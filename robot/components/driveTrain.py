@@ -11,14 +11,14 @@ class DriveTrain:
     leftEncoder: rev.CANEncoder
     rightEncoder: rev.CANEncoder
 
-    def arcadeDrive(self, xAxis,yAxis):
+    def arcade_drive(self, xAxis,yAxis):
         self.maxSpeed = 0.2
         self.rightMotorSpeed = yAxis-xAxis
         self.leftMotorSpeed= yAxis+xAxis
 
+    def tank_drive(self, rightJoystickValue, leftJoystickValue):
+        self.rightMotorSpeed = rightJoystickValue
+        self.leftMotorSpeed = leftJoystickValue
 
-    def tank_drive(self, RightJoystickValue, LeftJoystickValue):
-        RightMotorValue = RightJoystickValue
-        LeftMotorValue = LeftJoystickValue
-
+    def execute():
 
