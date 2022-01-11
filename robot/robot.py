@@ -5,4 +5,5 @@ from components.drivetrain import DriveTrain
 
 
 class MyRobot(magicbot.MagicRobot):
+
     drivetrain: DriveTrain
