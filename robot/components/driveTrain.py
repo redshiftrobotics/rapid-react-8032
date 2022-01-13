@@ -1,3 +1,4 @@
+from _typeshed import SupportsNoArgReadline
 import magicbot
 import wpilib
 import rev
@@ -11,14 +12,51 @@ class DriveTrain:
     leftEncoder: rev.CANEncoder
     rightEncoder: rev.CANEncoder
 
+    def __init__(self):
+        self.enabled = False
+
     def arcade_drive(self, xAxis,yAxis):
-        self.maxSpeed = 0.2
         self.rightMotorSpeed = yAxis-xAxis
-        self.leftMotorSpeed= yAxis+xAxis
+        self.leftMotorSpeed = yAxis+xAxis
 
     def tank_drive(self, rightJoystickValue, leftJoystickValue):
         self.rightMotorSpeed = rightJoystickValue
         self.leftMotorSpeed = leftJoystickValue
 
-    def execute():
+    def enable(self):
+        #Causes the shooter motor to spin
+        self.enabled = True
+
+    def disable(self):
+        self.enabled = False
+   
+    def capSpeed(self, speed, maxSpeed, minSpeed):
+        if speed > maxSpeed:
+            return maxSpeed
+
+        if speed < minSpeed:
+            return minSpeed
+        
+        return speed
+            
+    def execute(self):
+       
+        maxSpeed = 0.2
+        minSpeed = -0.2
+        self.leftMotorSpeed = self.capSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
+        self.rightMotorSpeed = self.capSpeed(self.rightMotorSpeed, maxSpeed, minSpeed)
+
+        if self.enabled:
+            self.backLeftMotor.set(self.leftMotorSpeed)
+            self.backRightMotor.set(self.rightMotorSpeed)
+            self.frontLeftMotor.set(self.leftMotorSpeed)
+            self.frontRightMotor.set(self.rightMotorSpeed)
+        
+        self.leftMotorSpeed = 0
+        self.rightMotorSpeed = 0
+
+
+
+
+
 
