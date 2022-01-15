@@ -11,6 +11,7 @@ class DriveTrain:
     backRightMotor: rev.CANSparkMax
     leftEncoder: rev.CANEncoder
     rightEncoder: rev.CANEncoder
+    
 
     def __init__(self):
         self.enabled = False
@@ -41,8 +42,8 @@ class DriveTrain:
             
     def execute(self):
        
-        maxSpeed = 0.2
-        minSpeed = -0.2
+        maxSpeed = 1
+        minSpeed = -1
         self.leftMotorSpeed = self.capSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
         self.rightMotorSpeed = self.capSpeed(self.rightMotorSpeed, maxSpeed, minSpeed)
 
