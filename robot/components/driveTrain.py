@@ -3,15 +3,14 @@ import magicbot
 import wpilib
 import rev
 
-class DriveTrain:
+class DriveTrain():
 
     frontLeftMotor: rev.CANSparkMax
     frontRightMotor: rev.CANSparkMax
     backLeftMotor: rev.CANSparkMax
     backRightMotor: rev.CANSparkMax
-    leftEncoder: rev.CANEncoder
-    rightEncoder: rev.CANEncoder
-    
+    # leftEncoder: rev.CANEncoder
+    # rightEncoder: rev.CANEncoder
 
     def __init__(self):
         self.enabled = False
@@ -25,7 +24,7 @@ class DriveTrain:
         self.leftMotorSpeed = leftJoystickValue
 
     def enable(self):
-        #Causes the shooter motor to spin
+    
         self.enabled = True
 
     def disable(self):
@@ -53,8 +52,8 @@ class DriveTrain:
             self.frontLeftMotor.set(self.leftMotorSpeed)
             self.frontRightMotor.set(self.rightMotorSpeed)
         
-        self.leftMotorSpeed = 0
-        self.rightMotorSpeed = 0
+        # self.leftMotorSpeed = 0
+        # self.rightMotorSpeed = 0
 
 
 

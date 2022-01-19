@@ -38,7 +38,7 @@ class MyRobot(magicbot.MagicRobot):
         # wpilib.SmartDashboard.putNumber("joystick  trigger", self.driverJoystick.getTrigger())
         # wpilib.SmartDashboard.putNumber("joystick  get twist", self.driverJoystick.getTwist())
 
-        # self.driveTrain.tank_drive(self.speed*leftJoystick, self.speed*rightJoystick)
+        self.driveTrain.arcade_drive(self.speed*self.driverJoystick.getX(), self.speed*self.driverJoystick.getY())
         
 
 
