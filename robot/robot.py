@@ -10,27 +10,35 @@ class MyRobot(magicbot.MagicRobot):
     def createObjects(self):
         self.driverJoystick = wpilib.Joystick(0)
 
-        self.frontLeftMotor = rev.CANSarkMax(0, rev.CANSparkMaxLowLevel.kBrushless)
-        self.frontRightMotor = rev.CANSarkMax(1, rev.CANSparkMaxLowLevel.kBrushless)
-        self.backLeftMotor = rev.CANSarkMax(2, rev.CANSparkMaxLowLevel.kBrushless)
-        self.backRightMotor = rev.CANSarkMax(3, rev.CANSparkMaxLowLevel.kBrushless)
+        motorType = rev.CANSparkMaxLowLevel.MotorType.kBrushless
+        self.frontLeftMotor = rev.CANSparkMax(1, motorType)
+        self.frontRightMotor = rev.CANSparkMax(2, motorType)
+        self.backLeftMotor = rev.CANSparkMax(3, motorType)
+        self.backRightMotor = rev.CANSparkMax(4, motorType)
+        # self.frontLeftMotor = rev.CANSparkMax(1, 0)
+        # self.frontRightMotor = rev.CANSparkMax(2, 0)
+        # self.backLeftMotor = rev.CANSparkMax(3, 0)
+        # self.backRightMotor = rev.CANSparkMax(4, 0)
 
     def teleopInit(self):
         self.speed = 0.2
 
+    def disabledPeriodic(self):
+        pass
+
     def teleopPeriodic(self):
         #get joystick data
         #call tank drive
-        self.driveTrain.enabled()
+        self.driveTrain.enable()
 
         #logitech extreme 3d. Case 10
 
         #get y axis - 1 (when moving joystick forward and backwards)
-        wpilib.SmartDashboard.putNumber("joystick  Y value", self.driverJoystick.getY())
+        wpilib.SmartDashboard.putNumber("joystick Y value", self.driverJoystick.getY())
         #get x axis - 0 (when moving joystick sideways)
-        wpilib.SmartDashboard.putNumber("joystick  X value", self.driverJoystick.getX())
+        wpilib.SmartDashboard.putNumber("joystick X value", self.driverJoystick.getX())
         #get the rotational value - 2 (when twisting joystick) left: -1, right: 1
-        wpilib.SmartDashboard.putNumber("joystick  Z value", self.driverJoystick.getZ())
+        wpilib.SmartDashboard.putNumber("joystick Z value", self.driverJoystick.getZ())
 
         # wpilib.SmartDashboard.putNumber("joystick  radians value", self.driverJoystick.getDirectionRadians())
         # wpilib.SmartDashboard.putNumber("joystick  throttle", self.driverJoystick.getThrottle())
@@ -38,8 +46,8 @@ class MyRobot(magicbot.MagicRobot):
         # wpilib.SmartDashboard.putNumber("joystick  trigger", self.driverJoystick.getTrigger())
         # wpilib.SmartDashboard.putNumber("joystick  get twist", self.driverJoystick.getTwist())
 
-        self.driveTrain.arcade_drive(self.speed*self.driverJoystick.getX(), self.speed*self.driverJoystick.getY())
-        
+        # self.driveTrain.arcade_drive(self.speed*self.driverJoystick.getX(), self.speed*self.driverJoystick.getY())
+
 
 
 if __name__ == '__main__':

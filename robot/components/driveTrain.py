@@ -1,4 +1,3 @@
-from _typeshed import SupportsNoArgReadline
 import magicbot
 import wpilib
 import rev
@@ -14,6 +13,9 @@ class DriveTrain():
 
     def __init__(self):
         self.enabled = False
+        self.frontLeftMotor = 0
+        self.frontRightMotor = 0
+
 
     def arcade_drive(self, xAxis,yAxis):
         self.rightMotorSpeed = yAxis-xAxis
@@ -41,10 +43,10 @@ class DriveTrain():
             
     def execute(self):
        
-        maxSpeed = 1
-        minSpeed = -1
-        self.leftMotorSpeed = self.capSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
-        self.rightMotorSpeed = self.capSpeed(self.rightMotorSpeed, maxSpeed, minSpeed)
+        # maxSpeed = 1
+        # minSpeed = -1
+        # self.leftMotorSpeed = self.capSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
+        # self.rightMotorSpeed = self.capSpeed(self.rightMotorSpeed, maxSpeed, minSpeed)
 
         if self.enabled:
             self.backLeftMotor.set(self.leftMotorSpeed)
