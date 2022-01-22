@@ -12,10 +12,10 @@ class MyRobot(magicbot.MagicRobot):
         self.driverJoystick = wpilib.Joystick(0)
 
         motorType = rev.CANSparkMaxLowLevel.MotorType.kBrushless
-        self.frontLeftMotor = rev.CANSparkMax(1, motorType)
+        self.frontLeftMotor = rev.CANSparkMax(3, motorType)
         self.frontRightMotor = rev.CANSparkMax(2, motorType)
-        self.backLeftMotor = rev.CANSparkMax(3, motorType)
-        self.backRightMotor = rev.CANSparkMax(4, motorType)
+        self.backLeftMotor = rev.CANSparkMax(4, motorType)
+        self.backRightMotor = rev.CANSparkMax(1, motorType)
 
         # try:
         # self.leftEncoder = self.backLeftMotor.getEncoder(rev.SparkMaxRelativeEncoder.Type.kHallSensor, )
@@ -26,10 +26,11 @@ class MyRobot(magicbot.MagicRobot):
         #     # raise RuntimeError(e)
         #     self.logger.info(e)
 
-        self.frontLeftMotor.setInverted(False)
-        self.frontRightMotor.setInverted(False)
+        self.frontLeftMotor.setInverted(True)
         self.backLeftMotor.setInverted(True)
-        self.backRightMotor.setInverted(True)
+
+        self.frontRightMotor.setInverted(False)
+        self.backRightMotor.setInverted(False)
 
 
     def teleopInit(self):
