@@ -20,6 +20,12 @@ class MyRobot(magicbot.MagicRobot):
         # self.backLeftMotor = rev.CANSparkMax(3, 0)
         # self.backRightMotor = rev.CANSparkMax(4, 0)
 
+        self.frontLeftMotor.setInverted(False)
+        self.frontRightMotor.setInverted(False)
+        self.backLeftMotor.setInverted(True)
+        self.backRightMotor.setInverted(True)
+
+
     def teleopInit(self):
         self.speed = 0.2
 
@@ -46,7 +52,7 @@ class MyRobot(magicbot.MagicRobot):
         # wpilib.SmartDashboard.putNumber("joystick  trigger", self.driverJoystick.getTrigger())
         # wpilib.SmartDashboard.putNumber("joystick  get twist", self.driverJoystick.getTwist())
 
-        # self.driveTrain.arcade_drive(self.speed*self.driverJoystick.getX(), self.speed*self.driverJoystick.getY())
+        self.driveTrain.arcade_drive(self.speed*self.driverJoystick.getX(), self.speed*self.driverJoystick.getY())
 
 
 

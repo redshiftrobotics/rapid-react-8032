@@ -13,16 +13,14 @@ class DriveTrain():
 
     def __init__(self):
         self.enabled = False
-        # self.frontLeftMotor = 0
-        # self.frontRightMotor = 0
 
         self.rightMotorSpeed = 0
         self.leftMotorSpeed = 0 
 
 
     def arcade_drive(self, xAxis,yAxis):
-        self.rightMotorSpeed = yAxis-xAxis
-        self.leftMotorSpeed = yAxis+xAxis
+        self.rightMotorSpeed = yAxis+xAxis
+        self.leftMotorSpeed = yAxis-xAxis
 
     def tank_drive(self, rightJoystickValue, leftJoystickValue):
         self.rightMotorSpeed = rightJoystickValue
