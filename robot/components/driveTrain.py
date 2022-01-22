@@ -23,13 +23,14 @@ class DriveTrain():
 
     def arcade_drive(self, xAxis,yAxis):
 
-        if yAxis >= 0:
-            self.rightMotorSpeed = yAxis-xAxis
-            self.leftMotorSpeed = yAxis+xAxis
+        #if uncomment, the robot will turn according to the joystick when moving backwards but this can cause glitches. 
+        # if yAxis >= 0:
+        self.rightMotorSpeed = yAxis+xAxis
+        self.leftMotorSpeed = yAxis-xAxis
         
-        else:
-            self.rightMotorSpeed = yAxis+xAxis
-            self.leftMotorSpeed = yAxis-xAxis
+        # else:
+        #     self.rightMotorSpeed = yAxis-xAxis
+        #     self.leftMotorSpeed = yAxis+xAxis
 
 
     def tank_drive(self, rightJoystickValue, leftJoystickValue):
@@ -50,7 +51,7 @@ class DriveTrain():
         if speed < minSpeed:
             return minSpeed
 
-        if abs(speed) <= 0.1:
+        if abs(speed) <= 0.01:
             speed = 0
             return speed
         
@@ -76,6 +77,10 @@ class DriveTrain():
 
         wpilib.SmartDashboard.putNumber('leftWheel', self.getLeftWheelDistance())
         wpilib.SmartDashboard.putNumber('RightWheel', self.getRightWheelDistance())
+        
+        wpilib.SmartDashboard.putNumber("rightMotor value", self.rightMotorSpeed)
+        wpilib.SmartDashboard.putNumber("leftMotor value", self.leftMotorSpeed)
+
         if self.enabled:
             self.backLeftMotor.set(self.leftMotorSpeed)
             self.backRightMotor.set(self.rightMotorSpeed)
