@@ -13,8 +13,11 @@ class DriveTrain():
 
     def __init__(self):
         self.enabled = False
-        self.frontLeftMotor = 0
-        self.frontRightMotor = 0
+        # self.frontLeftMotor = 0
+        # self.frontRightMotor = 0
+
+        self.rightMotorSpeed = 0
+        self.leftMotorSpeed = 0 
 
 
     def arcade_drive(self, xAxis,yAxis):
