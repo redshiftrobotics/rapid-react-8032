@@ -19,8 +19,14 @@ class DriveTrain():
 
 
     def arcade_drive(self, xAxis,yAxis):
-        self.rightMotorSpeed = yAxis+xAxis
-        self.leftMotorSpeed = yAxis-xAxis
+        if yAxis >= 0:
+            self.rightMotorSpeed = yAxis-xAxis
+            self.leftMotorSpeed = yAxis+xAxis
+        
+        else:
+            self.rightMotorSpeed = yAxis+xAxis
+            self.leftMotorSpeed = yAxis-xAxis
+
 
     def tank_drive(self, rightJoystickValue, leftJoystickValue):
         self.rightMotorSpeed = rightJoystickValue
