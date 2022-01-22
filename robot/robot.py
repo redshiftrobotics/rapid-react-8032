@@ -1,3 +1,4 @@
+from traceback import print_exception
 import magicbot
 import wpilib
 import rev
@@ -15,10 +16,15 @@ class MyRobot(magicbot.MagicRobot):
         self.frontRightMotor = rev.CANSparkMax(2, motorType)
         self.backLeftMotor = rev.CANSparkMax(3, motorType)
         self.backRightMotor = rev.CANSparkMax(4, motorType)
-        # self.frontLeftMotor = rev.CANSparkMax(1, 0)
-        # self.frontRightMotor = rev.CANSparkMax(2, 0)
-        # self.backLeftMotor = rev.CANSparkMax(3, 0)
-        # self.backRightMotor = rev.CANSparkMax(4, 0)
+
+        # try:
+        # self.leftEncoder = self.backLeftMotor.getEncoder(rev.SparkMaxRelativeEncoder.Type.kHallSensor, )
+        # self.rightEncoder = self.backRightMotor.getEncoder(rev.SparkMaxRelativeEncoder.Type.kHallSensor)
+        self.leftEncoder = self.backLeftMotor.getEncoder()
+        self.rightEncoder = self.backRightMotor.getEncoder()
+        # except Exception as e:
+        #     # raise RuntimeError(e)
+        #     self.logger.info(e)
 
         self.frontLeftMotor.setInverted(False)
         self.frontRightMotor.setInverted(False)
@@ -28,6 +34,7 @@ class MyRobot(magicbot.MagicRobot):
 
     def teleopInit(self):
         self.speed = 0.2
+        self.driveTrain.resetEncoders()
 
     def disabledPeriodic(self):
         pass
