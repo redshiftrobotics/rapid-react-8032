@@ -19,6 +19,7 @@ class DriveTrain():
 
 
     def arcade_drive(self, xAxis,yAxis):
+
         if yAxis >= 0:
             self.rightMotorSpeed = yAxis-xAxis
             self.leftMotorSpeed = yAxis+xAxis
@@ -39,21 +40,25 @@ class DriveTrain():
     def disable(self):
         self.enabled = False
    
-    def capSpeed(self, speed, maxSpeed, minSpeed):
+    def adjustSpeed(self, speed, maxSpeed, minSpeed):
         if speed > maxSpeed:
             return maxSpeed
 
         if speed < minSpeed:
             return minSpeed
+
+        if abs(speed) <= 0.1:
+            speed = 0
+            return speed
         
         return speed
-            
+                  
     def execute(self):
        
-        # maxSpeed = 1
-        # minSpeed = -1
-        # self.leftMotorSpeed = self.capSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
-        # self.rightMotorSpeed = self.capSpeed(self.rightMotorSpeed, maxSpeed, minSpeed)
+        maxSpeed = 1
+        minSpeed = -1
+        self.leftMotorSpeed = self.adjustSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
+        self.rightMotorSpeed = self.adjustSpeed(self.rightMotorSpeed, maxSpeed, minSpeed)
 
         if self.enabled:
             self.backLeftMotor.set(self.leftMotorSpeed)
@@ -61,8 +66,8 @@ class DriveTrain():
             self.frontLeftMotor.set(self.leftMotorSpeed)
             self.frontRightMotor.set(self.rightMotorSpeed)
         
-        # self.leftMotorSpeed = 0
-        # self.rightMotorSpeed = 0
+        self.leftMotorSpeed = 0
+        self.rightMotorSpeed = 0
 
 
 

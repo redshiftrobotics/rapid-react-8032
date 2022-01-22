@@ -52,8 +52,8 @@ class MyRobot(magicbot.MagicRobot):
         # wpilib.SmartDashboard.putNumber("joystick  trigger", self.driverJoystick.getTrigger())
         # wpilib.SmartDashboard.putNumber("joystick  get twist", self.driverJoystick.getTwist())
 
+        #the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         self.driveTrain.arcade_drive(self.speed*self.driverJoystick.getX(), self.speed*self.driverJoystick.getY())
-
 
 
 if __name__ == '__main__':
