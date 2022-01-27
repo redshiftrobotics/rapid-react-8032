@@ -38,16 +38,18 @@ class MyRobot(magicbot.MagicRobot):
         self.frontRightMotor.setInverted(False)
         self.backRightMotor.setInverted(False)
 
-        self.auto = AutonomousModeSelector(self)
-
+        self.auto = AutonomousModeSelector("autonomous")
     def autonomousInit(self):
         self.auto.start()
+        self.driveTrain.enable()
+
     def autonomousPeriodic(self):
         self.auto.periodic()
 
     def teleopInit(self):
         self.speed = 0.2
         self.driveTrain.resetEncoders()
+        self.driveTrain.enable()
 
     def disabledPeriodic(self):
         pass
@@ -55,7 +57,7 @@ class MyRobot(magicbot.MagicRobot):
     def teleopPeriodic(self):
         #get joystick data
         #call tank drive
-        self.driveTrain.enable()
+    
 
         #logitech extreme 3d. Case 10
 
