@@ -4,6 +4,8 @@ import wpilib
 import rev
 from components.driveTrain import DriveTrain
 
+from robotpy_ext.autonomous import AutonomousModeSelector
+
 class MyRobot(magicbot.MagicRobot):
 
     driveTrain: DriveTrain
@@ -20,8 +22,12 @@ class MyRobot(magicbot.MagicRobot):
         # try:
         # self.leftEncoder = self.backLeftMotor.getEncoder(rev.SparkMaxRelativeEncoder.Type.kHallSensor, )
         # self.rightEncoder = self.backRightMotor.getEncoder(rev.SparkMaxRelativeEncoder.Type.kHallSensor)
-        self.leftEncoder = self.backLeftMotor.getEncoder()
-        self.rightEncoder = self.backRightMotor.getEncoder()
+        # self.leftEncoder = self.backLeftMotor.getEncoder(countsPerRev=42)
+        # self.rightEncoder = self.backRightMotor.getEncoder(countsPerRev=42)
+
+        self.leftEncoder = self.backLeftMotor.getAlternateEncoder(1)
+        self.rightEncoder = self.backRightMotor.getAlternateEncoder(1)
+
         # except Exception as e:
         #     # raise RuntimeError(e)
         #     self.logger.info(e)
@@ -32,6 +38,12 @@ class MyRobot(magicbot.MagicRobot):
         self.frontRightMotor.setInverted(False)
         self.backRightMotor.setInverted(False)
 
+        self.auto = AutonomousModeSelector(self)
+
+    def autonomousInit(self):
+        self.auto.start()
+    def autonomousPeriodic(self):
+        self.auto.periodic()
 
     def teleopInit(self):
         self.speed = 0.2

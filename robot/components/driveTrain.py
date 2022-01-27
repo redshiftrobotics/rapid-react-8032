@@ -8,8 +8,8 @@ class DriveTrain():
     frontRightMotor: rev.CANSparkMax
     backLeftMotor: rev.CANSparkMax
     backRightMotor: rev.CANSparkMax
-    leftEncoder: rev.SparkMaxRelativeEncoder
-    rightEncoder: rev.SparkMaxRelativeEncoder
+    leftEncoder: rev.SparkMaxAlternateEncoder#rev.SparkMaxRelativeEncoder
+    rightEncoder: rev.SparkMaxAlternateEncoder#rev.SparkMaxRelativeEncoder
 
     def __init__(self):
         self.enabled = False
@@ -77,7 +77,7 @@ class DriveTrain():
 
         wpilib.SmartDashboard.putNumber('leftWheel', self.getLeftWheelDistance())
         wpilib.SmartDashboard.putNumber('RightWheel', self.getRightWheelDistance())
-        
+
         wpilib.SmartDashboard.putNumber("rightMotor value", self.rightMotorSpeed)
         wpilib.SmartDashboard.putNumber("leftMotor value", self.leftMotorSpeed)
 
