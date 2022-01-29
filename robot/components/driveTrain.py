@@ -1,6 +1,8 @@
 import magicbot
 import wpilib
 import rev
+from navx import AHRS
+
 
 class DriveTrain():
 
@@ -10,6 +12,7 @@ class DriveTrain():
     backRightMotor: rev.CANSparkMax
     leftEncoder: rev.SparkMaxAlternateEncoder#rev.SparkMaxRelativeEncoder
     rightEncoder: rev.SparkMaxAlternateEncoder#rev.SparkMaxRelativeEncoder
+    ahrs: AHRS
 
     def __init__(self):
         self.enabled = False

@@ -45,6 +45,7 @@ class MyRobot(magicbot.MagicRobot):
         self.ahrs = AHRS.create_spi()
 
         self.auto = AutonomousModeSelector("autonomous")
+        
     def autonomousInit(self):
         self.auto.start()
         self.driveTrain.enable()
