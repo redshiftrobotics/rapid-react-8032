@@ -4,9 +4,6 @@ import wpilib
 import rev
 from components.driveTrain import DriveTrain
 from navx import AHRS
-
-
-
 from robotpy_ext.autonomous import AutonomousModeSelector
 
 class MyRobot(magicbot.MagicRobot):
@@ -16,30 +13,28 @@ class MyRobot(magicbot.MagicRobot):
     def createObjects(self):
         self.driverJoystick = wpilib.Joystick(0)
 
+        #initialized motors
         motorType = rev.CANSparkMaxLowLevel.MotorType.kBrushless
+        
         self.frontLeftMotor = rev.CANSparkMax(3, motorType)
         self.frontRightMotor = rev.CANSparkMax(2, motorType)
         self.backLeftMotor = rev.CANSparkMax(4, motorType)
         self.backRightMotor = rev.CANSparkMax(1, motorType)
 
-        # try:
+        self.frontLeftMotor.setInverted(True)
+        self.backLeftMotor.setInverted(True)
+        self.frontRightMotor.setInverted(False)
+        self.backRightMotor.setInverted(False)
+
+        #various ways to initialize encoders (not working)
         # self.leftEncoder = self.backLeftMotor.getEncoder(rev.SparkMaxRelativeEncoder.Type.kHallSensor, )
         # self.rightEncoder = self.backRightMotor.getEncoder(rev.SparkMaxRelativeEncoder.Type.kHallSensor)
         # self.leftEncoder = self.backLeftMotor.getEncoder(countsPerRev=42)
         # self.rightEncoder = self.backRightMotor.getEncoder(countsPerRev=42)
 
+        #initialize encoders
         self.leftEncoder = self.backLeftMotor.getAlternateEncoder(1)
         self.rightEncoder = self.backRightMotor.getAlternateEncoder(1)
-
-        # except Exception as e:
-        #     # raise RuntimeError(e)
-        #     self.logger.info(e)
-
-        self.frontLeftMotor.setInverted(True)
-        self.backLeftMotor.setInverted(True)
-
-        self.frontRightMotor.setInverted(False)
-        self.backRightMotor.setInverted(False)
 
         #create gyroscope. spi - communications protocol 
         self.ahrs = AHRS.create_spi()
@@ -59,11 +54,6 @@ class MyRobot(magicbot.MagicRobot):
         self.driveTrain.enable()
     
     def teleopPeriodic(self):
-        #get joystick data
-        #call tank drive
-    
-
-        #logitech extreme 3d. Case 10
 
         #get y axis - 1 (when moving joystick forward and backwards)
         wpilib.SmartDashboard.putNumber("joystick Y value", self.driverJoystick.getY())
@@ -71,15 +61,6 @@ class MyRobot(magicbot.MagicRobot):
         wpilib.SmartDashboard.putNumber("joystick X value", self.driverJoystick.getX())
         #get the rotational value - 2 (when twisting joystick) left: -1, right: 1
         wpilib.SmartDashboard.putNumber("joystick Z value", self.driverJoystick.getZ())
-
-        # wpilib.SmartDashboard.putNumber("joystick  radians value", self.driverJoystick.getDirectionRadians())
-        # wpilib.SmartDashboard.putNumber("joystick  throttle", self.driverJoystick.getThrottle())
-        # wpilib.SmartDashboard.putNumber("joystick  get top", self.driverJoystick.getTop())
-        # wpilib.SmartDashboard.putNumber("joystick  trigger", self.driverJoystick.getTrigger())
-        # wpilib.SmartDashboard.putNumber("joystick  get twist", self.driverJoystick.getTwist())
-
-        #the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
-        self.driveTrain.arcadeDrive(self.speed*self.driverJoystick.getX(), self.speed*self.driverJoystick.getY())
 
         #Rotates on horizontal plane (spins!). 0-360 degrees
         wpilib.SmartDashboard.putNumber("NavX yaw", self.ahrs.getYaw())
@@ -91,6 +72,9 @@ class MyRobot(magicbot.MagicRobot):
 
         #tilts sideways
         wpilib.SmartDashboard.putNumber("NavX roll", self.ahrs.getRoll())
+
+        #the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
+        self.driveTrain.arcadeDrive(self.speed*self.driverJoystick.getX(), self.speed*self.driverJoystick.getY())
 
     def disabledPeriodic(self):
         pass

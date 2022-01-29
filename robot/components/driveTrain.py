@@ -20,7 +20,7 @@ class DriveTrain():
         self.rightMotorSpeed = 0
         self.leftMotorSpeed = 0
         
-        
+        #encoders currently not working on robot
         # self.drivetrain_leftEncoder = self.backLeftMotor.getEncoder(rev.SparkMaxRelativeEncoder.kHallSensor)
         # self.drivetrain_rightEncoder = self.backRightMotor.getEncoder(rev.SparkMaxRelativeEncoder.kHallSensor)
 
@@ -90,7 +90,6 @@ class DriveTrain():
             self.backRightMotor.set(self.rightMotorSpeed)
             self.frontLeftMotor.set(self.leftMotorSpeed)
             self.frontRightMotor.set(self.rightMotorSpeed)
-            
         
         self.leftMotorSpeed = 0
         self.rightMotorSpeed = 0

@@ -10,11 +10,6 @@ class TurnToAngle(AutonomousStateMachine):
 
     driveTrain: DriveTrain
     ahrs: AHRS
-
-    # @default_state()
-    # def default (self):
-    #     self.driveTrain.leftMotorSpeed = 0
-    #     self.driveTrain.rightMotorSpeed = 0
     
     @state(first = True)
     def turnToAngle(self):
