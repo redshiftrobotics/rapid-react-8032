@@ -1,14 +1,17 @@
-from magicbot import AutonomousStateMachine, timed_state, state
+from magicbot import AutonomousStateMachine, timed_state, default_state
 import wpilib
 
 from components.driveTrain import DriveTrain
 
-class drive_forward(AutonomousStateMachine):
+class DriveForward(AutonomousStateMachine):
 
     MODE_NAME = "Drive Forward"
     DEFAULT = False
 
-    driveTrain: DriveTrain
+    # driveTrain: DriveTrain
+    # @default_state()
+    # # def default(self):
+        
 
     @timed_state(duration=3, first = True)
     def drive_forward(self):

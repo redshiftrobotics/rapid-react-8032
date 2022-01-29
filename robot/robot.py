@@ -3,6 +3,9 @@ import magicbot
 import wpilib
 import rev
 from components.driveTrain import DriveTrain
+from navx import AHRS
+
+
 
 from robotpy_ext.autonomous import AutonomousModeSelector
 
@@ -38,6 +41,9 @@ class MyRobot(magicbot.MagicRobot):
         self.frontRightMotor.setInverted(False)
         self.backRightMotor.setInverted(False)
 
+        #create gyroscope. spi - communications protocol 
+        self.ahrs = AHRS.create_spi()
+
         self.auto = AutonomousModeSelector("autonomous")
     def autonomousInit(self):
         self.auto.start()
@@ -50,10 +56,7 @@ class MyRobot(magicbot.MagicRobot):
         self.speed = 0.2
         self.driveTrain.resetEncoders()
         self.driveTrain.enable()
-
-    def disabledPeriodic(self):
-        pass
-
+    
     def teleopPeriodic(self):
         #get joystick data
         #call tank drive
@@ -76,6 +79,20 @@ class MyRobot(magicbot.MagicRobot):
 
         #the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         self.driveTrain.arcade_drive(self.speed*self.driverJoystick.getX(), self.speed*self.driverJoystick.getY())
+
+        #Rotates on horizontal plane (spins!). 0-360 degrees
+        wpilib.SmartDashboard.putNumber("NavX yaw", self.ahrs.getYaw())
+        #Rotates on horizontal plane. 0 -> whatever degree. Angle will not reset to 0 at 360. 
+        wpilib.SmartDashboard.putNumber("NavX angle", self.ahrs.getAngle())
+
+        #tilts forward 
+        wpilib.SmartDashboard.putNumber("NavX pitch", self.ahrs.getPitch())
+
+        #tilts sideways
+        wpilib.SmartDashboard.putNumber("NavX roll", self.ahrs.getRoll())
+
+    def disabledPeriodic(self):
+        pass
 
 
 if __name__ == '__main__':
