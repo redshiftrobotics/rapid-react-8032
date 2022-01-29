@@ -8,7 +8,7 @@ class DriveForward(AutonomousStateMachine):
     MODE_NAME = "Drive Forward"
     DEFAULT = False
 
-    # driveTrain: DriveTrain
+    driveTrain: DriveTrain
     # @default_state()
     # # def default(self):
         
