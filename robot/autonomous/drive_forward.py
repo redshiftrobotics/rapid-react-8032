@@ -14,5 +14,5 @@ class DriveForward(AutonomousStateMachine):
         
 
     @timed_state(duration=3, first = True)
-    def drive_forward(self):
-        self.driveTrain.arcade_drive(0, 0.1) 
+    def driveForward(self):
+        self.driveTrain.arcadeDrive(0, 0.1) 

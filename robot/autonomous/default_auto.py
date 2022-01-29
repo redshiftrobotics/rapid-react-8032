@@ -12,6 +12,6 @@ class DefaultAuto (AutonomousStateMachine):
 
     #potentially change this to default state
     @state(first = True)
-    def zero_motor(self):
+    def zeroMotor(self):
         self.driveTrain.leftMotorSpeed=0
         self.driveTrain.rightMotorSpeed=0

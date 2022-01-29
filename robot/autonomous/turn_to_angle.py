@@ -17,7 +17,7 @@ class TurnToAngle(AutonomousStateMachine):
     #     self.driveTrain.rightMotorSpeed = 0
     
     @state(first = True)
-    def turn_to_angle(self):
+    def turnToAngle(self):
 
         target = 90
 
@@ -26,10 +26,10 @@ class TurnToAngle(AutonomousStateMachine):
             current = self.ahrs.getYaw()
 
             if current > target:
-                self.driveTrain.arcade_drive(-0.2,0)
+                self.driveTrain.arcadeDrive(-0.2,0)
 
             if current < target:
-                self.driveTrain.arcade_drive(0.2,0)
+                self.driveTrain.arcadeDrive(0.2,0)
 
 
 
