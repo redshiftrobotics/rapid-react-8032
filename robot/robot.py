@@ -1,4 +1,3 @@
-from traceback import print_exception
 import magicbot
 import wpilib
 import rev
