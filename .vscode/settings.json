@@ -1,0 +1,11 @@
+{
+  "python.pythonPath": ".venv/bin/python",
+  "cSpell.words": ["AHRS", "navx", "robotpy", "wpilib", "teleop"],
+  "python.analysis.typeCheckingMode": "strict",
+  "python.analysis.diagnosticSeverityOverrides": {
+      "reportPrivateImportUsage": "information",
+      "reportUnusedImport": "information",
+      "reportUntypedFunctionDecorator": "information",
+      "reportGeneralTypeIssues": "information",
+  }
+}
