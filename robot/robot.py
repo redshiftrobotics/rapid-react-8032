@@ -40,6 +40,16 @@ class MyRobot(magicbot.MagicRobot):
         self.ahrs = AHRS.create_spi()
 
         self.auto = AutonomousModeSelector("autonomous")
+
+        #_______________________mechanisms (motortype/id unknown________________________
+        self.intakeMotor = rev.CANSparkMax(5, motorType)
+        self.dropperMotor = rev.CANSparkMax(6, motorType)
+        self.leadScrewMotor = rev.CANSparkMax(7, motorType)
+        self.hangPulleyMotor = rev.CANSparkMax(8, motorType)
+
+        #Do not know what to input for parameters. Need Channel, range, offset
+        self.dropperSensor = wpilib.AnalogPotentiometer()
+        #sensors unknown
         
     def autonomousInit(self):
         self.auto.start()
@@ -73,12 +83,26 @@ class MyRobot(magicbot.MagicRobot):
         #tilts sideways
         wpilib.SmartDashboard.putNumber("NavX roll", self.ahrs.getRoll())
 
+        # wpilib.SmartDashboard.putNumber("get top pressed", self.driverJoystick.getTopPressed())
+        # wpilib.SmartDashboard.putNumber("get top", self.driverJoystick.getTop())
+        # wpilib.SmartDashboard.putNumber("get trigger", self.driverJoystick.getTrigger())
+        # wpilib.SmartDashboard.putNumber("get trigger pressed", self.driverJoystick.getTriggerPressed())
+        wpilib.SmartDashboard.putNumber("1", self.driverJoystick.getRawButton(1))
+        wpilib.SmartDashboard.putNumber("2", self.driverJoystick.getRawButton(2))
+        wpilib.SmartDashboard.putNumber("3", self.driverJoystick.getRawButton(3))
+        wpilib.SmartDashboard.putNumber("4", self.driverJoystick.getRawButton(4))
+        wpilib.SmartDashboard.putNumber("5", self.driverJoystick.getRawButton(5))
+        wpilib.SmartDashboard.putNumber("6", self.driverJoystick.getRawButton(6))
+        wpilib.SmartDashboard.putNumber("7", self.driverJoystick.getRawButton(7))
+        wpilib.SmartDashboard.putNumber("8", self.driverJoystick.getRawButton(8))
+        wpilib.SmartDashboard.putNumber("9", self.driverJoystick.getRawButton(9))
+        wpilib.SmartDashboard.putNumber("10", self.driverJoystick.getRawButton(10))
+
         #the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         self.driveTrain.arcadeDrive(self.speed*self.driverJoystick.getX(), self.speed*self.driverJoystick.getY())
 
     def disabledPeriodic(self):
         pass
-
 
 if __name__ == '__main__':
     wpilib.run(MyRobot)
