@@ -1,6 +1,7 @@
 import wpilib
 import rev
 import magicbot
+from .. util import remap
    
 class Dropper():
     dropperMotor: rev.CANSparkMax
@@ -8,6 +9,8 @@ class Dropper():
 
     def __init__(self):
         self.enabled = False
+        self.lowAngle = -45
+        self.startAngle = 0
 
     def enable(self):
         self.enabled = True
@@ -19,11 +22,18 @@ class Dropper():
         pass #Need to finish. PID should be here. Add code safety stop. 
 
     def drop(self):
-        self.turnToAngle(-45)
+        #for button (driver preference)
+        self.turnToAngle(self.lowAngle)
     
     def unDrop(self):
+        #for button (driver preference)
         #Achilles coined this function name. 
-        self.turnToAngle(0)
+        self.turnToAngle(self.startAngle)
+
+    def variationDrop(self, input):
+        #for slider (driver preference)
+        angle = remap(input,-1, 1, self.lowAngle, self.startAngle)
+        self.turnToAngle(angle)
 
     def execute():
         pass

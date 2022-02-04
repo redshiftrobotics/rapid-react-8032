@@ -41,14 +41,23 @@ class MyRobot(magicbot.MagicRobot):
 
         self.auto = AutonomousModeSelector("autonomous")
 
-        #_______________________mechanisms (motortype/id unknown________________________
-        self.intakeMotor = rev.CANSparkMax(5, motorType)
-        self.dropperMotor = rev.CANSparkMax(6, motorType)
-        self.leadScrewMotor = rev.CANSparkMax(7, motorType)
-        self.hangPulleyMotor = rev.CANSparkMax(8, motorType)
+        #_______________________mechanisms (MOTORTYPE/CHANNEL unknown)________________________
 
+        self.intakeMotor = rev.CANSparkMax(5, motorType)
+
+        self.dropperMotor = rev.CANSparkMax(6, motorType)
         #Do not know what to input for parameters. Need Channel, range, offset
-        self.dropperSensor = wpilib.AnalogPotentiometer()
+        self.dropperSensor = wpilib.AnalogPotentiometer(0) #TODO need to look over again
+       
+        self.leadScrewMotor = rev.CANSparkMax(7, motorType)
+        self.pulleyMotor = rev.CANSparkMax(8, motorType)
+        self.topPulleySensor = wpilib.DigitalInput(0)#these channel numbers MUST BE CHANGED
+        self.bottomPulleySensor = wpilib.DigitalInput(1)
+        self.topLeadScrewSensor = wpilib.DigitalInput(2)
+        self.bottomLeadScrewSensor = wpilib.DigitalInput(3)
+
+
+
         #sensors unknown
         
     def autonomousInit(self):
@@ -57,6 +66,7 @@ class MyRobot(magicbot.MagicRobot):
 
     def autonomousPeriodic(self):
         self.auto.periodic()
+
 
     def teleopInit(self):
         self.speed = 0.2
@@ -100,6 +110,8 @@ class MyRobot(magicbot.MagicRobot):
 
         #the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         self.driveTrain.arcadeDrive(self.speed*self.driverJoystick.getX(), self.speed*self.driverJoystick.getY())
+
+
 
     def disabledPeriodic(self):
         pass
