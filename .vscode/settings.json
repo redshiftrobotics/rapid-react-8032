@@ -1,5 +1,4 @@
 {
-  "python.pythonPath": ".venv/bin/python",
   "cSpell.words": [
     "AHRS",
     "navx",
@@ -8,10 +7,10 @@
     "teleop",
     "wpilib"
   ],
-  "python.analysis.typeCheckingMode": "strict",
-  "python.analysis.diagnosticSeverityOverrides": {
-      "reportPrivateImportUsage": "information",
-      "reportUnusedImport": "information",
-      "reportUntypedFunctionDecorator": "information",
-  }
+  // "python.analysis.typeCheckingMode": "strict",
+  // "python.analysis.diagnosticSeverityOverrides": {
+  //     "reportPrivateImportUsage": "information",
+  //     "reportUnusedImport": "information",
+  //     "reportUntypedFunctionDecorator": "information",
+  // }
 }
