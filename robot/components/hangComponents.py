@@ -2,7 +2,7 @@ import magicbot
 import wpilib
 import rev
 
-class Hang():
+class HangComponents():
     #any of these might be neo
     leadScrewMotor: rev.CANSparkMax
     pulleyMotor: rev.CANSparkMax
@@ -21,6 +21,10 @@ class Hang():
     def setPulleyMotorSpeed(self, speed):
         self.pulleySpeed = speed
 
+    def enable(self):
+        self.enable = True
+        return self.enable
+
     def getTopPulleySensor(self):
         return self.topPulleySensor.get()
 
@@ -32,15 +36,18 @@ class Hang():
 
     def getTopLeadScrewSensor(self):
         return self.topLeadScrewSensor.get()
-        
-    def pulleyToTop(self):
-        pass
-    def pulleyToBottom(self):
-        pass
+    
+    def setLeadScrewMotorSpeed(self, speed):
+        self.leadScrewSpeed = speed
 
-    def leadScrewToTop(self):
-        pass
-    def leadScrewToBottom(self):
-        pass
+    def execute(self):
+
+        if self.enable == True:
+            self.pulleyMotor.set(self.pulleySpeed)
+            self.leadScrewMotor.set(self.leadScrewSpeed)
+
+        self.leadScrewSpeed = 0
+        self.pulleySpeed = 0
+    
 
     

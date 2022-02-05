@@ -3,12 +3,14 @@ import magicbot
 import wpilib
 import rev
 from components.driveTrain import DriveTrain
+from components.hangComponents import HangComponents
 from navx import AHRS
 from robotpy_ext.autonomous import AutonomousModeSelector
 
 class MyRobot(magicbot.MagicRobot):
 
     driveTrain: DriveTrain
+    hangComponents: HangComponents
     
     def createObjects(self):
         self.driverJoystick = wpilib.Joystick(0)
@@ -72,6 +74,7 @@ class MyRobot(magicbot.MagicRobot):
         self.speed = 0.2
         self.driveTrain.resetEncoders()
         self.driveTrain.enable()
+        self.hangComponents.enable()
     
     def teleopPeriodic(self):
 
@@ -107,6 +110,19 @@ class MyRobot(magicbot.MagicRobot):
         wpilib.SmartDashboard.putNumber("8", self.driverJoystick.getRawButton(8))
         wpilib.SmartDashboard.putNumber("9", self.driverJoystick.getRawButton(9))
         wpilib.SmartDashboard.putNumber("10", self.driverJoystick.getRawButton(10))
+        
+        #temporary code meant for testing. Should be in higher level hang.
+        if self.driverJoystick.getRawButton(10):
+            self.hangComponents.setPulleyMotorSpeed(1)
+
+        if self.driverJoystick.getRawButton(9):
+            self.hangComponents.setPulleyMotorSpeed(-1)
+
+        if self.driverJoystick.getRawButton(8):
+            self.hangComponents.setLeadScrewMotorSpeed(1)
+
+        if self.driverJoystick.getRawButton(7):
+            self.hangComponents.setLeadScrewMotorSpeed(-1)
 
         #the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         self.driveTrain.arcadeDrive(self.speed*self.driverJoystick.getX(), self.speed*self.driverJoystick.getY())
