@@ -110,8 +110,13 @@ class MyRobot(magicbot.MagicRobot):
         wpilib.SmartDashboard.putNumber("8", self.driverJoystick.getRawButton(8))
         wpilib.SmartDashboard.putNumber("9", self.driverJoystick.getRawButton(9))
         wpilib.SmartDashboard.putNumber("10", self.driverJoystick.getRawButton(10))
-        
+
         #temporary code meant for testing. Should be in higher level hang.
+        wpilib.SmartDashboard.putBoolean("top pulley sensor", self.hangComponents.getTopPulleySensor())
+        wpilib.SmartDashboard.putBoolean("bottom pulley sensor", self.hangComponents.getBottomPulleySensor())
+        wpilib.SmartDashboard.putBoolean("bottom leadscrew sensor", self.hangComponents.getBottomLeadScrewSensor())
+        wpilib.SmartDashboard.putBoolean("top leadscrew sensor", self.hangComponents.getTopLeadScrewSensor())
+
         if self.driverJoystick.getRawButton(10):
             self.hangComponents.setPulleyMotorSpeed(1)
 
