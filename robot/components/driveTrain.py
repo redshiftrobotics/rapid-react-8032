@@ -10,8 +10,8 @@ class DriveTrain():
     frontRightMotor: rev.CANSparkMax
     backLeftMotor: rev.CANSparkMax
     backRightMotor: rev.CANSparkMax
-    leftEncoder: rev.SparkMaxAlternateEncoder#rev.SparkMaxRelativeEncoder
-    rightEncoder: rev.SparkMaxAlternateEncoder#rev.SparkMaxRelativeEncoder
+    leftEncoder: rev.SparkMaxAlternateEncoder #rev.SparkMaxRelativeEncoder
+    rightEncoder: rev.SparkMaxAlternateEncoder #rev.SparkMaxRelativeEncoder
     ahrs: AHRS
 
     def __init__(self):
