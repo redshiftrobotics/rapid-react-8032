@@ -3,15 +3,16 @@ import wpilib
 
 from components.driveTrain import DriveTrain
 
-class DefaultAuto (AutonomousStateMachine):
+
+class DefaultAuto(AutonomousStateMachine):
 
     MODE_NAME = "Default Auto"
     DEFAULT = True
 
     driveTrain: DriveTrain
 
-    #potentially change this to default state
-    @state(first = True)
+    # potentially change this to default state
+    @state(first=True)
     def zeroMotor(self):
-        self.driveTrain.leftMotorSpeed=0
-        self.driveTrain.rightMotorSpeed=0
+        self.driveTrain.leftMotorSpeed = 0
+        self.driveTrain.rightMotorSpeed = 0
