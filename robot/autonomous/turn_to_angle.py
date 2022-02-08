@@ -1,7 +1,7 @@
-
 from navx import AHRS
 from components.driveTrain import DriveTrain
 from magicbot import AutonomousStateMachine, state, default_state
+
 
 class TurnToAngle(AutonomousStateMachine):
 
@@ -10,8 +10,8 @@ class TurnToAngle(AutonomousStateMachine):
 
     driveTrain: DriveTrain
     ahrs: AHRS
-    
-    @state(first = True)
+
+    @state(first=True)
     def turnToAngle(self):
 
         target = 90
@@ -21,14 +21,7 @@ class TurnToAngle(AutonomousStateMachine):
             current = self.ahrs.getYaw()
 
             if current > target:
-                self.driveTrain.arcadeDrive(-0.2,0)
+                self.driveTrain.arcadeDrive(-0.2, 0)
 
             if current < target:
-                self.driveTrain.arcadeDrive(0.2,0)
-
-
-
-            
-
-
-
+                self.driveTrain.arcadeDrive(0.2, 0)
