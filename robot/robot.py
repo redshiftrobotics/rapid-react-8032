@@ -11,7 +11,7 @@ class MyRobot(magicbot.MagicRobot):
 
     driveTrain: DriveTrain
     hangComponents: HangComponents
-    
+
     def createObjects(self):
         self.driverJoystick = wpilib.Joystick(0)
 
@@ -43,25 +43,27 @@ class MyRobot(magicbot.MagicRobot):
 
         self.auto = AutonomousModeSelector("autonomous")
 
-        #_______________________mechanisms (MOTORTYPE/CHANNEL unknown)________________________
+        # _______________________mechanisms (MOTORTYPE/CHANNEL unknown)________________________
 
         self.intakeMotor = rev.CANSparkMax(5, motorType)
 
         self.dropperMotor = rev.CANSparkMax(6, motorType)
-        #Do not know what to input for parameters. Need Channel, range, offset
-        self.dropperSensor = wpilib.AnalogPotentiometer(0) #TODO need to look over again
-       
+        # Do not know what to input for parameters. Need Channel, range, offset
+        self.dropperSensor = wpilib.AnalogPotentiometer(
+            0
+        )  # TODO need to look over again
+
         self.leadScrewMotor = rev.CANSparkMax(7, motorType)
         self.pulleyMotor = rev.CANSparkMax(8, motorType)
-        self.topPulleySensor = wpilib.DigitalInput(0)#these channel numbers MUST BE CHANGED
+        self.topPulleySensor = wpilib.DigitalInput(
+            0
+        )  # these channel numbers MUST BE CHANGED
         self.bottomPulleySensor = wpilib.DigitalInput(1)
         self.topLeadScrewSensor = wpilib.DigitalInput(2)
         self.bottomLeadScrewSensor = wpilib.DigitalInput(3)
 
+        # sensors unknown
 
-
-        #sensors unknown
-        
     def autonomousInit(self):
         self.auto.start()
         self.driveTrain.enable()
@@ -69,13 +71,12 @@ class MyRobot(magicbot.MagicRobot):
     def autonomousPeriodic(self):
         self.auto.periodic()
 
-
     def teleopInit(self):
         self.speed = 0.2
         self.driveTrain.resetEncoders()
         self.driveTrain.enable()
         self.hangComponents.enable()
-    
+
     def teleopPeriodic(self):
 
         # get y axis - 1 (when moving joystick forward and backwards)
@@ -111,11 +112,19 @@ class MyRobot(magicbot.MagicRobot):
         wpilib.SmartDashboard.putNumber("9", self.driverJoystick.getRawButton(9))
         wpilib.SmartDashboard.putNumber("10", self.driverJoystick.getRawButton(10))
 
-        #temporary code meant for testing. Should be in higher level hang.
-        wpilib.SmartDashboard.putBoolean("top pulley sensor", self.hangComponents.getTopPulleySensor())
-        wpilib.SmartDashboard.putBoolean("bottom pulley sensor", self.hangComponents.getBottomPulleySensor())
-        wpilib.SmartDashboard.putBoolean("bottom leadscrew sensor", self.hangComponents.getBottomLeadScrewSensor())
-        wpilib.SmartDashboard.putBoolean("top leadscrew sensor", self.hangComponents.getTopLeadScrewSensor())
+        # temporary code meant for testing. Should be in higher level hang.
+        wpilib.SmartDashboard.putBoolean(
+            "top pulley sensor", self.hangComponents.getTopPulleySensor()
+        )
+        wpilib.SmartDashboard.putBoolean(
+            "bottom pulley sensor", self.hangComponents.getBottomPulleySensor()
+        )
+        wpilib.SmartDashboard.putBoolean(
+            "bottom leadscrew sensor", self.hangComponents.getBottomLeadScrewSensor()
+        )
+        wpilib.SmartDashboard.putBoolean(
+            "top leadscrew sensor", self.hangComponents.getTopLeadScrewSensor()
+        )
 
         if self.driverJoystick.getRawButton(10):
             self.hangComponents.setPulleyMotorSpeed(1)
@@ -134,8 +143,6 @@ class MyRobot(magicbot.MagicRobot):
             self.speed * self.driverJoystick.getX(),
             self.speed * self.driverJoystick.getY(),
         )
-
-
 
     def disabledPeriodic(self):
         pass

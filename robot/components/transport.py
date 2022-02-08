@@ -2,7 +2,8 @@ import wpilib
 import rev
 import magicbot
 
-class Transport():
+
+class Transport:
     intakeMotor: rev.CANSparkMax
 
     def __init__(self):
@@ -16,7 +17,6 @@ class Transport():
     def intake(self, intakeSpeed):
         self.intakeMotorSpeed = intakeSpeed
 
-
     def execute(self):
         wpilib.SmartDashboard.putNumber("intake motor", self.intakeMotorSpeed)
 
@@ -24,4 +24,3 @@ class Transport():
             self.intakeMotor.set(self.intakeMotorSpeed)
 
         self.intakeMotorSpeed = 0
-       
