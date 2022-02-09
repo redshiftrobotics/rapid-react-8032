@@ -1,5 +1,4 @@
-from magicbot import StateMachine, state
-import wpilib
+from magicbot.state_machine import StateMachine, state
 from components.hangComponents import HangComponents
 
 
@@ -9,7 +8,7 @@ class ExtendLeadScrew(StateMachine):
     def extendLeadScrew(self):
         self.engage()  # type:ignore
 
-    @state(first=True)
+    @state(first=True)  # type:ignore
     def startExtendLeadScrew(self):
 
         # the motor speed defaults back to zero unless otherwise called.

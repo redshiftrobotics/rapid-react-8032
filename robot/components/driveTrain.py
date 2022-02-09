@@ -1,4 +1,3 @@
-import magicbot
 import wpilib
 import rev
 from navx import AHRS

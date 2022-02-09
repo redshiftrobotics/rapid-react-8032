@@ -1,6 +1,5 @@
 import wpilib
 import rev
-import magicbot
 
 
 class Transport:
@@ -14,7 +13,7 @@ class Transport:
         self.dropperMotorSpeed = 0
         self.leadScrewMotorSpeed = 0
 
-    def intake(self, intakeSpeed):
+    def intake(self, intakeSpeed: float):
         self.intakeMotorSpeed = intakeSpeed
 
     def execute(self):

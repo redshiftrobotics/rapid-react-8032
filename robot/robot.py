@@ -7,7 +7,7 @@ from navx import AHRS
 from robotpy_ext.autonomous import AutonomousModeSelector  # type:ignore
 
 
-class MyRobot(magicbot.MagicRobot):
+class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
     hangComponents: HangComponents

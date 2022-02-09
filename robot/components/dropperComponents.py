@@ -1,6 +1,5 @@
 import wpilib
 import rev
-import magicbot
 from ..util import remap
 
 
@@ -19,7 +18,7 @@ class Dropper:
     def disable(self):
         self.enabled = False
 
-    def turnToAngle(self, targetAngle):
+    def turnToAngle(self, targetAngle: float):
         pass  # Need to finish. PID should be here. Add code safety stop.
 
     def drop(self):
@@ -31,10 +30,10 @@ class Dropper:
         # Achilles coined this function name.
         self.turnToAngle(self.startAngle)
 
-    def variationDrop(self, input):
+    def variationDrop(self, input: float):
         # for slider (driver preference)
         angle = remap(input, -1, 1, self.lowAngle, self.startAngle)
         self.turnToAngle(angle)
 
-    def execute():
+    def execute(self):
         pass
