@@ -8,17 +8,17 @@ class TransportComponents:
     def __init__(self):
         self.enabled = False
 
-        self.intakeMotorSpeed = 0
-        self.hangPulleyMotorSpeed = 0
-        self.dropperMotorSpeed = 0
-        self.leadScrewMotorSpeed = 0
-
-    def intake(self, intakeSpeed: float):
+    def setIntakeSpeed(self, intakeSpeed: float):
         self.intakeMotorSpeed = intakeSpeed
 
-    def execute(self):
-        wpilib.SmartDashboard.putNumber("intake motor", self.intakeMotorSpeed)
+    def enable(self):
+        self.enabled = True
 
+    def disable(self):
+        self.enabled = False
+
+    def execute(self):
+        # wpilib.SmartDashboard.putNumber("intake motor", self.intakeMotorSpeed)
         if self.enabled:
             self.intakeMotor.set(self.intakeMotorSpeed)
 
