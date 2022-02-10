@@ -5,7 +5,7 @@ from ..util import remap
 
 class DropperComponents:
     dropperMotor: rev.CANSparkMax
-    dropperSensor: wpilib.AnalogPotentiometer  # we definitely need to change this. THIS IS NOT CORRECT. JUST PLACE HOLDER. could be rev.analog input
+    #dropperSensor: wpilib.AnalogPotentiometer  # we definitely need to change this. THIS IS NOT CORRECT. JUST PLACE HOLDER. could be rev.analog input
     dropperEncoder: rev.SparkMaxAlternateEncoder
 
     def __init__(self):
@@ -36,6 +36,10 @@ class DropperComponents:
         # for slider (driver preference)
         angle = remap(input, -1, 1, self.lowAngle, self.startAngle)
         self.turnToAngle(angle)
+    
+    def getAngle(self):
+        #Could be with encoder or with potentiometer
+        pass
 
     def execute(self):
         pass
