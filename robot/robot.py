@@ -54,6 +54,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # initialize encoders
         self.leftEncoder = self.backLeftMotor.getAlternateEncoder(1)
         self.rightEncoder = self.backRightMotor.getAlternateEncoder(1)
+        self.dropperEncoder = self.dropperMotor.getAlternateEncoder(1)
 
         # create gyroscope. spi - communications protocol
         self.ahrs = AHRS.create_spi()  # type:ignore

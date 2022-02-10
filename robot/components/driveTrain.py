@@ -19,10 +19,6 @@ class DriveTrain:
         self.rightMotorSpeed = 0
         self.leftMotorSpeed = 0
 
-        # encoders currently not working on robot
-        # self.drivetrain_leftEncoder = self.backLeftMotor.getEncoder(rev.SparkMaxRelativeEncoder.kHallSensor)
-        # self.drivetrain_rightEncoder = self.backRightMotor.getEncoder(rev.SparkMaxRelativeEncoder.kHallSensor)
-
     def arcadeDrive(self, xAxis: float, yAxis: float):
 
         # if uncomment, the robot will turn according to the joystick when moving backwards but this can cause glitches.
