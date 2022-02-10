@@ -2,7 +2,7 @@ import wpilib
 import rev
 
 
-class Transport:
+class TransportComponents:
     intakeMotor: rev.CANSparkMax
 
     def __init__(self):
