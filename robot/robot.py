@@ -3,14 +3,31 @@ import wpilib
 import rev
 from components.driveTrain import DriveTrain
 from components.hangComponents import HangComponents
+from components.dropperComponents import DropperComponents
+from components.transportComponents import TransportComponents
+from hang.extendLeadScrew import ExtendLeadScrew
+from hang.retractLeadScrew import RetractLeadScrew
+from hang.extendPulley import ExtendPulley
+from hang.retractPulley import RetractPulley
 from navx import AHRS
-from robotpy_ext.autonomous import AutonomousModeSelector  # type:ignore
+from robotpy_ext.autonomous import AutonomousModeSelector
+from robot.components.dropperComponents import DropperComponents
+from robot.components.transportComponents import TransportComponents
+
+from robot.hang.extendLeadScrew import ExtendLeadScrew
+from robot.hang.retractLeadScrew import RetractLeadScrew  # type:ignore
 
 
 class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
     hangComponents: HangComponents
+    dropperComponents: DropperComponents
+    transportComponents: TransportComponents
+    extendLeadScrew: ExtendLeadScrew
+    retractLeadScrew: RetractLeadScrew
+    extendPulley: ExtendPulley
+    retractPulley: RetractPulley
 
     def createObjects(self):
         self.driverJoystick = wpilib.Joystick(0)
@@ -126,17 +143,34 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
             "top leadscrew sensor", self.hangComponents.getTopLeadScrewSensor()
         )
 
-        if self.driverJoystick.getRawButton(10):
-            self.hangComponents.setPulleyMotorSpeed(1)
+        # buttons are randomly chosen
+        # extend lead screw
+        if self.driverJoystick.getRawButton(4):
+            self.extendLeadScrew.extendLeadScrew()
 
-        if self.driverJoystick.getRawButton(9):
-            self.hangComponents.setPulleyMotorSpeed(-1)
+        # retracts lead screw
+        if self.driverJoystick.getRawButton(5):
+            self.retractLeadScrew.retractLeadScrew()
 
-        if self.driverJoystick.getRawButton(8):
-            self.hangComponents.setLeadScrewMotorSpeed(1)
+        # extends pulley
+        if self.driverJoystick.getRawButton(6):
+            self.extendPulley.extendPulley()
 
+        # retract pulley
         if self.driverJoystick.getRawButton(7):
-            self.hangComponents.setLeadScrewMotorSpeed(-1)
+            self.retractPulley.retractPulley()
+
+        # if self.driverJoystick.getRawButton(10):
+        #     self.hangComponents.setPulleyMotorSpeed(1)
+
+        # if self.driverJoystick.getRawButton(9):
+        #     self.hangComponents.setPulleyMotorSpeed(-1)
+
+        # if self.driverJoystick.getRawButton(8):
+        #     self.hangComponents.setLeadScrewMotorSpeed(1)
+
+        # if self.driverJoystick.getRawButton(7):
+        #     self.hangComponents.setLeadScrewMotorSpeed(-1)
 
         # the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         self.driveTrain.arcadeDrive(

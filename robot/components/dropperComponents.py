@@ -3,7 +3,7 @@ import rev
 from ..util import remap
 
 
-class Dropper:
+class DropperComponents:
     dropperMotor: rev.CANSparkMax
     dropperSensor: wpilib.AnalogPotentiometer  # we definitely need to change this. THIS IS NOT CORRECT. JUST PLACE HOLDER. could be rev.analog input
 
