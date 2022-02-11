@@ -94,13 +94,16 @@ class DriveTrain:
     def getAngle(self):
         return self.ahrs.getYaw()
 
+    def resetGyroYaw(self):
+        self.ahrs.zeroYaw()
+
     def atPIDSetPoint(self):
         return self.angleController.atSetpoint()
 
     def execute(self):
 
-        maxSpeed = 0.2
-        minSpeed = -0.2
+        maxSpeed = 0.3
+        minSpeed = -0.3
         self.leftMotorSpeed = self.adjustSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
         self.rightMotorSpeed = self.adjustSpeed(
             self.rightMotorSpeed, maxSpeed, minSpeed

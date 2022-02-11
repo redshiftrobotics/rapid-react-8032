@@ -87,6 +87,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     def autonomousInit(self):
         self.auto.start()
+        self.driveTrain.resetEncoders()
+        self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
 
     def autonomousPeriodic(self):
@@ -95,6 +97,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
     def teleopInit(self):
         self.speed = 0.2
         self.driveTrain.resetEncoders()
+        self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
         # self.hangComponents.enable()
 
