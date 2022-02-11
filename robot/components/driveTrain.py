@@ -23,16 +23,16 @@ class DriveTrain:
 
         # if uncomment, the robot will turn according to the joystick when moving backwards but this can cause glitches.
         # if yAxis >= 0:
-        setRightMotorSpeed(yAxis + xAxis)
-        setLeftMotorSpeed(yAxis - xAxis)
+        self.setRightMotorSpeed(yAxis + xAxis)
+        self.setLeftMotorSpeed(yAxis - xAxis)
 
         # else:
         #     self.rightMotorSpeed = yAxis-xAxis
         #     self.leftMotorSpeed = yAxis+xAxis
 
     def tankDrive(self, rightJoystickValue: float, leftJoystickValue: float):
-        setRightMotorSpeed(rightJoystickValue)
-        setLeftMotorSpeed(leftJoystickValue)
+        self.setRightMotorSpeed(rightJoystickValue)
+        self.setLeftMotorSpeed(leftJoystickValue)
 
     def enable(self):
 
