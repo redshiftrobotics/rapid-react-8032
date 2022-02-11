@@ -15,13 +15,5 @@ class TurnToAngle(AutonomousStateMachine):
     def turnToAngle(self):
 
         target = 90
-
-        if self.ahrs.getYaw() != 90:
-
-            current = self.ahrs.getYaw()
-
-            if current > target:
-                self.driveTrain.arcadeDrive(-0.2, 0)
-
-            if current < target:
-                self.driveTrain.arcadeDrive(0.2, 0)
+        if not self.driveTrain.atPIDSetPoint():
+            self.driveTrain.turnToAngle(target)

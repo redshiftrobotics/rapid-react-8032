@@ -20,10 +20,12 @@ class DropperComponents:
         self.kP = 0
         self.kI = 0
         self.kD = 0
+        self.kTolerence = 3
 
         self.angleController = wpimath.controller.PIDController(
             self.kP, self.kI, self.kD
         )
+        self.angleController.setTolerance(self.kTolerence)
 
     def enable(self):
         self.enabled = True

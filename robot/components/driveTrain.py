@@ -1,5 +1,7 @@
+from magicbot import tunable
 import wpilib
 import rev
+import wpimath.controller
 from navx import AHRS
 
 
@@ -18,6 +20,17 @@ class DriveTrain:
 
         self.rightMotorSpeed = 0
         self.leftMotorSpeed = 0
+
+        # These need to be small to make the PID output resonable
+        self.kP = tunable(default=0)
+        self.kI = tunable(default=0)
+        self.kD = tunable(default=0)
+        self.kTolerence = tunable(default=3)
+
+        self.angleController = wpimath.controller.PIDController(
+            self.kP, self.kI, self.kD
+        )
+        self.angleController.setTolerance(self.kTolerence)
 
     def arcadeDrive(self, xAxis: float, yAxis: float):
 
@@ -70,6 +83,18 @@ class DriveTrain:
 
     def setLeftMotorSpeed(self, speed: float):
         self.leftMotorSpeed = speed
+
+    def turnToAngle(self, targetAngle: float):
+        newSpeed = self.angleController.calculate(self.getAngle(), targetAngle)
+
+        self.setRightMotorSpeed(newSpeed)
+        self.setLeftMotorSpeed(-newSpeed)
+
+    def getAngle(self):
+        return self.ahrs.getYaw()
+
+    def atPIDSetPoint(self):
+        return self.angleController.atSetpoint()
 
     def execute(self):
 
