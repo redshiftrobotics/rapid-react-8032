@@ -1,6 +1,6 @@
 import wpimath.controller
 import rev
-from ..util import remap
+from util import remap
 
 
 class DropperComponents:
