@@ -64,13 +64,12 @@ class DriveTrain:
     def resetEncoders(self):
         self.leftEncoder.setPosition(0.0)
         self.rightEncoder.setPosition(0.0)
-  
-    def setRightMotorSpeed(self, speed:float):
-        self.rightMotorSpeed = speed
-    def setLeftMotorSpeed(self, speed:float):
-        self.leftMotorSpeed = speed
 
-        
+    def setRightMotorSpeed(self, speed: float):
+        self.rightMotorSpeed = speed
+
+    def setLeftMotorSpeed(self, speed: float):
+        self.leftMotorSpeed = speed
 
     def execute(self):
 
@@ -95,4 +94,3 @@ class DriveTrain:
 
         self.leftMotorSpeed = 0
         self.rightMotorSpeed = 0
-        

@@ -1,11 +1,11 @@
-import wpilib
+import wpimath.controller
 import rev
 from ..util import remap
 
 
 class DropperComponents:
     dropperMotor: rev.CANSparkMax
-    #dropperSensor: wpilib.AnalogPotentiometer  # we definitely need to change this. THIS IS NOT CORRECT. JUST PLACE HOLDER. could be rev.analog input
+    # dropperSensor: wpilib.AnalogPotentiometer  # we definitely need to change this. THIS IS NOT CORRECT. JUST PLACE HOLDER. could be rev.analog input
     dropperEncoder: rev.SparkMaxAlternateEncoder
 
     def __init__(self):
@@ -14,6 +14,17 @@ class DropperComponents:
         self.lowAngle = -45
         self.startAngle = 0
 
+        self.dropperMotorSpeed = 0
+
+        # These need to be small to make the PID output resonable / in the motors range
+        self.kP = 0
+        self.kI = 0
+        self.kD = 0
+
+        self.angleController = wpimath.controller.PIDController(
+            self.kP, self.kI, self.kD
+        )
+
     def enable(self):
         self.enabled = True
 
@@ -21,11 +32,15 @@ class DropperComponents:
         self.enabled = False
 
     def turnToAngle(self, targetAngle: float):
-        pass  # Need to finish. PID should be here. Add code safety stop.
+        # Might need to fix
+        self.setMotor(self.angleController.calculate(self.getAngle(), targetAngle))
 
     def drop(self):
         # for button (driver preference)
         self.turnToAngle(self.lowAngle)
+
+    def setMotor(self, speed: float):
+        self.dropperMotorSpeed = speed
 
     def unDrop(self):
         # for button (driver preference)
@@ -36,10 +51,13 @@ class DropperComponents:
         # for slider (driver preference)
         angle = remap(input, -1, 1, self.lowAngle, self.startAngle)
         self.turnToAngle(angle)
-    
-    def getAngle(self):
-        #Could be with encoder or with potentiometer
-        pass
+
+    def getAngle(self) -> float:
+        # Could be with encoder or with potentiometer
+        # This is a tmeporary value
+        return 0
 
     def execute(self):
-        pass
+        if self.enabled:
+            self.dropperMotor.set(self.dropperMotorSpeed)
+        self.dropperMotorSpeed = 0
