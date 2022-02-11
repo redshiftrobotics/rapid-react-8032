@@ -11,23 +11,23 @@ from hang.extendPulley import ExtendPulley
 from hang.retractPulley import RetractPulley
 from navx import AHRS
 from robotpy_ext.autonomous import AutonomousModeSelector
-from robot.components.dropperComponents import DropperComponents
-from robot.components.transportComponents import TransportComponents
+from components.dropperComponents import DropperComponents
+from components.transportComponents import TransportComponents
 
-from robot.hang.extendLeadScrew import ExtendLeadScrew
-from robot.hang.retractLeadScrew import RetractLeadScrew  # type:ignore
+from hang.extendLeadScrew import ExtendLeadScrew
+from hang.retractLeadScrew import RetractLeadScrew  # type:ignore
 
 
 class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
-    hangComponents: HangComponents
-    dropperComponents: DropperComponents
-    transportComponents: TransportComponents
-    extendLeadScrew: ExtendLeadScrew
-    retractLeadScrew: RetractLeadScrew
-    extendPulley: ExtendPulley
-    retractPulley: RetractPulley
+    #hangComponents: HangComponents
+    #dropperComponents: DropperComponents
+    #transportComponents: TransportComponents
+    #extendLeadScrew: ExtendLeadScrew
+    #retractLeadScrew: RetractLeadScrew
+    #extendPulley: ExtendPulley
+    #retractPulley: RetractPulley
 
     def createObjects(self):
         self.driverJoystick = wpilib.Joystick(0)
@@ -54,7 +54,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # initialize encoders
         self.leftEncoder = self.backLeftMotor.getAlternateEncoder(1)
         self.rightEncoder = self.backRightMotor.getAlternateEncoder(1)
-        self.dropperEncoder = self.dropperMotor.getAlternateEncoder(1)
+        #self.dropperEncoder = self.dropperMotor.getAlternateEncoder(1)
 
         # create gyroscope. spi - communications protocol
         self.ahrs = AHRS.create_spi()  # type:ignore
@@ -63,22 +63,22 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         # _______________________mechanisms (MOTORTYPE/CHANNEL unknown)________________________
 
-        self.intakeMotor = rev.CANSparkMax(5, motorType)
+        #self.intakeMotor = rev.CANSparkMax(5, motorType)
 
-        self.dropperMotor = rev.CANSparkMax(6, motorType)
+        #self.dropperMotor = rev.CANSparkMax(6, motorType)
         # Do not know what to input for parameters. Need Channel, range, offset
-        self.dropperSensor = wpilib.AnalogPotentiometer(
-            0
-        )  # TODO need to look over again
+        #self.dropperSensor = wpilib.AnalogPotentiometer(
+        #    0
+        #)  # TODO need to look over again
 
-        self.leadScrewMotor = rev.CANSparkMax(7, motorType)
-        self.pulleyMotor = rev.CANSparkMax(8, motorType)
-        self.topPulleySensor = wpilib.DigitalInput(
-            0
-        )  # these channel numbers MUST BE CHANGED
-        self.bottomPulleySensor = wpilib.DigitalInput(1)
-        self.topLeadScrewSensor = wpilib.DigitalInput(2)
-        self.bottomLeadScrewSensor = wpilib.DigitalInput(3)
+        #self.leadScrewMotor = rev.CANSparkMax(7, motorType)
+        #self.pulleyMotor = rev.CANSparkMax(8, motorType)
+        #self.topPulleySensor = wpilib.DigitalInput(
+        #    0
+        #)  # these channel numbers MUST BE CHANGED
+        #self.bottomPulleySensor = wpilib.DigitalInput(1)
+        #self.topLeadScrewSensor = wpilib.DigitalInput(2)
+        #self.bottomLeadScrewSensor = wpilib.DigitalInput(3)
 
         # sensors unknown
 
@@ -93,7 +93,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.speed = 0.2
         self.driveTrain.resetEncoders()
         self.driveTrain.enable()
-        self.hangComponents.enable()
+        #self.hangComponents.enable()
 
     def teleopPeriodic(self):
 
@@ -106,60 +106,28 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         # Rotates on horizontal plane (spins!). 0-360 degrees
         wpilib.SmartDashboard.putNumber("NavX yaw", self.ahrs.getYaw())
-        # Rotates on horizontal plane. 0 -> whatever degree. Angle will not reset to 0 at 360.
-        wpilib.SmartDashboard.putNumber("NavX angle", self.ahrs.getAngle())
 
-        # tilts forward
-        wpilib.SmartDashboard.putNumber("NavX pitch", self.ahrs.getPitch())
-
-        # tilts sideways
-        wpilib.SmartDashboard.putNumber("NavX roll", self.ahrs.getRoll())
-
-        # wpilib.SmartDashboard.putNumber("get top pressed", self.driverJoystick.getTopPressed())
-        # wpilib.SmartDashboard.putNumber("get top", self.driverJoystick.getTop())
-        # wpilib.SmartDashboard.putNumber("get trigger", self.driverJoystick.getTrigger())
-        # wpilib.SmartDashboard.putNumber("get trigger pressed", self.driverJoystick.getTriggerPressed())
-        wpilib.SmartDashboard.putNumber("1", self.driverJoystick.getRawButton(1))
-        wpilib.SmartDashboard.putNumber("2", self.driverJoystick.getRawButton(2))
-        wpilib.SmartDashboard.putNumber("3", self.driverJoystick.getRawButton(3))
-        wpilib.SmartDashboard.putNumber("4", self.driverJoystick.getRawButton(4))
-        wpilib.SmartDashboard.putNumber("5", self.driverJoystick.getRawButton(5))
-        wpilib.SmartDashboard.putNumber("6", self.driverJoystick.getRawButton(6))
-        wpilib.SmartDashboard.putNumber("7", self.driverJoystick.getRawButton(7))
-        wpilib.SmartDashboard.putNumber("8", self.driverJoystick.getRawButton(8))
-        wpilib.SmartDashboard.putNumber("9", self.driverJoystick.getRawButton(9))
-        wpilib.SmartDashboard.putNumber("10", self.driverJoystick.getRawButton(10))
+        
 
         # temporary code meant for testing. Should be in higher level hang.
-        wpilib.SmartDashboard.putBoolean(
-            "top pulley sensor", self.hangComponents.getTopPulleySensor()
-        )
-        wpilib.SmartDashboard.putBoolean(
-            "bottom pulley sensor", self.hangComponents.getBottomPulleySensor()
-        )
-        wpilib.SmartDashboard.putBoolean(
-            "bottom leadscrew sensor", self.hangComponents.getBottomLeadScrewSensor()
-        )
-        wpilib.SmartDashboard.putBoolean(
-            "top leadscrew sensor", self.hangComponents.getTopLeadScrewSensor()
-        )
+
 
         # buttons are randomly chosen
         # extend lead screw
-        if self.driverJoystick.getRawButton(4):
-            self.extendLeadScrew.extendLeadScrew()
+        #if self.driverJoystick.getRawButton(4):
+        #    self.extendLeadScrew.extendLeadScrew()
 
         # retracts lead screw
-        if self.driverJoystick.getRawButton(5):
-            self.retractLeadScrew.retractLeadScrew()
+        #if self.driverJoystick.getRawButton(5):
+        #    self.retractLeadScrew.retractLeadScrew()
 
         # extends pulley
-        if self.driverJoystick.getRawButton(6):
-            self.extendPulley.extendPulley()
+        #if self.driverJoystick.getRawButton(6):
+        #    self.extendPulley.extendPulley()
 
         # retract pulley
-        if self.driverJoystick.getRawButton(7):
-            self.retractPulley.retractPulley()
+        # if self.driverJoystick.getRawButton(7):
+        #     self.retractPulley.retractPulley()
 
         # if self.driverJoystick.getRawButton(10):
         #     self.hangComponents.setPulleyMotorSpeed(1)

@@ -1,4 +1,5 @@
 from navx import AHRS
+import wpilib
 from components.driveTrain import DriveTrain
 from magicbot.state_machine import AutonomousStateMachine, state
 
@@ -15,5 +16,6 @@ class TurnToAngle(AutonomousStateMachine):
     def turnToAngle(self):
 
         target = 90
-        if not self.driveTrain.atPIDSetPoint():
-            self.driveTrain.turnToAngle(target)
+        #You can get whether you are at the goal with atPIDSetPoint
+        self.driveTrain.turnToAngle(target)
+        wpilib.SmartDashboard.putNumber("NavX yaw",self.driveTrain.getAngle())

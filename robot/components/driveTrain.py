@@ -22,10 +22,10 @@ class DriveTrain:
         self.leftMotorSpeed = 0
 
         # These need to be small to make the PID output resonable
-        self.kP = tunable(default=0)
-        self.kI = tunable(default=0)
-        self.kD = tunable(default=0)
-        self.kTolerence = tunable(default=3)
+        self.kP = 1/360
+        self.kI = 0 
+        self.kD = 0
+        self.kTolerence = 3
 
         self.angleController = wpimath.controller.PIDController(
             self.kP, self.kI, self.kD
@@ -87,6 +87,7 @@ class DriveTrain:
     def turnToAngle(self, targetAngle: float):
         newSpeed = self.angleController.calculate(self.getAngle(), targetAngle)
 
+        wpilib.SmartDashboard.putNumber("PID Output",newSpeed)
         self.setRightMotorSpeed(newSpeed)
         self.setLeftMotorSpeed(-newSpeed)
 
@@ -98,8 +99,8 @@ class DriveTrain:
 
     def execute(self):
 
-        maxSpeed = 1
-        minSpeed = -1
+        maxSpeed = 0.1
+        minSpeed = -0.1
         self.leftMotorSpeed = self.adjustSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
         self.rightMotorSpeed = self.adjustSpeed(
             self.rightMotorSpeed, maxSpeed, minSpeed
