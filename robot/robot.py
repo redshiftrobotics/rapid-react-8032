@@ -21,13 +21,14 @@ from hang.retractLeadScrew import RetractLeadScrew  # type:ignore
 class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
-    #hangComponents: HangComponents
-    #dropperComponents: DropperComponents
-    #transportComponents: TransportComponents
-    #extendLeadScrew: ExtendLeadScrew
-    #retractLeadScrew: RetractLeadScrew
-    #extendPulley: ExtendPulley
-    #retractPulley: RetractPulley
+    # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
+    # hangComponents: HangComponents
+    # dropperComponents: DropperComponents
+    # transportComponents: TransportComponents
+    # extendLeadScrew: ExtendLeadScrew
+    # retractLeadScrew: RetractLeadScrew
+    # extendPulley: ExtendPulley
+    # retractPulley: RetractPulley
 
     def createObjects(self):
         self.driverJoystick = wpilib.Joystick(0)
@@ -54,31 +55,33 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # initialize encoders
         self.leftEncoder = self.backLeftMotor.getAlternateEncoder(1)
         self.rightEncoder = self.backRightMotor.getAlternateEncoder(1)
-        #self.dropperEncoder = self.dropperMotor.getAlternateEncoder(1)
+        # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
+        # self.dropperEncoder = self.dropperMotor.getAlternateEncoder(1)
 
         # create gyroscope. spi - communications protocol
         self.ahrs = AHRS.create_spi()  # type:ignore
 
         self.auto = AutonomousModeSelector("autonomous")
 
+        # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
         # _______________________mechanisms (MOTORTYPE/CHANNEL unknown)________________________
 
-        #self.intakeMotor = rev.CANSparkMax(5, motorType)
+        # self.intakeMotor = rev.CANSparkMax(5, motorType)
 
-        #self.dropperMotor = rev.CANSparkMax(6, motorType)
+        # self.dropperMotor = rev.CANSparkMax(6, motorType)
         # Do not know what to input for parameters. Need Channel, range, offset
-        #self.dropperSensor = wpilib.AnalogPotentiometer(
+        # self.dropperSensor = wpilib.AnalogPotentiometer(
         #    0
-        #)  # TODO need to look over again
+        # )  # TODO need to look over again
 
-        #self.leadScrewMotor = rev.CANSparkMax(7, motorType)
-        #self.pulleyMotor = rev.CANSparkMax(8, motorType)
-        #self.topPulleySensor = wpilib.DigitalInput(
+        # self.leadScrewMotor = rev.CANSparkMax(7, motorType)
+        # self.pulleyMotor = rev.CANSparkMax(8, motorType)
+        # self.topPulleySensor = wpilib.DigitalInput(
         #    0
-        #)  # these channel numbers MUST BE CHANGED
-        #self.bottomPulleySensor = wpilib.DigitalInput(1)
-        #self.topLeadScrewSensor = wpilib.DigitalInput(2)
-        #self.bottomLeadScrewSensor = wpilib.DigitalInput(3)
+        # )  # these channel numbers MUST BE CHANGED
+        # self.bottomPulleySensor = wpilib.DigitalInput(1)
+        # self.topLeadScrewSensor = wpilib.DigitalInput(2)
+        # self.bottomLeadScrewSensor = wpilib.DigitalInput(3)
 
         # sensors unknown
 
@@ -93,7 +96,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.speed = 0.2
         self.driveTrain.resetEncoders()
         self.driveTrain.enable()
-        #self.hangComponents.enable()
+        # self.hangComponents.enable()
 
     def teleopPeriodic(self):
 
@@ -107,22 +110,20 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # Rotates on horizontal plane (spins!). 0-360 degrees
         wpilib.SmartDashboard.putNumber("NavX yaw", self.ahrs.getYaw())
 
-        
-
         # temporary code meant for testing. Should be in higher level hang.
 
-
+        # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
         # buttons are randomly chosen
         # extend lead screw
-        #if self.driverJoystick.getRawButton(4):
+        # if self.driverJoystick.getRawButton(4):
         #    self.extendLeadScrew.extendLeadScrew()
 
         # retracts lead screw
-        #if self.driverJoystick.getRawButton(5):
+        # if self.driverJoystick.getRawButton(5):
         #    self.retractLeadScrew.retractLeadScrew()
 
         # extends pulley
-        #if self.driverJoystick.getRawButton(6):
+        # if self.driverJoystick.getRawButton(6):
         #    self.extendPulley.extendPulley()
 
         # retract pulley
