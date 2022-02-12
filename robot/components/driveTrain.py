@@ -22,7 +22,6 @@ class DriveTrain:
         self.rightMotorSpeed = 0
         self.leftMotorSpeed = 0
         self.kWheelRadius = 15.24 / 2  # THIS IS IN CM. 15.24 is the diameter
-        self.kTicksPerRev = 4096
         self.kWheelCircumference = self.kWheelRadius * self.kWheelRadius * math.pi
 
         # These need to be small to make the PID output resonable

@@ -1,0 +1,1 @@
+kTicksPerRev = 4096

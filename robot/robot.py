@@ -17,19 +17,20 @@ from components.transportComponents import TransportComponents
 from hang.extendLeadScrew import ExtendLeadScrew
 from hang.retractLeadScrew import RetractLeadScrew  # type:ignore
 from joystickUtils import *
+from motorUtils import kTicksPerRev
 
 
 class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
     # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
-    hangComponents: HangComponents
-    # dropperComponents: DropperComponents
-    # transportComponents: TransportComponents
-    extendLeadScrew: ExtendLeadScrew
-    retractLeadScrew: RetractLeadScrew
-    extendPulley: ExtendPulley
-    retractPulley: RetractPulley
+    # hangComponents: HangComponents
+    # # dropperComponents: DropperComponents
+    # # transportComponents: TransportComponents
+    # extendLeadScrew: ExtendLeadScrew
+    # retractLeadScrew: RetractLeadScrew
+    # extendPulley: ExtendPulley
+    # retractPulley: RetractPulley
 
     def createObjects(self):
         self.driverJoystick = wpilib.Joystick(0)
@@ -48,12 +49,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.backRightMotor.setInverted(False)
 
         # initialize encoders
-        self.leftEncoder = self.backLeftMotor.getAlternateEncoder(
-            self.driveTrain.kTicksPerRev
-        )
-        self.rightEncoder = self.backRightMotor.getAlternateEncoder(
-            self.driveTrain.kTicksPerRev
-        )
+        self.leftEncoder = self.backLeftMotor.getAlternateEncoder(kTicksPerRev)
+        self.rightEncoder = self.backRightMotor.getAlternateEncoder(kTicksPerRev)
         # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
 
         # create gyroscope. spi - communications protocol
@@ -116,20 +113,20 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
         # buttons are randomly chosen
         # extend lead screw
-        if self.driverJoystick.getRawButton(kLeadScrewExtendButton):
-            self.extendLeadScrew.extendLeadScrew()
+        # if self.driverJoystick.getRawButton(kLeadScrewExtendButton):
+        #     self.extendLeadScrew.extendLeadScrew()
 
-        # retracts lead screw
-        if self.driverJoystick.getRawButton(kLeadScrewRetractButton):
-            self.retractLeadScrew.retractLeadScrew()
+        # # retracts lead screw
+        # if self.driverJoystick.getRawButton(kLeadScrewRetractButton):
+        #     self.retractLeadScrew.retractLeadScrew()
 
-        # extends pulley
-        if self.driverJoystick.getRawButton(kPulleyExtendButton):
-            self.extendPulley.extendPulley()
+        # # extends pulley
+        # if self.driverJoystick.getRawButton(kPulleyExtendButton):
+        #     self.extendPulley.extendPulley()
 
-        # retract pulley
-        if self.driverJoystick.getRawButton(kPulleyRetractButton):
-            self.retractPulley.retractPulley()
+        # # retract pulley
+        # if self.driverJoystick.getRawButton(kPulleyRetractButton):
+        #     self.retractPulley.retractPulley()
 
         # the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         self.driveTrain.arcadeDrive(
