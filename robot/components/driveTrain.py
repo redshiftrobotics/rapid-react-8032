@@ -3,6 +3,7 @@ import wpilib
 import rev
 import wpimath.controller
 from navx import AHRS
+import math
 
 
 class DriveTrain:
@@ -20,17 +21,20 @@ class DriveTrain:
 
         self.rightMotorSpeed = 0
         self.leftMotorSpeed = 0
+        self.kWheelRadius = 15.24 / 2  # THIS IS IN CM. 15.24 is the diameter
+        self.kTicksPerRev = 4096
+        self.kWheelCircumference = self.kWheelRadius * self.kWheelRadius * math.pi
 
         # These need to be small to make the PID output resonable
         self.kP = 1 / 180
         self.kI = 0
         self.kD = 0
-        self.kTolerence = 3
+        self.kTolerance = 3
 
         self.angleController = wpimath.controller.PIDController(
             self.kP, self.kI, self.kD
         )
-        self.angleController.setTolerance(self.kTolerence)
+        self.angleController.setTolerance(self.kTolerance)
 
     def arcadeDrive(self, xAxis: float, yAxis: float):
 
@@ -68,11 +72,19 @@ class DriveTrain:
 
         return speed
 
-    def getLeftWheelDistance(self):
+    def getLeftEncoder(self):
         return self.leftEncoder.getPosition()
 
-    def getRightWheelDistance(self):
+    def getRightEncoder(self):
         return self.rightEncoder.getPosition()
+
+    def getRightDistance(self):
+        rightDistance = self.getRightEncoder() * self.kWheelCircumference
+        return rightDistance
+
+    def getLeftDistance(self):
+        leftDistance = self.getLeftEncoder() * self.kWheelCircumference
+        return leftDistance
 
     def resetEncoders(self):
         self.leftEncoder.setPosition(0.0)
@@ -109,8 +121,10 @@ class DriveTrain:
             self.rightMotorSpeed, maxSpeed, minSpeed
         )
 
-        wpilib.SmartDashboard.putNumber("leftWheel", self.getLeftWheelDistance())
-        wpilib.SmartDashboard.putNumber("RightWheel", self.getRightWheelDistance())
+        wpilib.SmartDashboard.putNumber("leftEncoder", self.getLeftEncoder())
+        wpilib.SmartDashboard.putNumber("RightEncoder", self.getRightEncoder())
+        wpilib.SmartDashboard.putNumber('rightDistance', self.getRightDistance())
+        wpilib.SmartDashboard.putNumber('leftDistance', self.getLeftDistance())
 
         wpilib.SmartDashboard.putNumber("rightMotor value", self.rightMotorSpeed)
         wpilib.SmartDashboard.putNumber("leftMotor value", self.leftMotorSpeed)

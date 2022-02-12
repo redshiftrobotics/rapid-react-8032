@@ -10,25 +10,26 @@ from hang.retractLeadScrew import RetractLeadScrew
 from hang.extendPulley import ExtendPulley
 from hang.retractPulley import RetractPulley
 from navx import AHRS
-from robotpy_ext.autonomous import AutonomousModeSelector
+from robotpy_ext.autonomous import AutonomousModeSelector  # type:ignore
 from components.dropperComponents import DropperComponents
 from components.transportComponents import TransportComponents
 
 from hang.extendLeadScrew import ExtendLeadScrew
 from hang.retractLeadScrew import RetractLeadScrew  # type:ignore
+from joystickUtils import *
 
 
 class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
     # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
-    # hangComponents: HangComponents
+    hangComponents: HangComponents
     # dropperComponents: DropperComponents
     # transportComponents: TransportComponents
-    # extendLeadScrew: ExtendLeadScrew
-    # retractLeadScrew: RetractLeadScrew
-    # extendPulley: ExtendPulley
-    # retractPulley: RetractPulley
+    extendLeadScrew: ExtendLeadScrew
+    retractLeadScrew: RetractLeadScrew
+    extendPulley: ExtendPulley
+    retractPulley: RetractPulley
 
     def createObjects(self):
         self.driverJoystick = wpilib.Joystick(0)
@@ -46,17 +47,14 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.frontRightMotor.setInverted(False)
         self.backRightMotor.setInverted(False)
 
-        # various ways to initialize encoders (not working)
-        # self.leftEncoder = self.backLeftMotor.getEncoder(rev.SparkMaxRelativeEncoder.Type.kHallSensor, )
-        # self.rightEncoder = self.backRightMotor.getEncoder(rev.SparkMaxRelativeEncoder.Type.kHallSensor)
-        # self.leftEncoder = self.backLeftMotor.getEncoder(countsPerRev=42)
-        # self.rightEncoder = self.backRightMotor.getEncoder(countsPerRev=42)
-
         # initialize encoders
-        self.leftEncoder = self.backLeftMotor.getAlternateEncoder(1)
-        self.rightEncoder = self.backRightMotor.getAlternateEncoder(1)
+        self.leftEncoder = self.backLeftMotor.getAlternateEncoder(
+            self.driveTrain.kTicksPerRev
+        )
+        self.rightEncoder = self.backRightMotor.getAlternateEncoder(
+            self.driveTrain.kTicksPerRev
+        )
         # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
-        # self.dropperEncoder = self.dropperMotor.getAlternateEncoder(1)
 
         # create gyroscope. spi - communications protocol
         self.ahrs = AHRS.create_spi()  # type:ignore
@@ -118,32 +116,20 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
         # buttons are randomly chosen
         # extend lead screw
-        # if self.driverJoystick.getRawButton(4):
-        #    self.extendLeadScrew.extendLeadScrew()
+        if self.driverJoystick.getRawButton(kLeadScrewExtendButton):
+            self.extendLeadScrew.extendLeadScrew()
 
         # retracts lead screw
-        # if self.driverJoystick.getRawButton(5):
-        #    self.retractLeadScrew.retractLeadScrew()
+        if self.driverJoystick.getRawButton(kLeadScrewRetractButton):
+            self.retractLeadScrew.retractLeadScrew()
 
         # extends pulley
-        # if self.driverJoystick.getRawButton(6):
-        #    self.extendPulley.extendPulley()
+        if self.driverJoystick.getRawButton(kPulleyExtendButton):
+            self.extendPulley.extendPulley()
 
         # retract pulley
-        # if self.driverJoystick.getRawButton(7):
-        #     self.retractPulley.retractPulley()
-
-        # if self.driverJoystick.getRawButton(10):
-        #     self.hangComponents.setPulleyMotorSpeed(1)
-
-        # if self.driverJoystick.getRawButton(9):
-        #     self.hangComponents.setPulleyMotorSpeed(-1)
-
-        # if self.driverJoystick.getRawButton(8):
-        #     self.hangComponents.setLeadScrewMotorSpeed(1)
-
-        # if self.driverJoystick.getRawButton(7):
-        #     self.hangComponents.setLeadScrewMotorSpeed(-1)
+        if self.driverJoystick.getRawButton(kPulleyRetractButton):
+            self.retractPulley.retractPulley()
 
         # the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         self.driveTrain.arcadeDrive(
