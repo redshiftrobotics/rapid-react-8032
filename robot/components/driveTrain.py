@@ -21,19 +21,29 @@ class DriveTrain:
 
         self.rightMotorSpeed = 0
         self.leftMotorSpeed = 0
-        self.kWheelRadius = 15.24 / 2  # THIS IS IN CM. 15.24 is the diameter
-        self.kWheelCircumference = self.kWheelRadius * self.kWheelRadius * math.pi
+        self.kWheelDiameter = 15.24  # THIS IS IN CM. 15.24 is the diameter
+        self.kWheelCircumference = self.kWheelDiameter * math.pi
 
         # These need to be small to make the PID output resonable
-        self.kP = 1 / 180
-        self.kI = 0
-        self.kD = 0
-        self.kTolerance = 3
+        self.kAngleP = 1 / 180
+        self.kAngleI = 0
+        self.kAngleD = 0
+        self.kAngleTolerance = 3
 
         self.angleController = wpimath.controller.PIDController(
-            self.kP, self.kI, self.kD
+            self.kAngleP, self.kAngleI, self.kAngleD
         )
-        self.angleController.setTolerance(self.kTolerance)
+        self.angleController.setTolerance(self.kAngleTolerance)
+
+        self.kForwardP = 1 / 100
+        self.kForwardI = 0
+        self.kForwardD = 0
+        self.kForwardTolerance = 10
+
+        self.forwardController = wpimath.controller.PIDController(
+            self.kForwardP, self.kForwardI, self.kForwardD
+        )
+        self.forwardController.setTolerance(self.kForwardTolerance)
 
     def arcadeDrive(self, xAxis: float, yAxis: float):
 
@@ -102,13 +112,24 @@ class DriveTrain:
         self.setRightMotorSpeed(newSpeed)
         self.setLeftMotorSpeed(-newSpeed)
 
+    def driveToDistance(self, targetDistance: float):
+        newLeftSpeed = self.forwardController.calculate(
+            self.getLeftDistance(), targetDistance
+        )
+        newRightSpeed = self.forwardController.calculate(
+            self.getRightDistance(), targetDistance
+        )
+
+        self.setLeftMotorSpeed(newLeftSpeed)
+        self.setRightMotorSpeed(newRightSpeed)
+
     def getAngle(self):
         return self.ahrs.getYaw()
 
     def resetGyroYaw(self):
         self.ahrs.zeroYaw()
 
-    def atPIDSetPoint(self):
+    def atAnglePIDSetPoint(self):
         return self.angleController.atSetpoint()
 
     def execute(self):
@@ -122,8 +143,8 @@ class DriveTrain:
 
         wpilib.SmartDashboard.putNumber("leftEncoder", self.getLeftEncoder())
         wpilib.SmartDashboard.putNumber("RightEncoder", self.getRightEncoder())
-        wpilib.SmartDashboard.putNumber('rightDistance', self.getRightDistance())
-        wpilib.SmartDashboard.putNumber('leftDistance', self.getLeftDistance())
+        wpilib.SmartDashboard.putNumber("rightDistance", self.getRightDistance())
+        wpilib.SmartDashboard.putNumber("leftDistance", self.getLeftDistance())
 
         wpilib.SmartDashboard.putNumber("rightMotor value", self.rightMotorSpeed)
         wpilib.SmartDashboard.putNumber("leftMotor value", self.leftMotorSpeed)

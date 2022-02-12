@@ -43,10 +43,10 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.backLeftMotor = rev.CANSparkMax(4, motorType)
         self.backRightMotor = rev.CANSparkMax(1, motorType)
 
-        self.frontLeftMotor.setInverted(True)
-        self.backLeftMotor.setInverted(True)
-        self.frontRightMotor.setInverted(False)
-        self.backRightMotor.setInverted(False)
+        self.frontLeftMotor.setInverted(False)
+        self.backLeftMotor.setInverted(False)
+        self.frontRightMotor.setInverted(True)
+        self.backRightMotor.setInverted(True)
 
         # initialize encoders
         self.leftEncoder = self.backLeftMotor.getAlternateEncoder(kTicksPerRev)
@@ -131,7 +131,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         self.driveTrain.arcadeDrive(
             self.speed * self.driverJoystick.getX(),
-            self.speed * self.driverJoystick.getY(),
+            -self.speed * self.driverJoystick.getY(),
         )
 
     def disabledPeriodic(self):
