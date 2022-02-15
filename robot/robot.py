@@ -71,15 +71,14 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         # self.leadScrewMotor = rev.CANSparkMax(7, motorType)
         # self.pulleyMotor = rev.CANSparkMax(8, motorType)
-        # self.topPulleySensor = wpilib.DigitalInput(
-        #    0
-        # )  # these channel numbers MUST BE CHANGED
+        self.topPulleySensor = wpilib.DigitalInput(0)  # these channel numbers MUST BE CHANGED
         # self.bottomPulleySensor = wpilib.DigitalInput(1)
         # self.topLeadScrewSensor = wpilib.DigitalInput(2)
         # self.bottomLeadScrewSensor = wpilib.DigitalInput(3)
 
         # sensors unknown
-
+        
+        
     def autonomousInit(self):
         self.auto.start()
         self.driveTrain.resetEncoders()
@@ -108,6 +107,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # Rotates on horizontal plane (spins!). 0-360 degrees
         wpilib.SmartDashboard.putNumber("NavX yaw", self.ahrs.getYaw())
 
+        wpilib.SmartDashboard.putBoolean('magnetSensor', self.topPulleySensor.get())
+
         # temporary code meant for testing. Should be in higher level hang.
 
         # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
@@ -133,6 +134,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
             self.speed * self.driverJoystick.getX(),
             -self.speed * self.driverJoystick.getY(),
         )
+
+        
 
     def disabledPeriodic(self):
         pass
