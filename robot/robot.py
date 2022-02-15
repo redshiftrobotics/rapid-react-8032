@@ -51,13 +51,13 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # initialize encoders
         self.leftEncoder = self.backLeftMotor.getAlternateEncoder(kTicksPerRev)
         self.rightEncoder = self.backRightMotor.getAlternateEncoder(kTicksPerRev)
-        # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
 
         # create gyroscope. spi - communications protocol
         self.ahrs = AHRS.create_spi()  # type:ignore
 
         self.auto = AutonomousModeSelector("autonomous")
 
+        # TODO update the motors with the variables for motorUtils
         # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
         # _______________________mechanisms (MOTORTYPE/CHANNEL unknown)________________________
 
