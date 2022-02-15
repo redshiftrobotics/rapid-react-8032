@@ -17,7 +17,7 @@ from components.transportComponents import TransportComponents
 from hang.extendLeadScrew import ExtendLeadScrew
 from hang.retractLeadScrew import RetractLeadScrew  # type:ignore
 from joystickUtils import *
-from motorUtils import kTicksPerRev
+from motorUtils import *
 
 
 class MyRobot(magicbot.MagicRobot):  # type:ignore
@@ -43,10 +43,10 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.backLeftMotor = rev.CANSparkMax(4, motorType)
         self.backRightMotor = rev.CANSparkMax(1, motorType)
 
-        self.frontLeftMotor.setInverted(False)
-        self.backLeftMotor.setInverted(False)
-        self.frontRightMotor.setInverted(True)
-        self.backRightMotor.setInverted(True)
+        self.frontLeftMotor.setInverted(isFrontLeftMotorReversed)
+        self.backLeftMotor.setInverted(isBackLeftMotorReversed)
+        self.frontRightMotor.setInverted(isFrontRightMotorReversed)
+        self.backRightMotor.setInverted(isBackRightMotorReversed)
 
         # initialize encoders
         self.leftEncoder = self.backLeftMotor.getAlternateEncoder(kTicksPerRev)
