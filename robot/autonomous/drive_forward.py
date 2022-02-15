@@ -14,7 +14,6 @@ class DriveForward(AutonomousStateMachine):
     # def driveForward(self):
     #     self.driveTrain.arcadeDrive(0, 0.1)
 
- 
     @state(first=True)  # type:ignore
     def driveToDistance(self):
         target = 100
