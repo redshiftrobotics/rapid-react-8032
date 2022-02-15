@@ -131,8 +131,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         # the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         self.driveTrain.arcadeDrive(
-            self.speed * self.driverJoystick.getX(),
-            -self.speed * self.driverJoystick.getY(),
+            isYAxisReversed* self.speed * self.driverJoystick.getX(),
+            isYAxisReversed* self.speed * self.driverJoystick.getY(),
         )
 
         

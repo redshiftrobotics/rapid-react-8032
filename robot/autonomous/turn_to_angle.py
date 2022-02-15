@@ -15,7 +15,7 @@ class TurnToAngle(AutonomousStateMachine):
     @state(first=True)  # type:ignore
     def turnToAngle(self):
 
-        target = 90
+        target = -90
         # You can get whether you are at the goal with atAnglePIDSetPoint
         self.driveTrain.turnToAngle(target)
         wpilib.SmartDashboard.putNumber("NavX yaw", self.driveTrain.getAngle())

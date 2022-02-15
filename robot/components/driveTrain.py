@@ -24,8 +24,8 @@ class DriveTrain:
         self.kWheelDiameter = 15.24  # THIS IS IN CM. 15.24 is the diameter
         self.kWheelCircumference = self.kWheelDiameter * math.pi
 
-        # These need to be small to make the PID output resonable
-        self.kAngleP = 1 / 180
+        # These need to be small to make the PID output reasonable
+        self.kAngleP = 1 / 360
         self.kAngleI = 0
         self.kAngleD = 0
         self.kAngleTolerance = 3
@@ -109,8 +109,8 @@ class DriveTrain:
         newSpeed = self.angleController.calculate(self.getAngle(), targetAngle)
 
         wpilib.SmartDashboard.putNumber("PID Output", newSpeed)
-        self.setRightMotorSpeed(newSpeed)
-        self.setLeftMotorSpeed(-newSpeed)
+        self.setRightMotorSpeed(-newSpeed)
+        self.setLeftMotorSpeed(newSpeed)
 
     def driveToDistance(self, targetDistance: float):
         newLeftSpeed = self.forwardController.calculate(

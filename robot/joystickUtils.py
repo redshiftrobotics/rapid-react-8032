@@ -10,3 +10,6 @@ kPulleyExtendButton = 8
 kPulleyRetractButton = 7
 kLeadScrewExtendButton = 10
 kLeadScrewRetractButton = 9
+
+isYAxisReversed = -1
+isXAxisReversed = -1
