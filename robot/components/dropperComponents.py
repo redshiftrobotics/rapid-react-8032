@@ -56,8 +56,11 @@ class DropperComponents:
 
     def getAngle(self) -> float:
         # Could be with encoder or with potentiometer
-        # This is a tmeporary value
+        # This is a temporary value
         return 0
+
+    def atDropperPIDAnglePoint():
+        return self.angleController.atSetpoint()
 
     def execute(self):
         if self.enabled:
