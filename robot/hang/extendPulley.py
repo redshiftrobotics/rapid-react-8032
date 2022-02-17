@@ -11,7 +11,8 @@ class ExtendPulley(StateMachine):
     @state(first=True)  # type:ignore
     def startExtendPulley(self):
 
-        if not self.hangComponents.getTopPulleySensor():
+        #Magnet Sensor is True when away from magnet and False when close to magnet
+        if self.hangComponents.getTopPulleySensor():
             self.hangComponents.setPulleyMotorSpeed(
                 0.1
             )  # 0.1 isn't the final speed might need to change
