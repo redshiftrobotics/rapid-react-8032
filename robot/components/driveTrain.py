@@ -25,9 +25,9 @@ class DriveTrain:
         self.kWheelCircumference = self.kWheelDiameter * math.pi
 
         # These need to be small to make the PID output reasonable
-        self.kAngleP = 1 / 360
+        self.kAngleP = 1 / 90
         self.kAngleI = 0
-        self.kAngleD = 0
+        self.kAngleD = -1 / 500
         self.kAngleTolerance = 3
 
         self.angleController = wpimath.controller.PIDController(
@@ -131,6 +131,12 @@ class DriveTrain:
 
     def atAnglePIDSetPoint(self):
         return self.angleController.atSetpoint()
+
+    
+    def resetOdometry(self):
+        '''Resets gyro yaw & encoders'''
+        self.resetEncoders()
+        self.resetGyroYaw()
 
     def execute(self):
 

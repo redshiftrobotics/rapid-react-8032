@@ -13,9 +13,11 @@ class NextStateTest(AutonomousStateMachine):
     def firstState(self):
         target = 90
         self.driveTrain.turnToAngle(target)
-
         if self.driveTrain.atAnglePIDSetPoint():
+            self.driveTrain.resetOdometry()
             self.next_state('secondState') #type:ignore
+        
+        
 
     @state(first=False)#type:ignore
     def secondState(self):
