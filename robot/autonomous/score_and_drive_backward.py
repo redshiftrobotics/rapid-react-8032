@@ -4,6 +4,7 @@ from components.driveTrain import DriveTrain
 from components.dropperComponents import DropperComponents
 from magicbot.state_machine import AutonomousStateMachine, state
 
+
 class ScoreAndDriveBackward(AutonomousStateMachine):
 
     MODE_NAME = "Score and drive backward"
@@ -12,24 +13,20 @@ class ScoreAndDriveBackward(AutonomousStateMachine):
     driveTrain: DriveTrain
     dropperComponents: DropperComponents
 
-    #first state
-    @state(first=True) 
-    def depositPayload(self): 
+    # first state
+    @state(first=True)  # type:ignore
+    def depositPayload(self):
         self.dropperComponents.drop()
         if self.dropperComponents.atDropperPIDAnglePoint():
-            self.next_state("resetDropper") #type:ignore
+            self.next_state("resetDropper")  # type:ignore
 
-    @state(first=False)
+    @state(first=False)  # type:ignore
     def resetDropper(self):
         self.dropperComponents.unDrop()
         if self.dropperComponents.atDropperPIDAnglePoint():
-            self.next_state("") #type: ignore
+            self.next_state("")  # type: ignore
 
-    @state(first=False)
+    @state(first=False)  # type:ignore
     def driveBackward(self):
         target = -100
         self.driveTrain.driveToDistance(target)
-
-
-
-

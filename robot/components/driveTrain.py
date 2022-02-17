@@ -4,6 +4,7 @@ import rev
 import wpimath.controller
 from navx import AHRS
 import math
+from util import adjustSpeed
 
 
 class DriveTrain:
@@ -46,7 +47,11 @@ class DriveTrain:
         self.forwardController.setTolerance(self.kForwardTolerance)
 
     def arcadeDrive(self, xAxis: float, yAxis: float):
-
+        """
+        Drives robot Arcade Drive
+        Input: float,float
+        Returns: None
+        """
         # if uncomment, the robot will turn according to the joystick when moving backwards but this can cause glitches.
         # if yAxis >= 0:
         self.setRightMotorSpeed(yAxis + xAxis)
@@ -57,55 +62,95 @@ class DriveTrain:
         #     self.leftMotorSpeed = yAxis+xAxis
 
     def tankDrive(self, rightJoystickValue: float, leftJoystickValue: float):
+        """
+        Drives robot Tank Drive
+        Input: float,float
+        Returns: None
+        """
         self.setRightMotorSpeed(rightJoystickValue)
         self.setLeftMotorSpeed(leftJoystickValue)
 
     def enable(self):
-
+        """
+        Enables Drivetrain
+        Input: None
+        Returns: None
+        """
         self.enabled = True
 
     def disable(self):
+        """
+        Disables Drivetrain
+        Input: None
+        Returns: None
+        """
         self.enabled = False
 
-    # TODO move to utilities file
-    def adjustSpeed(self, speed: float, maxSpeed: float, minSpeed: float):
-        if speed > maxSpeed:
-            return maxSpeed
-
-        if speed < minSpeed:
-            return minSpeed
-
-        if abs(speed) <= 0.01:
-            speed = 0
-            return speed
-
-        return speed
-
     def getLeftEncoder(self):
+        """
+        Return the position of the right encoder
+        Input: None
+        Returns: float
+        """
         return self.leftEncoder.getPosition()
 
     def getRightEncoder(self):
+        """
+        Return the position of the right encoder
+        Input: None
+        Returns: float
+        """
         return self.rightEncoder.getPosition()
 
     def getRightDistance(self):
+        """
+        Return the distance the right wheel has gone
+        Input: None
+        Returns: float
+        """
         rightDistance = self.getRightEncoder() * self.kWheelCircumference
         return rightDistance
 
     def getLeftDistance(self):
+        """
+        Return the distance the left wheel has gone
+        Input: None
+        Returns: float
+        """
         leftDistance = self.getLeftEncoder() * self.kWheelCircumference
         return leftDistance
 
     def resetEncoders(self):
+        """
+        Resets Encoders
+        Input: None
+        Returns: None
+        """
         self.leftEncoder.setPosition(0.0)
         self.rightEncoder.setPosition(0.0)
 
     def setRightMotorSpeed(self, speed: float):
+        """
+        Sets the right motor speed
+        Input: float
+        Returns: None
+        """
         self.rightMotorSpeed = speed
 
     def setLeftMotorSpeed(self, speed: float):
+        """
+        Sets the left motor speed
+        Input: float
+        Returns: None
+        """
         self.leftMotorSpeed = speed
 
     def turnToAngle(self, targetAngle: float):
+        """
+        Turns the robot to a certain angle, needs odometry reset before using
+        Input: float
+        Returns: None
+        """
         newSpeed = self.angleController.calculate(self.getAngle(), targetAngle)
 
         wpilib.SmartDashboard.putNumber("PID Output", newSpeed)
@@ -113,6 +158,11 @@ class DriveTrain:
         self.setLeftMotorSpeed(newSpeed)
 
     def driveToDistance(self, targetDistance: float):
+        """
+        Drives the robot a certain distance using PID, needs odometry reset before using
+        Input: float
+        Returns: None
+        """
         newLeftSpeed = self.forwardController.calculate(
             self.getLeftDistance(), targetDistance
         )
@@ -124,17 +174,35 @@ class DriveTrain:
         self.setRightMotorSpeed(newRightSpeed)
 
     def getAngle(self):
+        """
+        Returns angle of robot
+        Input: None
+        Returns: float
+        """
         return self.ahrs.getYaw()
 
     def resetGyroYaw(self):
+        """
+        Resets gyro yaw
+        Input: None
+        Returns: None
+        """
         self.ahrs.zeroYaw()
 
     def atAnglePIDSetPoint(self):
+        """
+        Returns if the angle PID is at it's setpoint
+        Input: None
+        Returns: boolean
+        """
         return self.angleController.atSetpoint()
 
-    
     def resetOdometry(self):
-        '''Resets gyro yaw & encoders'''
+        """
+        Resets gyro yaw & encoders
+        Input: None
+        Returns: None
+        """
         self.resetEncoders()
         self.resetGyroYaw()
 
@@ -142,10 +210,8 @@ class DriveTrain:
 
         maxSpeed = 0.3
         minSpeed = -0.3
-        self.leftMotorSpeed = self.adjustSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
-        self.rightMotorSpeed = self.adjustSpeed(
-            self.rightMotorSpeed, maxSpeed, minSpeed
-        )
+        self.leftMotorSpeed = adjustSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
+        self.rightMotorSpeed = adjustSpeed(self.rightMotorSpeed, maxSpeed, minSpeed)
 
         wpilib.SmartDashboard.putNumber("leftEncoder", self.getLeftEncoder())
         wpilib.SmartDashboard.putNumber("RightEncoder", self.getRightEncoder())

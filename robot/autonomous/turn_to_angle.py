@@ -1,4 +1,3 @@
-
 import wpilib
 from components.driveTrain import DriveTrain
 from magicbot.state_machine import AutonomousStateMachine, state
@@ -17,4 +16,3 @@ class TurnToAngle(AutonomousStateMachine):
         target = -90
         # You can get whether you are at the goal with atAnglePIDSetPoint
         self.driveTrain.turnToAngle(target)
-        

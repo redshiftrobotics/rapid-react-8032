@@ -59,7 +59,7 @@ class DropperComponents:
         # This is a temporary value
         return 0
 
-    def atDropperPIDAnglePoint():
+    def atDropperPIDAnglePoint(self):
         return self.angleController.atSetpoint()
 
     def execute(self):
