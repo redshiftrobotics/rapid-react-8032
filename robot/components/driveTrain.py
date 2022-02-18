@@ -1,4 +1,4 @@
-from magicbot import tunable
+from magicbot.magic_tunable import tunable
 import wpilib
 import rev
 import wpimath.controller

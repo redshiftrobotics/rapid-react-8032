@@ -23,7 +23,7 @@ from motorUtils import *
 class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
-    # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
+    # Commented out because it would mess up the robot because we do not currently have these mechanisms
     # hangComponents: HangComponents
     # # dropperComponents: DropperComponents
     # # transportComponents: TransportComponents
@@ -58,7 +58,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.auto = AutonomousModeSelector("autonomous")
 
         # TODO update the motors with the variables for motorUtils
-        # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
+        # Commented out because it would mess up the robot because we do not currently have these mechanisms
         # _______________________mechanisms (MOTORTYPE/CHANNEL unknown)________________________
 
         # self.intakeMotor = rev.CANSparkMax(5, motorType)
@@ -71,9 +71,9 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         # self.leadScrewMotor = rev.CANSparkMax(7, motorType)
         # self.pulleyMotor = rev.CANSparkMax(8, motorType)
-        self.topPulleySensor = wpilib.DigitalInput(
-            0
-        )  # these channel numbers MUST BE CHANGED
+
+        # these channel numbers MUST BE CHANGED
+        # self.topPulleySensor = wpilib.DigitalInput(0)
         # self.bottomPulleySensor = wpilib.DigitalInput(1)
         # self.topLeadScrewSensor = wpilib.DigitalInput(2)
         # self.bottomLeadScrewSensor = wpilib.DigitalInput(3)
@@ -99,20 +99,20 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
     def teleopPeriodic(self):
 
         # get y axis - 1 (when moving joystick forward and backwards)
-        wpilib.SmartDashboard.putNumber("joystick Y value", self.driverJoystick.getY())
+        # wpilib.SmartDashboard.putNumber("joystick Y value", self.driverJoystick.getY())
         # get x axis - 0 (when moving joystick sideways)
-        wpilib.SmartDashboard.putNumber("joystick X value", self.driverJoystick.getX())
+        # wpilib.SmartDashboard.putNumber("joystick X value", self.driverJoystick.getX())
         # get the rotational value - 2 (when twisting joystick) left: -1, right: 1
-        wpilib.SmartDashboard.putNumber("joystick Z value", self.driverJoystick.getZ())
+        # wpilib.SmartDashboard.putNumber("joystick Z value", self.driverJoystick.getZ())
 
         # Rotates on horizontal plane (spins!). 0-360 degrees
-        wpilib.SmartDashboard.putNumber("NavX yaw", self.ahrs.getYaw())
+        # wpilib.SmartDashboard.putNumber("NavX yaw", self.ahrs.getYaw())
 
-        wpilib.SmartDashboard.putBoolean("magnetSensor", self.topPulleySensor.get())
+        # wpilib.SmartDashboard.putBoolean("magnetSensor", self.topPulleySensor.get())
 
         # temporary code meant for testing. Should be in higher level hang.
 
-        # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
+        # Commented out because it would mess up the robot because we do not currently have these mechanisms
         # buttons are randomly chosen
         # extend lead screw
         # if self.driverJoystick.getRawButton(kLeadScrewExtendButton):
@@ -132,7 +132,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         # the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         self.driveTrain.arcadeDrive(
-            isYAxisReversed * self.speed * self.driverJoystick.getX(),
+            isXAxisReversed * self.speed * self.driverJoystick.getX(),
             isYAxisReversed * self.speed * self.driverJoystick.getY(),
         )
 

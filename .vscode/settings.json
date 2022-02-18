@@ -1,16 +1,20 @@
 {
   "cSpell.words": [
     "AHRS",
+    "cfgs",
     "navx",
+    "Odometry",
+    "pyfrc",
     "pyright",
     "robotpy",
     "teleop",
-    "wpilib"
+    "wpilib",
+    "wpimath"
   ],
   "python.analysis.typeCheckingMode": "strict",
   "python.analysis.diagnosticSeverityOverrides": {
       "reportPrivateImportUsage": "information",
-      "reportUnusedImport": "information",
+      "reportUnusedImport": "none",
       "reportUntypedFunctionDecorator": "information",
   }
 }

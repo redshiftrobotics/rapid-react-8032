@@ -11,6 +11,6 @@ class RetractLeadScrew(StateMachine):
     @state(first=True)  # type:ignore
     def startRetractLeadScrew(self):
 
-        #Magnet Sensor is True when away from magnet and False when close to magnet
+        # Magnet Sensor is True when away from magnet and False when close to magnet
         if self.hangComponents.getBottomLeadScrewSensor():
             self.hangComponents.setLeadScrewMotorSpeed(-1.0)

@@ -39,7 +39,6 @@ class HangComponents:
     def setPulleyMotorSpeed(self, speed: float):
         self.pulleySpeed = speed
 
-
     def execute(self):
 
         if self.enabled == True:
