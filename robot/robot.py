@@ -18,19 +18,20 @@ from hang.extendLeadScrew import ExtendLeadScrew
 from hang.retractLeadScrew import RetractLeadScrew  # type:ignore
 from joystickUtils import *
 from motorUtils import *
+from sensorsUtil import *
 
 
 class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
     # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
-    # hangComponents: HangComponents
+    hangComponents: HangComponents
     # # dropperComponents: DropperComponents
     # # transportComponents: TransportComponents
-    # extendLeadScrew: ExtendLeadScrew
-    # retractLeadScrew: RetractLeadScrew
-    # extendPulley: ExtendPulley
-    # retractPulley: RetractPulley
+    extendLeadScrew: ExtendLeadScrew
+    retractLeadScrew: RetractLeadScrew
+    extendPulley: ExtendPulley
+    retractPulley: RetractPulley
 
     def createObjects(self):
         self.driverJoystick = wpilib.Joystick(0)
@@ -72,11 +73,11 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # self.leadScrewMotor = rev.CANSparkMax(7, motorType)
         # self.pulleyMotor = rev.CANSparkMax(8, motorType)
         self.topPulleySensor = wpilib.DigitalInput(
-            0
+            topPulleySensorID
         )  # these channel numbers MUST BE CHANGED
-        # self.bottomPulleySensor = wpilib.DigitalInput(1)
-        # self.topLeadScrewSensor = wpilib.DigitalInput(2)
-        # self.bottomLeadScrewSensor = wpilib.DigitalInput(3)
+        self.bottomPulleySensor = wpilib.DigitalInput(bottomPulleySensorID)
+        self.topLeadScrewSensor = wpilib.DigitalInput(topLeadScrewSensorID)
+        self.bottomLeadScrewSensor = wpilib.DigitalInput(bottomLeadScrewSensorID)
 
         # sensors unknown
 
@@ -94,9 +95,12 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driveTrain.resetEncoders()
         self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
+        self.hangComponents.enable()
         # self.hangComponents.enable()
 
     def teleopPeriodic(self):
+
+        
 
         # get y axis - 1 (when moving joystick forward and backwards)
         wpilib.SmartDashboard.putNumber("joystick Y value", self.driverJoystick.getY())
@@ -114,21 +118,23 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
         # buttons are randomly chosen
-        # extend lead screw
-        # if self.driverJoystick.getRawButton(kLeadScrewExtendButton):
-        #     self.extendLeadScrew.extendLeadScrew()
+        #extend lead screw
+        if self.driverJoystick.getRawButton(kLeadScrewExtendButton):
+            
+            self.extendLeadScrew.extendLeadScrew()
 
-        # # retracts lead screw
-        # if self.driverJoystick.getRawButton(kLeadScrewRetractButton):
-        #     self.retractLeadScrew.retractLeadScrew()
+        # retracts lead screw
+        if self.driverJoystick.getRawButton(kLeadScrewRetractButton):
+            self.retractLeadScrew.retractLeadScrew()
 
-        # # extends pulley
-        # if self.driverJoystick.getRawButton(kPulleyExtendButton):
-        #     self.extendPulley.extendPulley()
+        # extends pulley
+        if self.driverJoystick.getRawButton(kPulleyExtendButton):
+            wpilib.SmartDashboard.putBoolean("Button Pulley Extend",True)
+            self.extendPulley.extendPulley()
 
-        # # retract pulley
-        # if self.driverJoystick.getRawButton(kPulleyRetractButton):
-        #     self.retractPulley.retractPulley()
+        # retract pulley
+        if self.driverJoystick.getRawButton(kPulleyRetractButton):
+            self.retractPulley.retractPulley()
 
         # the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         self.driveTrain.arcadeDrive(

@@ -2,6 +2,7 @@ from magicbot.state_machine import StateMachine, state
 from components.hangComponents import HangComponents
 
 
+
 class RetractLeadScrew(StateMachine):
     hangComponents: HangComponents
 
@@ -13,4 +14,6 @@ class RetractLeadScrew(StateMachine):
 
         #Magnet Sensor is True when away from magnet and False when close to magnet
         if self.hangComponents.getBottomLeadScrewSensor():
-            self.hangComponents.setLeadScrewMotorSpeed(-1.0)
+            #Changed 1.0 to 0.1 for testing
+            self.hangComponents.setLeadScrewMotorSpeed(-0.1)
+            

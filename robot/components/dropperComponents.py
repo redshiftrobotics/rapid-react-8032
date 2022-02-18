@@ -4,9 +4,9 @@ from util import remap
 
 
 class DropperComponents:
-    dropperMotor: rev.CANSparkMax
-    # dropperSensor: wpilib.AnalogPotentiometer  # we definitely need to change this. THIS IS NOT CORRECT. JUST PLACE HOLDER. could be rev.analog input
-    dropperEncoder: rev.SparkMaxAlternateEncoder
+    # dropperMotor: rev.CANSparkMax
+    # # dropperSensor: wpilib.AnalogPotentiometer  # we definitely need to change this. THIS IS NOT CORRECT. JUST PLACE HOLDER. could be rev.analog input
+    # dropperEncoder: rev.SparkMaxAlternateEncoder
 
     def __init__(self):
         self

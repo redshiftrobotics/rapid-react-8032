@@ -14,4 +14,5 @@ class ExtendLeadScrew(StateMachine):
         #Magnet Sensor is True when away from magnet and False when close to magnet
         # the motor speed defaults back to zero unless otherwise called.
         if self.hangComponents.getTopLeadScrewSensor():
-            self.hangComponents.setLeadScrewMotorSpeed(1.0)
+            #Changed 1.0 to 0.1 for testing
+            self.hangComponents.setLeadScrewMotorSpeed(0.1)
