@@ -1,16 +1,26 @@
 {
   "MainWindow": {
     "GLOBAL": {
-      "height": "865",
-      "maximized": "0",
-      "style": "0",
+      "height": "997",
+      "maximized": "1",
+      "style": "1",
       "userScale": "2",
-      "width": "1441",
-      "xpos": "-1",
-      "ypos": "-1"
+      "width": "1680",
+      "xpos": "0",
+      "ypos": "53"
     }
   },
   "Window": {
+    "###/FMSInfo": {
+      "Collapsed": "0",
+      "Pos": "60,60",
+      "Size": "169,167"
+    },
+    "###/LiveWindow/Ungrouped/navX-Sensor[4]": {
+      "Collapsed": "0",
+      "Pos": "886,660",
+      "Size": "254,265"
+    },
     "###/SmartDashboard/Autonomous Mode": {
       "Collapsed": "0",
       "Pos": "730,74",
@@ -28,8 +38,13 @@
     },
     "###Joysticks": {
       "Collapsed": "0",
-      "Pos": "250,528",
-      "Size": "796,73"
+      "Pos": "251,471",
+      "Size": "796,155"
+    },
+    "###Keyboard 0 Settings": {
+      "Collapsed": "0",
+      "Pos": "355,99",
+      "Size": "300,560"
     },
     "###NetworkTables": {
       "Collapsed": "0",
@@ -38,8 +53,18 @@
     },
     "###Other Devices": {
       "Collapsed": "0",
-      "Pos": "1081,18",
-      "Size": "250,695"
+      "Pos": "1231,17",
+      "Size": "411,813"
+    },
+    "###Plot <0>": {
+      "Collapsed": "1",
+      "Pos": "60,60",
+      "Size": "700,400"
+    },
+    "###RoboRIO": {
+      "Collapsed": "0",
+      "Pos": "270,704",
+      "Size": "119,146"
     },
     "###System Joysticks": {
       "Collapsed": "0",

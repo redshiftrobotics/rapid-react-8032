@@ -13,32 +13,34 @@ class PhysicsEngine:
     realistic, but it's good enough to illustrate the point
     """
 
-    def __init__(self, physics_controller: PhysicsInterface):
+    def __init__(self, physics_controller: PhysicsInterface, robot):
 
         self.physics_controller = physics_controller
+        self.robot = robot
 
         # Motors
-        self.fl_motor = wpilib.simulation.SimDeviceSim("SPARK MAX [3]")
-        self.fr_motor = wpilib.simulation.SimDeviceSim("SPARK MAX [2]")
-        self.bl_motor = wpilib.simulation.SimDeviceSim("SPARK MAX [4]")
-        self.br_motor = wpilib.simulation.SimDeviceSim("SPARK MAX [1]")
+        # self.fl_motor = wpilib.simulation.SimDeviceSim("SPARK MAX [3]")
+        # self.fr_motor = wpilib.simulation.SimDeviceSim("SPARK MAX [2]")
+        # self.bl_motor = wpilib.simulation.SimDeviceSim("SPARK MAX [4]")
+        # self.br_motor = wpilib.simulation.SimDeviceSim("SPARK MAX [1]")
 
         print("devices:", wpilib.simulation.SimDeviceSim.enumerateDevices())
 
-        self.fl_mc = self.fl_motor.getDouble("Motor Current")
-        self.fr_mc = self.fr_motor.getDouble("Motor Current")
+        # self.l_speed = self.fl_motor.getDouble("Applied Output")
+        # self.r_speed = self.fr_motor.getDouble("Applied Output")
 
-        self.dio1 = wpilib.simulation.DIOSim(1)
-        self.dio2 = wpilib.simulation.DIOSim(2)
-        self.ain2 = wpilib.simulation.AnalogInputSim(2)
+        # self.dio1 = wpilib.simulation.DIOSim(1)
+        # self.dio2 = wpilib.simulation.DIOSim(2)
+        # self.ain2 = wpilib.simulation.AnalogInputSim(2)
 
-        self.motor = wpilib.simulation.PWMSim(4)
+        # self.motor = wpilib.simulation.PWMSim(4)
 
-        # Gyro
-        self.gyro = wpilib.simulation.AnalogGyroSim(1)
+        # # Gyro
+        # self.gyro = wpilib.simulation.AnalogGyroSim(1)
         self.navx = wpilib.simulation.SimDeviceSim("navX-Sensor[4]")
+        self.navx_yaw = self.navx.getDouble("Yaw")
 
-        self.position = 0
+        # self.position = 0
 
         # Change these parameters to fit your robot!
         bumper_width = 3.25 * units.inch
@@ -66,39 +68,42 @@ class PhysicsEngine:
         """
 
         # Simulate the drivetrain
-        l_mc = self.fl_mc.get()
-        r_mc = self.fr_mc.get()
+        # l_speed = self.l_speed.get()
+        # r_speed = self.r_speed.get()
 
         # print("motor current:", l_mc, r_mc)
         # v = sm.getDouble("Motor Current")
         # v.value = 42
         # print("Motor current is", m.getOutputCurrent())
 
-        transform = self.drivetrain.calculate(l_mc, r_mc, tm_diff)
+        transform = self.drivetrain.calculate(self.robot.driveTrain.leftMotorSpeed, self.robot.driveTrain.rightMotorSpeed, tm_diff)
         pose = self.physics_controller.move_robot(transform)
+
+        print("s", self.robot.driveTrain.leftMotorSpeed, self.robot.driveTrain.rightMotorSpeed)
 
         # Update the gyro simulation
         # -> FRC gyros are positive clockwise, but the returned pose is positive
         #    counter-clockwise
-        self.gyro.setAngle(-pose.rotation().degrees())
+        # self.gyro.setAngle(-pose.rotation().degrees())
+        self.navx_yaw.value = -pose.rotation().degrees()
 
-        # update position (use tm_diff so the rate is constant)
-        self.position += self.motor.getSpeed() * tm_diff * 3
+        # # update position (use tm_diff so the rate is constant)
+        # self.position += self.motor.getSpeed() * tm_diff * 3
 
-        # update limit switches based on position
-        if self.position <= 0:
-            switch1 = True
-            switch2 = False
+        # # update limit switches based on position
+        # if self.position <= 0:
+        #     switch1 = True
+        #     switch2 = False
 
-        elif self.position > 10:
-            switch1 = False
-            switch2 = True
+        # elif self.position > 10:
+        #     switch1 = False
+        #     switch2 = True
 
-        else:
-            switch1 = False
-            switch2 = False
+        # else:
+        #     switch1 = False
+        #     switch2 = False
 
-        # set values here
-        self.dio1.setValue(switch1)
-        self.dio2.setValue(switch2)
-        self.ain2.setVoltage(self.position)
+        # # set values here
+        # self.dio1.setValue(switch1)
+        # self.dio2.setValue(switch2)
+        # self.ain2.setVoltage(self.position)

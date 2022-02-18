@@ -131,10 +131,13 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         #     self.retractPulley.retractPulley()
 
         # the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
-        self.driveTrain.arcadeDrive(
-            isXAxisReversed * self.speed * self.driverJoystick.getX(),
-            isYAxisReversed * self.speed * self.driverJoystick.getY(),
-        )
+        # self.driveTrain.arcadeDrive(
+        #     isXAxisReversed * self.speed * self.driverJoystick.getX(),
+        #     isYAxisReversed * self.speed * self.driverJoystick.getY(),
+        # )
+
+        self.driveTrain.arcadeDrive(0, 1)
+        print("r", self.driveTrain.leftMotorSpeed, self.driveTrain.rightMotorSpeed)
 
     def disabledPeriodic(self):
         pass
