@@ -5,6 +5,8 @@ from pyfrc.physics.core import PhysicsInterface
 from pyfrc.physics import motor_cfgs, tankmodel
 from pyfrc.physics.units import units
 
+from networktables import NetworkTables
+
 
 class PhysicsEngine:
     """
@@ -18,13 +20,16 @@ class PhysicsEngine:
         self.physics_controller = physics_controller
         self.robot = robot
 
+        # NetworkTables.initialize()
+        self.nt = NetworkTables.getTable("sim")
+
         # Motors
         # self.fl_motor = wpilib.simulation.SimDeviceSim("SPARK MAX [3]")
         # self.fr_motor = wpilib.simulation.SimDeviceSim("SPARK MAX [2]")
         # self.bl_motor = wpilib.simulation.SimDeviceSim("SPARK MAX [4]")
         # self.br_motor = wpilib.simulation.SimDeviceSim("SPARK MAX [1]")
 
-        print("devices:", wpilib.simulation.SimDeviceSim.enumerateDevices())
+        # print("devices:", wpilib.simulation.SimDeviceSim.enumerateDevices())
 
         # self.l_speed = self.fl_motor.getDouble("Applied Output")
         # self.r_speed = self.fr_motor.getDouble("Applied Output")
@@ -76,10 +81,12 @@ class PhysicsEngine:
         # v.value = 42
         # print("Motor current is", m.getOutputCurrent())
 
-        transform = self.drivetrain.calculate(self.robot.driveTrain.leftMotorSpeed, self.robot.driveTrain.rightMotorSpeed, tm_diff)
+        transform = self.drivetrain.calculate(
+            self.nt.getNumber("drivetrain.leftSpeed", 0),
+            self.nt.getNumber("drivetrain.rightSpeed", 0),
+            tm_diff,
+        )
         pose = self.physics_controller.move_robot(transform)
-
-        print("s", self.robot.driveTrain.leftMotorSpeed, self.robot.driveTrain.rightMotorSpeed)
 
         # Update the gyro simulation
         # -> FRC gyros are positive clockwise, but the returned pose is positive

@@ -46,6 +46,8 @@ class DriveTrain:
         )
         self.forwardController.setTolerance(self.kForwardTolerance)
 
+        self.inSimulation = False
+
     def arcadeDrive(self, xAxis: float, yAxis: float):
         """
         Drives robot Arcade Drive
@@ -206,6 +208,10 @@ class DriveTrain:
         self.resetEncoders()
         self.resetGyroYaw()
 
+    def useNT(self, ntInstance):  # type: ignore
+        self.inSimulation = True
+        self.ntInstance = ntInstance  # type: ignore
+
     def execute(self):
 
         maxSpeed = 0.3
@@ -229,3 +235,7 @@ class DriveTrain:
 
         self.leftMotorSpeed = 0
         self.rightMotorSpeed = 0
+
+        if self.inSimulation:
+            self.ntInstance.putNumber("drivetrain.leftSpeed", self.frontLeftMotor.get())  # type: ignore
+            self.ntInstance.putNumber("drivetrain.rightSpeed", self.frontRightMotor.get())  # type: ignore
