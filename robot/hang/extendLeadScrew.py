@@ -11,7 +11,6 @@ class ExtendLeadScrew(StateMachine):
     @state(first=True)  # type:ignore
     def startExtendLeadScrew(self):
 
-        #Magnet Sensor is True when away from magnet and False when close to magnet
         # the motor speed defaults back to zero unless otherwise called.
         if self.hangComponents.getTopLeadScrewSensor():
             #Changed 1.0 to 0.1 for testing

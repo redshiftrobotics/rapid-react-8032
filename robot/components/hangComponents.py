@@ -20,6 +20,9 @@ class HangComponents:
         self.leadScrewSpeed = 0
         self.pulleySpeed = 0
 
+    def setPulleyMotorSpeed(self, speed: float):
+        self.pulleySpeed = speed
+
     def enable(self):
         self.enabled = True
 
@@ -37,10 +40,6 @@ class HangComponents:
 
     def setLeadScrewMotorSpeed(self, speed: float):
         self.leadScrewSpeed = speed
-
-    def setPulleyMotorSpeed(self, speed: float):
-        self.pulleySpeed = speed
-
 
     def execute(self):
 

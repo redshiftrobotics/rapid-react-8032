@@ -100,8 +100,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     def teleopPeriodic(self):
 
-        
-
+    
         # get y axis - 1 (when moving joystick forward and backwards)
         wpilib.SmartDashboard.putNumber("joystick Y value", self.driverJoystick.getY())
         # get x axis - 0 (when moving joystick sideways)
@@ -128,19 +127,25 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
             self.retractLeadScrew.retractLeadScrew()
 
         # extends pulley
+        wpilib.SmartDashboard.putBoolean('kPulley Extent button 8', self.driverJoystick.getRawButton(kPulleyExtendButton))
         if self.driverJoystick.getRawButton(kPulleyExtendButton):
             wpilib.SmartDashboard.putBoolean("Button Pulley Extend",True)
             self.extendPulley.extendPulley()
+            # self.driveTrain.arcadeDrive(0,1)
+        #     self.driveTrain.arcadeDrive(
+        #     isYAxisReversed * self.speed * 0,
+        #     isYAxisReversed * self.speed * 1,
+        # )
 
         # retract pulley
         if self.driverJoystick.getRawButton(kPulleyRetractButton):
             self.retractPulley.retractPulley()
 
         # the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
-        self.driveTrain.arcadeDrive(
-            isYAxisReversed * self.speed * self.driverJoystick.getX(),
-            isYAxisReversed * self.speed * self.driverJoystick.getY(),
-        )
+        # self.driveTrain.arcadeDrive(
+        #     isYAxisReversed * self.speed * self.driverJoystick.getX(),
+        #     isYAxisReversed * self.speed * self.driverJoystick.getY(),
+        # )
 
     def disabledPeriodic(self):
         pass
