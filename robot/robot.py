@@ -25,13 +25,13 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
     # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
-    hangComponents: HangComponents
+    #hangComponents: HangComponents
     # # dropperComponents: DropperComponents
     # # transportComponents: TransportComponents
-    extendLeadScrew: ExtendLeadScrew
-    retractLeadScrew: RetractLeadScrew
-    extendPulley: ExtendPulley
-    retractPulley: RetractPulley
+    #extendLeadScrew: ExtendLeadScrew
+    #retractLeadScrew: RetractLeadScrew
+    #extendPulley: ExtendPulley
+    #retractPulley: RetractPulley
 
     def createObjects(self):
         self.driverRightJoystick = wpilib.Joystick(0)
@@ -97,18 +97,18 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driveTrain.resetEncoders()
         self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
-        self.hangComponents.enable()
+        #self.hangComponents.enable()
         # self.hangComponents.enable()
 
     def teleopPeriodic(self):
 
-    
+        #------------Old Test Code for Joystick-------------
         # get y axis - 1 (when moving joystick forward and backwards)
-        wpilib.SmartDashboard.putNumber("joystick Y value", self.driverJoystick.getY())
+        #wpilib.SmartDashboard.putNumber("joystick Y value", self.driverJoystick.getY())
         # get x axis - 0 (when moving joystick sideways)
-        wpilib.SmartDashboard.putNumber("joystick X value", self.driverJoystick.getX())
+        #wpilib.SmartDashboard.putNumber("joystick X value", self.driverJoystick.getX())
         # get the rotational value - 2 (when twisting joystick) left: -1, right: 1
-        wpilib.SmartDashboard.putNumber("joystick Z value", self.driverJoystick.getZ())
+        #wpilib.SmartDashboard.putNumber("joystick Z value", self.driverJoystick.getZ())
 
         # Rotates on horizontal plane (spins!). 0-360 degrees
         wpilib.SmartDashboard.putNumber("NavX yaw", self.ahrs.getYaw())
@@ -120,18 +120,18 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
         # buttons are randomly chosen
         #extend lead screw
-        if self.operatorJoystick.getRawButton(kLeadScrewExtendButton):
-            self.extendLeadScrew.extendLeadScrew()
+        # if self.operatorJoystick.getRawButton(kLeadScrewExtendButton):
+        #     self.extendLeadScrew.extendLeadScrew()
 
-        # retracts lead screw
-        if self.operatorJoystick.getRawButton(kLeadScrewRetractButton):
-            self.retractLeadScrew.retractLeadScrew()
+        # # retracts lead screw
+        # if self.operatorJoystick.getRawButton(kLeadScrewRetractButton):
+        #     self.retractLeadScrew.retractLeadScrew()
 
         # extends pulley
-        wpilib.SmartDashboard.putBoolean('kPulley Extent button 8', self.operatorJoystick.getRawButton(kPulleyExtendButton))
-        if self.operatorJoystick.getRawButton(kPulleyExtendButton):
-            wpilib.SmartDashboard.putBoolean("Button Pulley Extend",True)
-            self.extendPulley.extendPulley()
+        # wpilib.SmartDashboard.putBoolean('kPulley Extent button 8', self.operatorJoystick.getRawButton(kPulleyExtendButton))
+        # if self.operatorJoystick.getRawButton(kPulleyExtendButton):
+        #     wpilib.SmartDashboard.putBoolean("Button Pulley Extend",True)
+        #     self.extendPulley.extendPulley()
             # self.driveTrain.arcadeDrive(0,1)
         #     self.driveTrain.arcadeDrive(
         #     isYAxisReversed * self.speed * 0,
@@ -139,8 +139,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # )
 
         # retract pulley
-        if self.operatorJoystick.getRawButton(kPulleyRetractButton):
-            self.retractPulley.retractPulley()
+        # if self.operatorJoystick.getRawButton(kPulleyRetractButton):
+        #     self.retractPulley.retractPulley()
 
         #the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         self.driveTrain.tankDrive(
