@@ -4,8 +4,8 @@ from components.driveTrain import DriveTrain
 
 class HangComponents:
     # any of these might be neo
-    # leadScrewMotor: rev.CANSparkMax
-    # pulleyMotor: rev.CANSparkMax
+    leadScrewMotor: rev.CANSparkMax
+    pulleyMotor: rev.CANSparkMax
 
     driveTrain: DriveTrain
 
@@ -44,10 +44,10 @@ class HangComponents:
     def execute(self):
 
         if self.enabled == True:
-            # self.pulleyMotor.set(self.pulleySpeed)
-            # self.leadScrewMotor.set(self.leadScrewSpeed)
-            wpilib.SmartDashboard.putBoolean("Hang Component Pulley Extend",True)
-            self.driveTrain.tankDrive(self.pulleySpeed,self.leadScrewSpeed)
+            self.pulleyMotor.set(self.pulleySpeed)
+            self.leadScrewMotor.set(self.leadScrewSpeed)
+            # self.driveTrain.tankDrive(self.pulleySpeed,self.leadScrewSpeed)
+            
 
         self.leadScrewSpeed = 0
         self.pulleySpeed = 0
