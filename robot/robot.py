@@ -34,7 +34,9 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
     retractPulley: RetractPulley
 
     def createObjects(self):
-        self.driverJoystick = wpilib.Joystick(0)
+        self.driverRightJoystick = wpilib.Joystick(0)
+        self.driverLeftJoystick = wpilib.Joystick(2)
+        self.operatorJoystick = wpilib.Joystick(1)
 
         # initialized motors
         motorType = rev.CANSparkMaxLowLevel.MotorType.kBrushless
@@ -118,17 +120,16 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
         # buttons are randomly chosen
         #extend lead screw
-        if self.driverJoystick.getRawButton(kLeadScrewExtendButton):
-            
+        if self.operatorJoystick.getRawButton(kLeadScrewExtendButton):
             self.extendLeadScrew.extendLeadScrew()
 
         # retracts lead screw
-        if self.driverJoystick.getRawButton(kLeadScrewRetractButton):
+        if self.operatorJoystick.getRawButton(kLeadScrewRetractButton):
             self.retractLeadScrew.retractLeadScrew()
 
         # extends pulley
-        wpilib.SmartDashboard.putBoolean('kPulley Extent button 8', self.driverJoystick.getRawButton(kPulleyExtendButton))
-        if self.driverJoystick.getRawButton(kPulleyExtendButton):
+        wpilib.SmartDashboard.putBoolean('kPulley Extent button 8', self.operatorJoystick.getRawButton(kPulleyExtendButton))
+        if self.operatorJoystick.getRawButton(kPulleyExtendButton):
             wpilib.SmartDashboard.putBoolean("Button Pulley Extend",True)
             self.extendPulley.extendPulley()
             # self.driveTrain.arcadeDrive(0,1)
@@ -138,14 +139,14 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # )
 
         # retract pulley
-        if self.driverJoystick.getRawButton(kPulleyRetractButton):
+        if self.operatorJoystick.getRawButton(kPulleyRetractButton):
             self.retractPulley.retractPulley()
 
-        # the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
-        # self.driveTrain.arcadeDrive(
-        #     isYAxisReversed * self.speed * self.driverJoystick.getX(),
-        #     isYAxisReversed * self.speed * self.driverJoystick.getY(),
-        # )
+        #the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
+        self.driveTrain.tankDrive(
+            isYAxisReversed * self.speed * self.driverRightJoystick.getY(),
+            isYAxisReversed * self.speed * self.driverLeftJoystick.getY(),
+        )
 
     def disabledPeriodic(self):
         pass
