@@ -14,19 +14,9 @@ class ScoreAndDriveBackward(AutonomousStateMachine):
     #dropperComponents: DropperComponents
 
     # first state
+   
     @state(first=True)  # type:ignore
-    def depositPayload(self):
-        self.dropperComponents.drop()
-        if self.dropperComponents.atDropperPIDAnglePoint():
-            self.next_state("resetDropper")  # type:ignore
-
-    @state(first=False)  # type:ignore
-    def resetDropper(self):
-        self.dropperComponents.unDrop()
-        if self.dropperComponents.atDropperPIDAnglePoint():
-            self.next_state("")  # type: ignore
-
-    @state(first=False)  # type:ignore
     def driveBackward(self):
-        target = -100
+        target = -110
         self.driveTrain.driveToDistance(target)
+
