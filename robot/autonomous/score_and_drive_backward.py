@@ -11,7 +11,7 @@ class ScoreAndDriveBackward(AutonomousStateMachine):
     DEFAULT = False
 
     driveTrain: DriveTrain
-    dropperComponents: DropperComponents
+    #dropperComponents: DropperComponents
 
     # first state
     @state(first=True)  # type:ignore

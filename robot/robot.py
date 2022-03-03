@@ -88,6 +88,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     def autonomousPeriodic(self):
         self.auto.periodic()
+        
 
     def teleopInit(self):
         self.speed = 0.2
