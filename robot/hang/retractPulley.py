@@ -11,6 +11,5 @@ class RetractPulley(StateMachine):
     @state(first=True)  # type:ignore
     def startRetractPulley(self):
 
-        #Magnet Sensor is True when away from magnet and False when close to magnet
-        if self.hangComponents.getBottomPulleySensor():
+        if not self.hangComponents.getBottomPulleySensor():
             self.hangComponents.setPulleyMotorSpeed(-0.1)
