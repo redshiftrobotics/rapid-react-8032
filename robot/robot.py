@@ -23,17 +23,17 @@ from motorUtils import *
 class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
-    # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
-    # hangComponents: HangComponents
+    hangComponents: HangComponents
     # # dropperComponents: DropperComponents
     # # transportComponents: TransportComponents
-    # extendLeadScrew: ExtendLeadScrew
-    # retractLeadScrew: RetractLeadScrew
-    # extendPulley: ExtendPulley
-    # retractPulley: RetractPulley
+    extendLeadScrew: ExtendLeadScrew
+    retractLeadScrew: RetractLeadScrew
+    extendPulley: ExtendPulley
+    retractPulley: RetractPulley
 
     def createObjects(self):
-        self.driverJoystick = wpilib.Joystick(0)
+        self.driverJoystick = wpilib.Joystick(kDriverJoystickNum)
+        self.operatorJoystick = wpilib.Joystick(kOperatorJoystickNum)
 
         # initialized motors
         motorType = rev.CANSparkMaxLowLevel.MotorType.kBrushless
@@ -69,16 +69,15 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         #    0
         # )  # TODO need to look over again
 
-        # self.leadScrewMotor = rev.CANSparkMax(7, motorType)
-        # self.pulleyMotor = rev.CANSparkMax(8, motorType)
+        self.leadScrewMotor = rev.CANSparkMax(7, motorType)
+        self.pulleyMotor = rev.CANSparkMax(8, motorType)
         self.topPulleySensor = wpilib.DigitalInput(
             0
         )  # these channel numbers MUST BE CHANGED
-        # self.bottomPulleySensor = wpilib.DigitalInput(1)
-        # self.topLeadScrewSensor = wpilib.DigitalInput(2)
-        # self.bottomLeadScrewSensor = wpilib.DigitalInput(3)
+        self.bottomPulleySensor = wpilib.DigitalInput(1)
+        self.topLeadScrewSensor = wpilib.DigitalInput(2)
+        self.bottomLeadScrewSensor = wpilib.DigitalInput(3)
 
-        # sensors unknown
 
     def autonomousInit(self):
         self.auto.start()
@@ -91,14 +90,11 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         
 
     def teleopInit(self):
-        #speed should be set in teleoperiodic and is only used for joystick 
-        self.speed = 0
         self.driveTrain.resetEncoders()
         self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
-        self.slowButtonToggle= False
-        
-        #self.hangComponents.enable()
+        self.slowButtonToggle = False
+        self.hangComponents.enable()
         
 
     def teleopPeriodic(self):
@@ -120,28 +116,28 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
         # buttons are randomly chosen
         # extend lead screw
-        # if self.driverJoystick.getRawButton(kLeadScrewExtendButton):
-        #     self.extendLeadScrew.extendLeadScrew()
+        if self.driverJoystick.getRawButton(kLeadScrewExtendButton):
+            self.extendLeadScrew.extendLeadScrew()
 
-        # # retracts lead screw
-        # if self.driverJoystick.getRawButton(kLeadScrewRetractButton):
-        #     self.retractLeadScrew.retractLeadScrew()
+        # retracts lead screw
+        if self.driverJoystick.getRawButton(kLeadScrewRetractButton):
+            self.retractLeadScrew.retractLeadScrew()
 
-        # # extends pulley
-        # if self.driverJoystick.getRawButton(kPulleyExtendButton):
-        #     self.extendPulley.extendPulley()
+        # extends pulley
+        if self.driverJoystick.getRawButton(kPulleyExtendButton):
+            self.extendPulley.extendPulley()
 
-        # # retract pulley
-        # if self.driverJoystick.getRawButton(kPulleyRetractButton):
-        #     self.retractPulley.retractPulley()
+        # retract pulley
+        if self.driverJoystick.getRawButton(kPulleyRetractButton):
+            self.retractPulley.retractPulley()
 
 
         #Slow mode for speed
-        if self.driverJoystick.getRawButtonPressed(2):
+        if self.operatorJoystick.getRawButtonPressed(kSlowButton):
             self.slowButtonToggle=not self.slowButtonToggle
 
         #Nitro mode, makes the speed variable go up when pressing the trigger button on joystick
-        if self.driverJoystick.getTrigger(): #Can also be substituted for self.driverJoystick.getRawButton(0)
+        if self.driverJoystick.getTrigger(): #Can also be substituted for self.driverJoystick.getRawButton(kFastButton)
             if self.slowButtonToggle:
                 self.driveTrain.setSpeed(normalSpeed) 
             else:
