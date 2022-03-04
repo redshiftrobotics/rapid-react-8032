@@ -9,8 +9,7 @@ class DefaultAuto(AutonomousStateMachine):
 
     driveTrain: DriveTrain
 
-    # potentially change this to default state
-    @state(first=True)  # type:ignore
+    @state(first=True, first=True)  # type:ignore
     def zeroMotor(self):
         self.driveTrain.leftMotorSpeed = 0
         self.driveTrain.rightMotorSpeed = 0
