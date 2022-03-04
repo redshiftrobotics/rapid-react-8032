@@ -6,17 +6,17 @@ kCANSparkMaxBrushless = rev.CANSparkMaxLowLevel.MotorType.kBrushless
 kCANSparkMaxBrushed = rev.CANSparkMaxLowLevel.MotorType.kBrushed
 
 # CAN IDs
-kFrontLeftMotorID = 3
-kFrontRightMotorID = 2
-kBackLeftMotorID = 4
-kBackRightMotorID = 1
+kFrontLeftMotorID = 2
+kFrontRightMotorID = 6
+kBackLeftMotorID = 20
+kBackRightMotorID = 5
 
 kIntakeMotorID = 5
 
 kDropperMotorID = 6
 
-kLeadScrewMotorID = 7
-kPulleyMotorID = 8
+kLeadScrewMotorID = 8
+kPulleyMotorID = 1
 
 # Motor Directions
 isFrontLeftMotorReversed = False
