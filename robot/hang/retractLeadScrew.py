@@ -10,6 +10,5 @@ class RetractLeadScrew(StateMachine):
 
     @state(first=True)  # type:ignore
     def startRetractLeadScrew(self):
-
-        if not self.hangComponents.getBottomLeadScrewSensor():
-            self.hangComponents.setLeadScrewMotorSpeed(-1.0)
+        if self.hangComponents.getBottomLeadScrewSensor():
+            self.hangComponents.setLeadScrewMotorSpeed(-0.1)

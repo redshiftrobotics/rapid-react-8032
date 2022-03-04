@@ -1,8 +1,8 @@
-import wpilib
 import rev
 
 
 class TransportComponents:
+    # Motors
     intakeMotor: rev.CANSparkMax
 
     def __init__(self):
@@ -18,7 +18,6 @@ class TransportComponents:
         self.enabled = False
 
     def execute(self):
-        # wpilib.SmartDashboard.putNumber("intake motor", self.intakeMotorSpeed)
         if self.enabled:
             self.intakeMotor.set(self.intakeMotorSpeed)
 

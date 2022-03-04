@@ -3,16 +3,18 @@ import rev
 
 
 class HangComponents:
-    # any of these might be neo
+    # Motors
     leadScrewMotor: rev.CANSparkMax
     pulleyMotor: rev.CANSparkMax
 
-    topLeadScrewSensor: wpilib.DigitalInput  # check if this is correct
+    # Sensors
+    topLeadScrewSensor: wpilib.DigitalInput
     bottomLeadScrewSensor: wpilib.DigitalInput
     topPulleySensor: wpilib.DigitalInput
     bottomPulleySensor: wpilib.DigitalInput
 
     def __init__(self):
+        ### General Setup ###
         self.enabled = False
 
         self.leadScrewSpeed = 0
@@ -40,10 +42,10 @@ class HangComponents:
         self.leadScrewSpeed = speed
 
     def execute(self):
-
         if self.enabled == True:
             self.pulleyMotor.set(self.pulleySpeed)
             self.leadScrewMotor.set(self.leadScrewSpeed)
+            # self.driveTrain.tankDrive(self.pulleySpeed,self.leadScrewSpeed)
 
         self.leadScrewSpeed = 0
         self.pulleySpeed = 0
