@@ -10,6 +10,6 @@ class DriveBackwardTimed(AutonomousStateMachine):
 
     driveTrain: DriveTrain
 
-    @timed_state(duration=3, first=True) # type:ignore
+    @timed_state(duration=2.5, first=True) # type:ignore
     def driveBackwardTimed(self):
-        self.driveTrain.tankDrive(-0.3, -0.3)
+        self.driveTrain.tankDrive(-0.15, -0.15)
