@@ -6,10 +6,10 @@ kIntakeButton = 2
 kStopIntakeButton = 5
 kReverseIntakeButton = 3
 
-kPulleyExtendButton = 8
-kPulleyRetractButton = 7
-kLeadScrewExtendButton = 10
-kLeadScrewRetractButton = 9
+kPulleyExtendButton = 1
+kPulleyRetractButton = 4
+kLeadScrewExtendButton = 3
+kLeadScrewRetractButton = 2
 
 isYAxisReversed = -1
 isXAxisReversed = -1
