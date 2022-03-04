@@ -70,14 +70,15 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         #    0
         # )  # TODO need to look over again
 
-        # self.leadScrewMotor = rev.CANSparkMax(7, motorType)
-        # self.pulleyMotor = rev.CANSparkMax(8, motorType)
-        self.topPulleySensor = wpilib.DigitalInput(
-            topPulleySensorID
-        )  # these channel numbers MUST BE CHANGED
-        self.bottomPulleySensor = wpilib.DigitalInput(bottomPulleySensorID)
-        self.topLeadScrewSensor = wpilib.DigitalInput(topLeadScrewSensorID)
-        self.bottomLeadScrewSensor = wpilib.DigitalInput(bottomLeadScrewSensorID)
+        with self.consumeExceptions():
+            # self.leadScrewMotor = rev.CANSparkMax(7, motorType)
+            # self.pulleyMotor = rev.CANSparkMax(8, motorType)
+            self.topPulleySensor = wpilib.DigitalInput(
+                topPulleySensorID
+            )  # these channel numbers MUST BE CHANGED
+            self.bottomPulleySensor = wpilib.DigitalInput(bottomPulleySensorID)
+            self.topLeadScrewSensor = wpilib.DigitalInput(topLeadScrewSensorID)
+            self.bottomLeadScrewSensor = wpilib.DigitalInput(bottomLeadScrewSensorID)
 
         # sensors unknown
 
@@ -95,7 +96,9 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driveTrain.resetEncoders()
         self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
-        #self.hangComponents.enable()
+
+        with self.consumeExceptions():
+            #self.hangComponents.enable()
         
 
     def teleopPeriodic(self):
@@ -111,35 +114,41 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # Rotates on horizontal plane (spins!). 0-360 degrees
         wpilib.SmartDashboard.putNumber("NavX yaw", self.ahrs.getYaw())
 
-        wpilib.SmartDashboard.putBoolean("magnetSensor", self.topPulleySensor.get())
+        with self.consumeExceptions():
+            wpilib.SmartDashboard.putBoolean("magnetSensor", self.topPulleySensor.get())
 
         # temporary code meant for testing. Should be in higher level hang.
 
         # Commented out because it would mess up the robot becasue we do not currently have these mechanisms
         # buttons are randomly chosen
-        #extend lead screw
-        # if self.driverJoystick.getRawButton(kLeadScrewExtendButton):
-            
-        #     self.extendLeadScrew.extendLeadScrew()
 
-        # retracts lead screw
-        # if self.driverJoystick.getRawButton(kLeadScrewRetractButton):
-        #     self.retractLeadScrew.retractLeadScrew()
+        with self.consumeExceptions():
+            #extend lead screw
+            # if self.driverJoystick.getRawButton(kLeadScrewExtendButton):
+                
+            #     self.extendLeadScrew.extendLeadScrew()
 
-        # extends pulley
-        # wpilib.SmartDashboard.putBoolean('kPulley Extent button 8', self.driverJoystick.getRawButton(kPulleyExtendButton))
-        # if self.driverJoystick.getRawButton(kPulleyExtendButton):
-        #     wpilib.SmartDashboard.putBoolean("Button Pulley Extend",True)
-        #     self.extendPulley.extendPulley()
-            # self.driveTrain.arcadeDrive(0,1)
-        #     self.driveTrain.arcadeDrive(
-        #     isYAxisReversed * self.speed * 0,
-        #     isYAxisReversed * self.speed * 1,
-        # )
+        with self.consumeExceptions():
+            # retracts lead screw
+            # if self.driverJoystick.getRawButton(kLeadScrewRetractButton):
+            #     self.retractLeadScrew.retractLeadScrew()
 
-        # retract pulley
-        # if self.driverJoystick.getRawButton(kPulleyRetractButton):
-        #     self.retractPulley.retractPulley()
+        with self.consumeExceptions():
+            # extends pulley
+            # wpilib.SmartDashboard.putBoolean('kPulley Extent button 8', self.driverJoystick.getRawButton(kPulleyExtendButton))
+            # if self.driverJoystick.getRawButton(kPulleyExtendButton):
+            #     wpilib.SmartDashboard.putBoolean("Button Pulley Extend",True)
+            #     self.extendPulley.extendPulley()
+                # self.driveTrain.arcadeDrive(0,1)
+            #     self.driveTrain.arcadeDrive(
+            #     isYAxisReversed * self.speed * 0,
+            #     isYAxisReversed * self.speed * 1,
+            # )
+
+        with self.consumeExceptions():
+            # retract pulley
+            # if self.driverJoystick.getRawButton(kPulleyRetractButton):
+            #     self.retractPulley.retractPulley()
 
         #the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
         if self.driverJoystick.getX() != 0 and self.driverJoystick.getY() != 0:
