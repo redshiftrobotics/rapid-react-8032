@@ -91,11 +91,15 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         
 
     def teleopInit(self):
-        self.speed = 0.2
+        #speed should be set in teleoperiodic and is only used for joystick 
+        self.speed = 0
         self.driveTrain.resetEncoders()
         self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
-        # self.hangComponents.enable()
+        self.slowButtonToggle= False
+        
+        #self.hangComponents.enable()
+        
 
     def teleopPeriodic(self):
 
@@ -131,11 +135,31 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # if self.driverJoystick.getRawButton(kPulleyRetractButton):
         #     self.retractPulley.retractPulley()
 
-        # the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
-        self.driveTrain.arcadeDrive(
-            isYAxisReversed * self.speed * self.driverJoystick.getX(),
-            isYAxisReversed * self.speed * self.driverJoystick.getY(),
-        )
+
+        #Slow mode for speed
+        if self.driverJoystick.getRawButtonPressed(2):
+            self.slowButtonToggle=not self.slowButtonToggle
+
+        #Nitro mode, makes the speed variable go up when pressing the trigger button on joystick
+        if self.driverJoystick.getTrigger(): #Can also be substituted for self.driverJoystick.getRawButton(0)
+            if self.slowButtonToggle:
+                self.driveTrain.setSpeed(normalSpeed) 
+            else:
+                self.driveTrain.setSpeed(nitroSpeed)
+        else:
+            if self.slowButtonToggle:
+                self.driveTrain.setSpeed(slowSpeed)
+            else:
+                self.driveTrain.setSpeed(normalSpeed)
+
+        #the getX()) means that moving joystick left to right is turn. Can change to getZ() if driver wants to twist the joystick to turn.
+        if self.driverJoystick.getX() != 0 and self.driverJoystick.getY() != 0:
+            self.driveTrain.arcadeDrive(
+                isYAxisReversed * self.driveTrain.getSpeed() * self.driverJoystick.getX(),
+                isYAxisReversed * self.driveTrain.getSpeed() * self.driverJoystick.getY(),
+            )
+
+        
 
     def disabledPeriodic(self):
         pass

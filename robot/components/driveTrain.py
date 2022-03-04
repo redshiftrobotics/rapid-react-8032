@@ -5,6 +5,7 @@ import wpimath.controller
 from navx import AHRS
 import math
 from util import adjustSpeed
+from motorUtils import deadband
 
 
 class DriveTrain:
@@ -19,6 +20,8 @@ class DriveTrain:
 
     def __init__(self):
         self.enabled = False
+
+        self.maxSpeed = 0.0
 
         self.rightMotorSpeed = 0
         self.leftMotorSpeed = 0
@@ -206,12 +209,15 @@ class DriveTrain:
         self.resetEncoders()
         self.resetGyroYaw()
 
-    def execute(self):
+    def getSpeed(self):
+        return self.maxSpeed
 
-        maxSpeed = 0.3
-        minSpeed = -0.3
-        self.leftMotorSpeed = adjustSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
-        self.rightMotorSpeed = adjustSpeed(self.rightMotorSpeed, maxSpeed, minSpeed)
+    def setSpeed(self, speed: float):
+        self.maxSpeed=speed
+
+    def execute(self):
+        self.leftMotorSpeed = adjustSpeed(self.leftMotorSpeed, self.maxSpeed, -self.maxSpeed,deadband)
+        self.rightMotorSpeed = adjustSpeed(self.rightMotorSpeed, self.maxSpeed, -self.maxSpeed,deadband)
 
         wpilib.SmartDashboard.putNumber("leftEncoder", self.getLeftEncoder())
         wpilib.SmartDashboard.putNumber("RightEncoder", self.getRightEncoder())

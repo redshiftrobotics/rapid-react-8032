@@ -8,3 +8,7 @@ isBackRightMotorReversed = True
 isLeadScrewMotorReversed = False
 isDropperMotorReversed = False
 isPulleyMotorReversed = False
+
+deadband = 0.01
+
+

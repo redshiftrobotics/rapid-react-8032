@@ -13,3 +13,7 @@ kLeadScrewRetractButton = 9
 
 isYAxisReversed = -1
 isXAxisReversed = -1
+
+slowSpeed = 0.2
+normalSpeed = 0.4
+nitroSpeed = 1
