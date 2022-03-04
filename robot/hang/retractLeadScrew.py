@@ -2,7 +2,6 @@ from magicbot.state_machine import StateMachine, state
 from components.hangComponents import HangComponents
 
 
-
 class RetractLeadScrew(StateMachine):
     hangComponents: HangComponents
 

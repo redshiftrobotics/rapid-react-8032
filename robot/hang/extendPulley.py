@@ -11,6 +11,4 @@ class ExtendPulley(StateMachine):
     @state(first=True)  # type:ignore
     def startExtendPulley(self):
         if self.hangComponents.getTopPulleySensor():
-            self.hangComponents.setPulleyMotorSpeed(
-                0.1
-            )
+            self.hangComponents.setPulleyMotorSpeed(0.1)

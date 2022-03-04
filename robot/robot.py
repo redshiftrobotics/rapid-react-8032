@@ -23,7 +23,6 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
 
-
     ### These mechanisms don't exist yet ###
     # hangComponents: HangComponents
     # extendLeadScrew: ExtendLeadScrew
@@ -39,10 +38,18 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driverJoystick = wpilib.Joystick(0)
 
         #### Drivetrain Setup ###
-        self.frontLeftMotor = rev.CANSparkMax(motorUtils.kFrontLeftMotorID, motorUtils.kCANSparkMaxBrushless)
-        self.frontRightMotor = rev.CANSparkMax(motorUtils.kFrontRightMotorID, motorUtils.kCANSparkMaxBrushless)
-        self.backLeftMotor = rev.CANSparkMax(motorUtils.kBackLeftMotorID, motorUtils.kCANSparkMaxBrushless)
-        self.backRightMotor = rev.CANSparkMax(motorUtils.kBackRightMotorID, motorUtils.kCANSparkMaxBrushless)
+        self.frontLeftMotor = rev.CANSparkMax(
+            motorUtils.kFrontLeftMotorID, motorUtils.kCANSparkMaxBrushless
+        )
+        self.frontRightMotor = rev.CANSparkMax(
+            motorUtils.kFrontRightMotorID, motorUtils.kCANSparkMaxBrushless
+        )
+        self.backLeftMotor = rev.CANSparkMax(
+            motorUtils.kBackLeftMotorID, motorUtils.kCANSparkMaxBrushless
+        )
+        self.backRightMotor = rev.CANSparkMax(
+            motorUtils.kBackRightMotorID, motorUtils.kCANSparkMaxBrushless
+        )
 
         self.frontLeftMotor.setInverted(motorUtils.isFrontLeftMotorReversed)
         self.backLeftMotor.setInverted(motorUtils.isBackLeftMotorReversed)
@@ -61,7 +68,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.ahrs = AHRS.create_spi()  # type:ignore
 
         ### These mechanisms don't exist yet ###
-        
+
         ### Intake Setup ###
         # with self.consumeExceptions():
         #     self.intakeMotor = rev.CANSparkMax(motorUtils.kIntakeMotorID, motorUtils.kCANSparkMaxBrushed)
@@ -96,7 +103,6 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         ### Auto Setup ###
         with self.consumeExceptions():
             self.auto = AutonomousModeSelector("autonomous")
-
 
     def autonomousInit(self):
         self.auto.start()

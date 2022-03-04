@@ -1,6 +1,7 @@
 import wpilib
 import rev
 
+
 class HangComponents:
     # Motors
     leadScrewMotor: rev.CANSparkMax
@@ -45,7 +46,6 @@ class HangComponents:
             self.pulleyMotor.set(self.pulleySpeed)
             self.leadScrewMotor.set(self.leadScrewSpeed)
             # self.driveTrain.tankDrive(self.pulleySpeed,self.leadScrewSpeed)
-            
 
         self.leadScrewSpeed = 0
         self.pulleySpeed = 0
