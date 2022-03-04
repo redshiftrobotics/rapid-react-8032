@@ -154,11 +154,10 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
             self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
 
         # `getX` left to right is turns the robot. Replace with `getZ` for twist
-        if self.driverJoystick.getX() != 0 and self.driverJoystick.getY() != 0:
-            self.driveTrain.arcadeDrive(
-                joystickUtils.isYAxisReversed * self.driverJoystick.getX(),
-                joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
-            )
+        self.driveTrain.arcadeDrive(
+            joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
+            joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
+        )
 
     def disabledPeriodic(self):
         pass
