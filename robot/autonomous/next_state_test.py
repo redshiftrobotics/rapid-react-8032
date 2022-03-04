@@ -1,4 +1,3 @@
-import wpilib
 from components.driveTrain import DriveTrain
 from magicbot.state_machine import AutonomousStateMachine, state
 
