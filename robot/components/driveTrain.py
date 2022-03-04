@@ -4,24 +4,32 @@ import rev
 import wpimath.controller
 from navx import AHRS
 import math
-from util import adjustSpeed
+from utils.util import adjustSpeed
+import utils.joystickUtils as joystickUtils
 
 
 class DriveTrain:
-
+    # Motors
     frontLeftMotor: rev.CANSparkMax
     frontRightMotor: rev.CANSparkMax
     backLeftMotor: rev.CANSparkMax
     backRightMotor: rev.CANSparkMax
-    leftEncoder: rev.SparkMaxAlternateEncoder  # rev.SparkMaxRelativeEncoder
-    rightEncoder: rev.SparkMaxAlternateEncoder  # rev.SparkMaxRelativeEncoder
+
+    # Sensors
+    leftEncoder: rev.SparkMaxAlternateEncoder
+    rightEncoder: rev.SparkMaxAlternateEncoder
     ahrs: AHRS
 
     def __init__(self):
+        ### General Setup ###
         self.enabled = False
+
+        self.maxSpeed = 0.0
 
         self.rightMotorSpeed = 0
         self.leftMotorSpeed = 0
+
+        ### PID Setup ###
         self.kWheelDiameter = 15.24  # THIS IS IN CM. 15.24 is the diameter
         self.kWheelCircumference = self.kWheelDiameter * math.pi
 
@@ -153,7 +161,6 @@ class DriveTrain:
         """
         newSpeed = self.angleController.calculate(self.getAngle(), targetAngle)
 
-        wpilib.SmartDashboard.putNumber("PID Output", newSpeed)
         self.setRightMotorSpeed(-newSpeed)
         self.setLeftMotorSpeed(newSpeed)
 
@@ -163,6 +170,7 @@ class DriveTrain:
         Input: float
         Returns: None
         """
+        # FIXME: Don't call calculate twice, because it messes up the PID controller
         newLeftSpeed = self.forwardController.calculate(
             self.getLeftDistance(), targetDistance
         )
@@ -206,20 +214,21 @@ class DriveTrain:
         self.resetEncoders()
         self.resetGyroYaw()
 
+    def getMaxSpeed(self):
+        return self.maxSpeed
+
+    def setMaxSpeed(self, speed: float):
+        self.maxSpeed = speed
+
     def execute(self):
-
-        maxSpeed = 0.3
-        minSpeed = -0.3
-        self.leftMotorSpeed = adjustSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
-        self.rightMotorSpeed = adjustSpeed(self.rightMotorSpeed, maxSpeed, minSpeed)
-
-        wpilib.SmartDashboard.putNumber("leftEncoder", self.getLeftEncoder())
-        wpilib.SmartDashboard.putNumber("RightEncoder", self.getRightEncoder())
-        wpilib.SmartDashboard.putNumber("rightDistance", self.getRightDistance())
-        wpilib.SmartDashboard.putNumber("leftDistance", self.getLeftDistance())
-
-        wpilib.SmartDashboard.putNumber("rightMotor value", self.rightMotorSpeed)
-        wpilib.SmartDashboard.putNumber("leftMotor value", self.leftMotorSpeed)
+        # TODO: Its kind of messy that drivetrain accesses a deadband which is a joystick value.
+        # We could call adjustSpeed in robot.py instead, or create a joystick wrapper class
+        self.leftMotorSpeed = adjustSpeed(
+            self.leftMotorSpeed, self.maxSpeed, -self.maxSpeed, joystickUtils.kDeadband
+        )
+        self.rightMotorSpeed = adjustSpeed(
+            self.rightMotorSpeed, self.maxSpeed, -self.maxSpeed, joystickUtils.kDeadband
+        )
 
         if self.enabled:
             self.backLeftMotor.set(self.leftMotorSpeed)
