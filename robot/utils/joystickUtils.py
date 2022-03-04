@@ -2,7 +2,8 @@
 kDeadband = 0.025
 
 ### Driver Joystick ###
-kDriverJoystickID = 0
+kDriverLeftJoystickID = 2
+kDriverRightJoystickID = 0
 kNitroButton = 1
 kSlowButton = 2
 
@@ -13,7 +14,6 @@ kNitroSpeed = 1
 
 # Should be 1 or -1
 isYAxisReversed = -1
-isXAxisReversed = -1
 
 ### Operator Joystick ###
 kOperatorJoystickID = 1

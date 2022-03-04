@@ -36,8 +36,9 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     def createObjects(self):
         ### Joystick Setup ###
-        self.driverJoystick = wpilib.Joystick(joystickUtils.kDriverJoystickID)
-        self.slowButtonToggle = Toggle(self.driverJoystick, joystickUtils.kSlowButton)
+        self.driverLeftJoystick = wpilib.Joystick(joystickUtils.kDriverLeftJoystickID)
+        self.driverRightJoystick = wpilib.Joystick(joystickUtils.kDriverRightJoystickID)
+        self.slowButtonToggle = Toggle(self.driverRightJoystick, joystickUtils.kSlowButton) # The right joystick controls drivetrain speed
 
         self.operatorJoystick = wpilib.Joystick(joystickUtils.kOperatorJoystickID)
 
@@ -147,18 +148,18 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         ### Drivetrain Control Code ###
 
+        # The right joystick controls drivetrain speed
         self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
-        if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
+        if self.driverRightJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
             self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
         if self.slowButtonToggle.get():
             self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
 
         # `getX` left to right is turns the robot. Replace with `getZ` for twist
-        if self.driverJoystick.getX() != 0 and self.driverJoystick.getY() != 0:
-            self.driveTrain.arcadeDrive(
-                joystickUtils.isYAxisReversed * self.driverJoystick.getX(),
-                joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
-            )
+        self.driveTrain.tankDrive(
+            joystickUtils.isYAxisReversed * self.driverLeftJoystick.getX(),
+            joystickUtils.isYAxisReversed * self.driverRightJoystick.getY(),
+        )
 
     def disabledPeriodic(self):
         pass
