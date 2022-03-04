@@ -4,24 +4,29 @@ import rev
 import wpimath.controller
 from navx import AHRS
 import math
-from util import adjustSpeed
+from utils.util import adjustSpeed
 
 
 class DriveTrain:
-
+    # Motors
     frontLeftMotor: rev.CANSparkMax
     frontRightMotor: rev.CANSparkMax
     backLeftMotor: rev.CANSparkMax
     backRightMotor: rev.CANSparkMax
-    leftEncoder: rev.SparkMaxAlternateEncoder  # rev.SparkMaxRelativeEncoder
-    rightEncoder: rev.SparkMaxAlternateEncoder  # rev.SparkMaxRelativeEncoder
+
+    # Sensors
+    leftEncoder: rev.SparkMaxAlternateEncoder
+    rightEncoder: rev.SparkMaxAlternateEncoder
     ahrs: AHRS
 
     def __init__(self):
+        ### General Setup ###
         self.enabled = False
 
         self.rightMotorSpeed = 0
         self.leftMotorSpeed = 0
+
+        ### PID Setup ###
         self.kWheelDiameter = 15.24  # THIS IS IN CM. 15.24 is the diameter
         self.kWheelCircumference = self.kWheelDiameter * math.pi
 
@@ -163,6 +168,7 @@ class DriveTrain:
         Input: float
         Returns: None
         """
+        # FIXME: Don't call calculate twice, because it messes up the PID controller
         newLeftSpeed = self.forwardController.calculate(
             self.getLeftDistance(), targetDistance
         )
@@ -207,25 +213,16 @@ class DriveTrain:
         self.resetGyroYaw()
 
     def execute(self):
-        with self.consumeExceptions():
-            maxSpeed = 0.3
-            minSpeed = -0.3
-            self.leftMotorSpeed = adjustSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
-            self.rightMotorSpeed = adjustSpeed(self.rightMotorSpeed, maxSpeed, minSpeed)
+        maxSpeed = 0.3
+        minSpeed = -0.3
+        self.leftMotorSpeed = adjustSpeed(self.leftMotorSpeed, maxSpeed, minSpeed)
+        self.rightMotorSpeed = adjustSpeed(self.rightMotorSpeed, maxSpeed, minSpeed)
 
-            wpilib.SmartDashboard.putNumber("leftEncoder", self.getLeftEncoder())
-            wpilib.SmartDashboard.putNumber("RightEncoder", self.getRightEncoder())
-            wpilib.SmartDashboard.putNumber("rightDistance", self.getRightDistance())
-            wpilib.SmartDashboard.putNumber("leftDistance", self.getLeftDistance())
+        if self.enabled:
+            self.backLeftMotor.set(self.leftMotorSpeed)
+            self.backRightMotor.set(self.rightMotorSpeed)
+            self.frontLeftMotor.set(self.leftMotorSpeed)
+            self.frontRightMotor.set(self.rightMotorSpeed)
 
-            wpilib.SmartDashboard.putNumber("rightMotor value", self.rightMotorSpeed)
-            wpilib.SmartDashboard.putNumber("leftMotor value", self.leftMotorSpeed)
-
-            if self.enabled:
-                self.backLeftMotor.set(self.leftMotorSpeed)
-                self.backRightMotor.set(self.rightMotorSpeed)
-                self.frontLeftMotor.set(self.leftMotorSpeed)
-                self.frontRightMotor.set(self.rightMotorSpeed)
-
-            self.leftMotorSpeed = 0
-            self.rightMotorSpeed = 0
+        self.leftMotorSpeed = 0
+        self.rightMotorSpeed = 0
