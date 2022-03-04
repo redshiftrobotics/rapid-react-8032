@@ -1,4 +1,5 @@
 import magicbot
+from robotpy_ext.control.toggle import Toggle
 import wpilib
 import rev
 from components.driveTrain import DriveTrain
@@ -35,7 +36,10 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     def createObjects(self):
         ### Joystick Setup ###
-        self.driverJoystick = wpilib.Joystick(0)
+        self.driverJoystick = wpilib.Joystick(joystickUtils.kDriverJoystickID)
+        self.slowButtonToggle = Toggle(self.driverJoystick, joystickUtils.kSlowButton)
+
+        self.operatorJoystick = wpilib.Joystick(joystickUtils.kOperatorJoystickID)
 
         #### Drivetrain Setup ###
         self.frontLeftMotor = rev.CANSparkMax(
@@ -114,7 +118,6 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.auto.periodic()
 
     def teleopInit(self):
-        self.speed = 0.2
         self.driveTrain.resetEncoders()
         self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
@@ -141,12 +144,18 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                 self.retractPulley.retractPulley()
 
         ### Drivetrain Control Code ###
+
+        self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
+        if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
+            self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
+        if self.slowButtonToggle.get():
+            self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
+
         # `getX` left to right is turns the robot. Replace with `getZ` for twist
-        if self.driverJoystick.getX() != 0 and self.driverJoystick.getY() != 0:
-            self.driveTrain.arcadeDrive(
-                joystickUtils.isYAxisReversed * self.speed * self.driverJoystick.getX(),
-                joystickUtils.isYAxisReversed * self.speed * self.driverJoystick.getY(),
-            )
+        self.driveTrain.arcadeDrive(
+            joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
+            joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
+        )
 
     def disabledPeriodic(self):
         pass
