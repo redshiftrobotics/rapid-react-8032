@@ -1,5 +1,5 @@
 import magicbot
-from robotpy_ext.control.toggle import Toggle
+from robotpy_ext.control.toggle import Toggle # type: ignore
 import wpilib
 import rev
 from components.driveTrain import DriveTrain
