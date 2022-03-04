@@ -10,6 +10,5 @@ class RetractPulley(StateMachine):
 
     @state(first=True)  # type:ignore
     def startRetractPulley(self):
-
-        if not self.hangComponents.getBottomPulleySensor():
+        if self.hangComponents.getBottomPulleySensor():
             self.hangComponents.setPulleyMotorSpeed(-0.1)

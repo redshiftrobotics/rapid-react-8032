@@ -10,7 +10,5 @@ class ExtendLeadScrew(StateMachine):
 
     @state(first=True)  # type:ignore
     def startExtendLeadScrew(self):
-
-        # the motor speed defaults back to zero unless otherwise called.
-        if not self.hangComponents.getTopLeadScrewSensor():
-            self.hangComponents.setLeadScrewMotorSpeed(1.0)
+        if self.hangComponents.getTopLeadScrewSensor():
+            self.hangComponents.setLeadScrewMotorSpeed(0.1)
