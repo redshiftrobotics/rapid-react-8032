@@ -223,12 +223,6 @@ class DriveTrain:
     def execute(self):
         # TODO: Its kind of messy that drivetrain accesses a deadband which is a joystick value.
         # We could call adjustSpeed in robot.py instead, or create a joystick wrapper class
-        self.leftMotorSpeed = adjustSpeed(
-            self.leftMotorSpeed, self.maxSpeed, -self.maxSpeed, joystickUtils.kDeadband
-        )
-        self.rightMotorSpeed = adjustSpeed(
-            self.rightMotorSpeed, self.maxSpeed, -self.maxSpeed, joystickUtils.kDeadband
-        )
 
         if self.enabled:
             self.backLeftMotor.set(self.leftMotorSpeed)

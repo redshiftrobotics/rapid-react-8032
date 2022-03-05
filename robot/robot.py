@@ -18,6 +18,7 @@ from components.transportComponents import TransportComponents
 import utils.joystickUtils as joystickUtils
 import utils.motorUtils as motorUtils
 import utils.sensorUtils as sensorUtils
+import utils.util as util
 
 
 class MyRobot(magicbot.MagicRobot):  # type:ignore
@@ -158,10 +159,10 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         #     self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
 
         # `getX` left to right is turns the robot. Replace with `getZ` for twist
-        # self.driveTrain.arcadeDrive(
-        #     joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
-        #     joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
-        # )
+        self.driveTrain.arcadeDrive(
+            util.adjustSpeed(joystickUtils.isXAxisReversed * self.driverJoystick.getX(), 1, -1, joystickUtils.kDeadband),
+            util.adjustSpeed(joystickUtils.isYAxisReversed * self.driverJoystick.getY(), 1, -1, joystickUtils.kDeadband)
+        )
 
     def disabledPeriodic(self):
         pass
