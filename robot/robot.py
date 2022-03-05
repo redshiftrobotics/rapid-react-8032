@@ -154,6 +154,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         # with self.consumeExceptions():
         self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
+
+        # with self.consumeExceptions():
         #     if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
         #         self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
         #     if self.slowButtonToggle.get():

@@ -24,7 +24,7 @@ class DriveTrain:
         ### General Setup ###
         self.enabled = False
 
-        self.maxSpeed = 0.0
+        self.maxSpeed = 1
 
         self.rightMotorSpeed = 0
         self.leftMotorSpeed = 0
@@ -231,7 +231,7 @@ class DriveTrain:
 
         wpilib.SmartDashboard.putNumber('leftMotorSpeed', self.leftMotorSpeed)
         wpilib.SmartDashboard.putNumber('rightMotorSpeed', self.rightMotorSpeed)
-        
+
         if self.enabled:
             self.backLeftMotor.set(self.leftMotorSpeed)
             self.backRightMotor.set(self.rightMotorSpeed)

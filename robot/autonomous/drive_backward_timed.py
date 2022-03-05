@@ -5,8 +5,8 @@ from magicbot.state_machine import AutonomousStateMachine, timed_state
 class DriveBackwardTimed(AutonomousStateMachine):
 
     MODE_NAME = "Drive backward timed"
-    DEFAULT = False
-
+    DEFAULT = True
+    
     driveTrain: DriveTrain
 
     @timed_state(duration=5, first=True)  # type:ignore
