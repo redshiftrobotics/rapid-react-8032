@@ -90,8 +90,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         ### Hang Setup ###
         with self.consumeExceptions():
-            self.leadScrewMotor = rev.CANSparkMax(motorUtils.kPulleyMotorID, motorUtils.kCANSparkMaxBrushless)
-            self.pulleyMotor = rev.CANSparkMax(motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushed)
+            self.leadScrewMotor = rev.CANSparkMax(motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushless)
+            self.pulleyMotor = rev.CANSparkMax(motorUtils.kPulleyMotorID, motorUtils.kCANSparkMaxBrushed)
 
             self.topPulleySensor = wpilib.DigitalInput(sensorUtils.kTopPulleySensorID)
             self.bottomPulleySensor = wpilib.DigitalInput(
@@ -129,35 +129,39 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
     def teleopPeriodic(self):
         ### These mechanisms don't exist yet ###
         ### Hang Control Code ###
-        # with self.consumeExceptions():
-        #     if self.driverJoystick.getRawButton(joystickUtils.kLeadScrewExtendButton):
-        #         self.extendLeadScrew.extendLeadScrew()
+        with self.consumeExceptions():
+            if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewExtendButton):
+                #self.extendLeadScrew.extendLeadScrew()
+                self.hangComponents.setLeadScrewMotorSpeed(1)
 
-        # with self.consumeExceptions():
-        #     if self.driverJoystick.getRawButton(joystickUtils.kLeadScrewRetractButton):
-        #         self.retractLeadScrew.retractLeadScrew()
+        with self.consumeExceptions():
+            if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewRetractButton):
+                # self.retractLeadScrew.retractLeadScrew()
+                self.hangComponents.setLeadScrewMotorSpeed(-1)
 
-        # with self.consumeExceptions():
-        #     if self.driverJoystick.getRawButton(joystickUtils.kPulleyExtendButton):
-        #         self.extendPulley.extendPulley()
+        with self.consumeExceptions():
+            if self.operatorJoystick.getRawButton(joystickUtils.kPulleyExtendButton):
+                #self.extendPulley.extendPulley()
+                self.hangComponents.setPulleyMotorSpeed(1)
 
-        # with self.consumeExceptions():
-        #     if self.driverJoystick.getRawButton(joystickUtils.kPulleyRetractButton):
-        #         self.retractPulley.retractPulley()
+        with self.consumeExceptions():
+            if self.operatorJoystick.getRawButton(joystickUtils.kPulleyRetractButton):
+                #self.retractPulley.retractPulley()
+                self.hangComponents.setPulleyMotorSpeed(-1)
 
         ### Drivetrain Control Code ###
 
-        self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
-        if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
-            self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
-        if self.slowButtonToggle.get():
-            self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
+        # self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
+        # if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
+        #     self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
+        # if self.slowButtonToggle.get():
+        #     self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
 
         # `getX` left to right is turns the robot. Replace with `getZ` for twist
-        self.driveTrain.arcadeDrive(
-            joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
-            joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
-        )
+        # self.driveTrain.arcadeDrive(
+        #     joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
+        #     joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
+        # )
 
     def disabledPeriodic(self):
         pass
