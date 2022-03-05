@@ -152,16 +152,18 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         ### Drivetrain Control Code ###
 
-        self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
-        if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
-            self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
-        if self.slowButtonToggle.get():
-            self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
+        with self.consumeExceptions():
+            self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
+            if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
+                self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
+            if self.slowButtonToggle.get():
+                self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
 
         # `getX` left to right is turns the robot. Replace with `getZ` for twist
         self.driveTrain.arcadeDrive(
-            util.adjustSpeed(joystickUtils.isXAxisReversed * self.driverJoystick.getX(), 1, -1, joystickUtils.kDeadband),
-            util.adjustSpeed(joystickUtils.isYAxisReversed * self.driverJoystick.getY(), 1, -1, joystickUtils.kDeadband)
+            util.deadBand(joystickUtils.isXAxisReversed * self.driverJoystick.getX(),joystickUtils.kDeadband),
+            util.deadBand(joystickUtils.isYAxisReversed * self.driverJoystick.getY(), joystickUtils.kDeadband)
+
         )
 
     def disabledPeriodic(self):
