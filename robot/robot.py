@@ -24,13 +24,13 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
 
-    ### These mechanisms don't exist yet ###
-    # hangComponents: HangComponents
-    # extendLeadScrew: ExtendLeadScrew
-    # retractLeadScrew: RetractLeadScrew
-    # extendPulley: ExtendPulley
-    # retractPulley: RetractPulley
+    hangComponents: HangComponents
+    extendLeadScrew: ExtendLeadScrew
+    retractLeadScrew: RetractLeadScrew
+    extendPulley: ExtendPulley
+    retractPulley: RetractPulley
 
+    ### These mechanisms don't exist yet ###
     # dropperComponents: DropperComponents
     # transportComponents: TransportComponents
 
@@ -89,20 +89,20 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # )
 
         ### Hang Setup ###
-        # with self.consumeExceptions():
-        #     self.leadScrewMotor = rev.CANSparkMax(motorUtils.kPulleyMotorID, motorUtils.kCANSparkMaxBrushless)
-        #     self.pulleyMotor = rev.CANSparkMax(motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushed)
+        with self.consumeExceptions():
+            self.leadScrewMotor = rev.CANSparkMax(motorUtils.kPulleyMotorID, motorUtils.kCANSparkMaxBrushless)
+            self.pulleyMotor = rev.CANSparkMax(motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushed)
 
-        #     self.topPulleySensor = wpilib.DigitalInput(sensorUtils.kTopPulleySensorID)
-        #     self.bottomPulleySensor = wpilib.DigitalInput(
-        #         sensorUtils.kBottomPulleySensorID
-        #     )
-        #     self.topLeadScrewSensor = wpilib.DigitalInput(
-        #         sensorUtils.kTopLeadScrewSensorID
-        #     )
-        #     self.bottomLeadScrewSensor = wpilib.DigitalInput(
-        #         sensorUtils.kBottomLeadScrewSensorID
-        #     )
+            self.topPulleySensor = wpilib.DigitalInput(sensorUtils.kTopPulleySensorID)
+            self.bottomPulleySensor = wpilib.DigitalInput(
+                sensorUtils.kBottomPulleySensorID
+            )
+            self.topLeadScrewSensor = wpilib.DigitalInput(
+                sensorUtils.kTopLeadScrewSensorID
+            )
+            self.bottomLeadScrewSensor = wpilib.DigitalInput(
+                sensorUtils.kBottomLeadScrewSensorID
+            )
 
         ### Auto Setup ###
         with self.consumeExceptions():
@@ -123,8 +123,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driveTrain.enable()
 
         ### These mechanisms don't exist yet ###
-        # with self.consumeExceptions():
-        #     self.hangComponents.enable()
+        with self.consumeExceptions():
+            self.hangComponents.enable()
 
     def teleopPeriodic(self):
         ### These mechanisms don't exist yet ###

@@ -49,3 +49,7 @@ class HangComponents:
 
         self.leadScrewSpeed = 0
         self.pulleySpeed = 0
+        wpilib.SmartDashboard.putBoolean("TopPulley 9",self.topPulleySensor.get())
+        wpilib.SmartDashboard.putBoolean("BottomPulley 7",self.bottomPulleySensor.get())
+        wpilib.SmartDashboard.putBoolean("TopLeadScrew 5",self.topLeadScrewSensor.get())
+        wpilib.SmartDashboard.putBoolean("BotoomLeadscrew 6",self.bottomLeadScrewSensor.get())
