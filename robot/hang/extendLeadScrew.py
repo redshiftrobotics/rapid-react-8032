@@ -1,5 +1,6 @@
 from magicbot.state_machine import StateMachine, state
 from components.hangComponents import HangComponents
+import utils.joystickUtils as joystickUtils
 
 
 class ExtendLeadScrew(StateMachine):
@@ -11,4 +12,4 @@ class ExtendLeadScrew(StateMachine):
     @state(first=True)  # type:ignore
     def startExtendLeadScrew(self):
         if self.hangComponents.getTopLeadScrewSensor():
-            self.hangComponents.setLeadScrewMotorSpeed(0.1)
+            self.hangComponents.setLeadScrewMotorSpeed(joystickUtils.kLeadScrewSpeed)

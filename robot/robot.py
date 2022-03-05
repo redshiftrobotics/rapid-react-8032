@@ -133,30 +133,30 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewExtendButton):
                 #self.extendLeadScrew.extendLeadScrew()
-                self.hangComponents.setLeadScrewMotorSpeed(1)
+                self.hangComponents.setLeadScrewMotorSpeed(joystickUtils.kLeadScrewSpeed)
 
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewRetractButton):
                 # self.retractLeadScrew.retractLeadScrew()
-                self.hangComponents.setLeadScrewMotorSpeed(-1)
+                self.hangComponents.setLeadScrewMotorSpeed(-joystickUtils.kLeadScrewSpeed)
 
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(joystickUtils.kPulleyExtendButton):
                 #self.extendPulley.extendPulley()
-                self.hangComponents.setPulleyMotorSpeed(1)
+                self.hangComponents.setPulleyMotorSpeed(joystickUtils.kPulleySpeed)
 
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(joystickUtils.kPulleyRetractButton):
                 #self.retractPulley.retractPulley()
-                self.hangComponents.setPulleyMotorSpeed(-1)
+                self.hangComponents.setPulleyMotorSpeed(-joystickUtils.kPulleySpeed)
 
         ### Drivetrain Control Code ###
 
-        # self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
-        # if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
-        #     self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
-        # if self.slowButtonToggle.get():
-        #     self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
+        self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
+        if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
+            self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
+        if self.slowButtonToggle.get():
+            self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
 
         # `getX` left to right is turns the robot. Replace with `getZ` for twist
         self.driveTrain.arcadeDrive(

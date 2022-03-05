@@ -1,5 +1,6 @@
 from magicbot.state_machine import StateMachine, state
 from components.hangComponents import HangComponents
+import utils.joystickUtils as joystickUtils
 
 
 class ExtendPulley(StateMachine):
@@ -11,4 +12,4 @@ class ExtendPulley(StateMachine):
     @state(first=True)  # type:ignore
     def startExtendPulley(self):
         if self.hangComponents.getTopPulleySensor():
-            self.hangComponents.setPulleyMotorSpeed(0.1)
+            self.hangComponents.setPulleyMotorSpeed(joystickUtils.kPulleySpeed)
