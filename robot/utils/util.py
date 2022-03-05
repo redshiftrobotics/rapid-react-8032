@@ -17,7 +17,7 @@ def clampSpeed(speed: float, maxSpeed: float, minSpeed: float):
     return speed
 
 def deadBand(speed: float, deadband: float):
-    if abs(speed) > deadband:
+    if abs(speed) < deadband:
         speed = 0
 
     return speed
