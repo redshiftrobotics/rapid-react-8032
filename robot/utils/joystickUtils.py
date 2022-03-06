@@ -29,5 +29,5 @@ kPulleyRetractButton = 4
 kLeadScrewExtendButton = 3
 kLeadScrewRetractButton = 2
 
-kLeadScrewSpeed = 0.5
+kLeadScrewSpeed = 0.2
 kPulleySpeed = 1
