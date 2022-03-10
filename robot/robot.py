@@ -8,10 +8,8 @@ from components.hangComponents import HangComponents
 from components.dropperComponents import DropperComponents
 from components.transportComponents import TransportComponents
 
-# from hang.extendLeadScrew import ExtendLeadScrew
+from hang.extendLeadScrew import ExtendLeadScrew
 from hang.retractLeadScrew import RetractLeadScrew
-from hang.extendPulley import ExtendPulley
-from hang.retractPulley import RetractPulley
 from navx import AHRS
 from robotpy_ext.autonomous import AutonomousModeSelector  # type:ignore
 from components.dropperComponents import DropperComponents
@@ -28,10 +26,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
     driveTrain: DriveTrain
 
     hangComponents: HangComponents
-    # extendLeadScrew: ExtendLeadScrew
+    extendLeadScrew: ExtendLeadScrew
     retractLeadScrew: RetractLeadScrew
-    extendPulley: ExtendPulley
-    retractPulley: RetractPulley
 
     ### These mechanisms don't exist yet ###
     # dropperComponents: DropperComponents
@@ -96,14 +92,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
             self.leadScrewMotor = rev.CANSparkMax(
                 motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushless
             )
-            self.pulleyMotor = rev.CANSparkMax(
-                motorUtils.kPulleyMotorID, motorUtils.kCANSparkMaxBrushed
-            )
 
-            self.topPulleySensor = wpilib.DigitalInput(sensorUtils.kTopPulleySensorID)
-            self.bottomPulleySensor = wpilib.DigitalInput(
-                sensorUtils.kBottomPulleySensorID
-            )
             self.topLeadScrewSensor = wpilib.DigitalInput(
                 sensorUtils.kTopLeadScrewSensorID
             )
@@ -137,12 +126,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
     def teleopPeriodic(self):
         ### These mechanisms don't exist yet ###
         ### Hang Control Code ###
-        wpilib.SmartDashboard.putBoolean(
-            "topPulleySensor", self.hangComponents.getTopPulleySensor()
-        )
-        wpilib.SmartDashboard.putBoolean(
-            "bottomPulleySensor", self.hangComponents.getBottomPulleySensor()
-        )
+
         wpilib.SmartDashboard.putBoolean(
             "topLeadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
         )
@@ -156,36 +140,19 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                 wpilib.SmartDashboard.putBoolean(
                     "topleadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
                 )
-                # if self.hangComponents.getTopLeadScrewSensor():
-                #     self.hangComponents.setLeadScrewMotorSpeed(joystickUtils.kPulleySpeed)
-
-                # else:
-                #     self.hangComponents.setLeadScrewMotorSpeed(0.0)
-
-                # self.hangComponents.setLeadScrewMotorSpeed(joystickUtils.kLeadScrewSpeed)
-                self.hangComponents.setLeadScrewMotorSpeed(joystickUtils.kPulleySpeed)
+                # self.extendLeadScrew.extendLeadScrew()
+                self.hangComponents.setLeadScrewMotorSpeed(
+                    joystickUtils.kLeadScrewSpeed
+                )
 
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(
                 joystickUtils.kLeadScrewRetractButton
             ):
-                self.retractLeadScrew.retractLeadScrew()
-                # self.hangComponents.setLeadScrewMotorSpeed(-joystickUtils.kLeadScrewSpeed)
-        wpilib.SmartDashboard.putBoolean(
-            "pulleyMotorSensor", self.hangComponents.getTopPulleySensor()
-        )
-        with self.consumeExceptions():
-            if self.operatorJoystick.getRawButton(joystickUtils.kPulleyExtendButton):
-                # if self.hangComponents.getTopPulleySensor():
-                self.hangComponents.setPulleyMotorSpeed(joystickUtils.kPulleySpeed)
-
-                # self.extendPulley.extendPulley()
-                # self.hangComponents.setPulleyMotorSpeed(joystickUtils.kPulleySpeed)
-
-        with self.consumeExceptions():
-            if self.operatorJoystick.getRawButton(joystickUtils.kPulleyRetractButton):
-                # self.retractPulley.retractPulley()
-                self.hangComponents.setPulleyMotorSpeed(-joystickUtils.kPulleySpeed)
+                # self.retractLeadScrew.retractLeadScrew()
+                self.hangComponents.setLeadScrewMotorSpeed(
+                    -joystickUtils.kLeadScrewSpeed
+                )
 
         ### Drivetrain Control Code ###
 

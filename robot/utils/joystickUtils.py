@@ -24,10 +24,7 @@ kIntakeButton = 2
 kStopIntakeButton = 5
 kReverseIntakeButton = 3
 
-kPulleyExtendButton = 1
-kPulleyRetractButton = 4
 kLeadScrewExtendButton = 3
 kLeadScrewRetractButton = 2
 
 kLeadScrewSpeed = 0.2
-kPulleySpeed = 1

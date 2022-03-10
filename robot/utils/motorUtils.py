@@ -16,7 +16,6 @@ kIntakeMotorID = 5
 kDropperMotorID = 6
 
 kLeadScrewMotorID = 8
-kPulleyMotorID = 1
 
 # Motor Directions
 isFrontLeftMotorReversed = False
