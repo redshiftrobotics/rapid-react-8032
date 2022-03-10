@@ -175,17 +175,21 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
 
         with self.consumeExceptions():
-            if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
+            # if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
+            #     self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
+            if self.driverJoystick.getTrigger():
                 self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
             if self.slowButtonToggle.get():
                 self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
+            wpilib.SmartDashboard.putBoolean("nitro button pressed", self.driverJoystick.getTrigger())
+            wpilib.SmartDashboard.putNumber("code max speed",self.driveTrain.getMaxSpeed())
 
         # `getX` left to right is turns the robot. Replace with `getZ` for twist
         self.driveTrain.arcadeDrive(
             # util.deadBand(joystickUtils.isXAxisReversed * self.driverJoystick.getX(),joystickUtils.kDeadband),
             # util.deadBand(joystickUtils.isYAxisReversed * self.driverJoystick.getY(), joystickUtils.kDeadband)
             joystickUtils.isXAxisReversed* self.driverJoystick.getX(),
-            -joystickUtils.isYAxisReversed* self.driverJoystick.getY()
+            joystickUtils.isYAxisReversed* self.driverJoystick.getY()
 
         )
 
