@@ -7,7 +7,7 @@ def remap(
 
 
 def clampSpeed(speed: float, maxSpeed: float, minSpeed: float):
-    
+
     if speed > maxSpeed:
         return maxSpeed
 
@@ -15,6 +15,7 @@ def clampSpeed(speed: float, maxSpeed: float, minSpeed: float):
         return minSpeed
 
     return speed
+
 
 def deadBand(speed: float, deadband: float):
     if abs(speed) < deadband:

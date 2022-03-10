@@ -229,8 +229,8 @@ class DriveTrain:
         self.leftMotorSpeed = self.leftMotorSpeed * self.getMaxSpeed()
         self.rightMotorSpeed = self.rightMotorSpeed * self.getMaxSpeed()
 
-        wpilib.SmartDashboard.putNumber('leftMotorSpeed', self.leftMotorSpeed)
-        wpilib.SmartDashboard.putNumber('rightMotorSpeed', self.rightMotorSpeed)
+        wpilib.SmartDashboard.putNumber("leftMotorSpeed", self.leftMotorSpeed)
+        wpilib.SmartDashboard.putNumber("rightMotorSpeed", self.rightMotorSpeed)
 
         if self.enabled:
             self.backLeftMotor.set(self.leftMotorSpeed)

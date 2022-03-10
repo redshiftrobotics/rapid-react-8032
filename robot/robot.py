@@ -1,12 +1,13 @@
 from pydoc_data import topics
 import magicbot
-from robotpy_ext.control.toggle import Toggle # type: ignore
+from robotpy_ext.control.toggle import Toggle  # type: ignore
 import wpilib
 import rev
 from components.driveTrain import DriveTrain
 from components.hangComponents import HangComponents
 from components.dropperComponents import DropperComponents
 from components.transportComponents import TransportComponents
+
 # from hang.extendLeadScrew import ExtendLeadScrew
 from hang.retractLeadScrew import RetractLeadScrew
 from hang.extendPulley import ExtendPulley
@@ -92,8 +93,12 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         ### Hang Setup ###
         with self.consumeExceptions():
-            self.leadScrewMotor = rev.CANSparkMax(motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushless)
-            self.pulleyMotor = rev.CANSparkMax(motorUtils.kPulleyMotorID, motorUtils.kCANSparkMaxBrushed)
+            self.leadScrewMotor = rev.CANSparkMax(
+                motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushless
+            )
+            self.pulleyMotor = rev.CANSparkMax(
+                motorUtils.kPulleyMotorID, motorUtils.kCANSparkMaxBrushed
+            )
 
             self.topPulleySensor = wpilib.DigitalInput(sensorUtils.kTopPulleySensorID)
             self.bottomPulleySensor = wpilib.DigitalInput(
@@ -132,16 +137,25 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
     def teleopPeriodic(self):
         ### These mechanisms don't exist yet ###
         ### Hang Control Code ###
-        wpilib.SmartDashboard.putBoolean('topPulleySensor', self.hangComponents.getTopPulleySensor())
-        wpilib.SmartDashboard.putBoolean('bottomPulleySensor', self.hangComponents.getBottomPulleySensor())
-        wpilib.SmartDashboard.putBoolean('topLeadScrewSensor', self.hangComponents.getTopLeadScrewSensor())
-        wpilib.SmartDashboard.putBoolean('bottomLeadScrewSensor', self.hangComponents.getBottomLeadScrewSensor())
-
+        wpilib.SmartDashboard.putBoolean(
+            "topPulleySensor", self.hangComponents.getTopPulleySensor()
+        )
+        wpilib.SmartDashboard.putBoolean(
+            "bottomPulleySensor", self.hangComponents.getBottomPulleySensor()
+        )
+        wpilib.SmartDashboard.putBoolean(
+            "topLeadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
+        )
+        wpilib.SmartDashboard.putBoolean(
+            "bottomLeadScrewSensor", self.hangComponents.getBottomLeadScrewSensor()
+        )
 
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewExtendButton):
-                
-                wpilib.SmartDashboard.putBoolean('topleadScrewSensor', self.hangComponents.getTopLeadScrewSensor())
+
+                wpilib.SmartDashboard.putBoolean(
+                    "topleadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
+                )
                 # if self.hangComponents.getTopLeadScrewSensor():
                 #     self.hangComponents.setLeadScrewMotorSpeed(joystickUtils.kPulleySpeed)
 
@@ -152,15 +166,19 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                 self.hangComponents.setLeadScrewMotorSpeed(joystickUtils.kPulleySpeed)
 
         with self.consumeExceptions():
-            if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewRetractButton):
+            if self.operatorJoystick.getRawButton(
+                joystickUtils.kLeadScrewRetractButton
+            ):
                 self.retractLeadScrew.retractLeadScrew()
                 # self.hangComponents.setLeadScrewMotorSpeed(-joystickUtils.kLeadScrewSpeed)
-        wpilib.SmartDashboard.putBoolean('pulleyMotorSensor', self.hangComponents.getTopPulleySensor())
+        wpilib.SmartDashboard.putBoolean(
+            "pulleyMotorSensor", self.hangComponents.getTopPulleySensor()
+        )
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(joystickUtils.kPulleyExtendButton):
                 # if self.hangComponents.getTopPulleySensor():
                 self.hangComponents.setPulleyMotorSpeed(joystickUtils.kPulleySpeed)
-            
+
                 # self.extendPulley.extendPulley()
                 # self.hangComponents.setPulleyMotorSpeed(joystickUtils.kPulleySpeed)
 
@@ -181,16 +199,19 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                 self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
             if self.slowButtonToggle.get():
                 self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
-            wpilib.SmartDashboard.putBoolean("nitro button pressed", self.driverJoystick.getTrigger())
-            wpilib.SmartDashboard.putNumber("code max speed",self.driveTrain.getMaxSpeed())
+            wpilib.SmartDashboard.putBoolean(
+                "nitro button pressed", self.driverJoystick.getTrigger()
+            )
+            wpilib.SmartDashboard.putNumber(
+                "code max speed", self.driveTrain.getMaxSpeed()
+            )
 
         # `getX` left to right is turns the robot. Replace with `getZ` for twist
         self.driveTrain.arcadeDrive(
             # util.deadBand(joystickUtils.isXAxisReversed * self.driverJoystick.getX(),joystickUtils.kDeadband),
             # util.deadBand(joystickUtils.isYAxisReversed * self.driverJoystick.getY(), joystickUtils.kDeadband)
-            joystickUtils.isXAxisReversed* self.driverJoystick.getX(),
-            joystickUtils.isYAxisReversed* self.driverJoystick.getY()
-
+            joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
+            joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
         )
 
     def disabledPeriodic(self):

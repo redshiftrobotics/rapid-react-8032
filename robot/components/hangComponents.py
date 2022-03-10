@@ -43,10 +43,10 @@ class HangComponents:
 
     def execute(self):
         if self.enabled == True:
-            wpilib.SmartDashboard.putNumber('SpeedpulleyMotor', self.pulleySpeed)
-            wpilib.SmartDashboard.putNumber('SpeedleadScrewMotor', self.leadScrewSpeed)
+            wpilib.SmartDashboard.putNumber("SpeedpulleyMotor", self.pulleySpeed)
+            wpilib.SmartDashboard.putNumber("SpeedleadScrewMotor", self.leadScrewSpeed)
             self.pulleyMotor.set(self.pulleySpeed)
             self.leadScrewMotor.set(self.leadScrewSpeed)
-        
+
         self.leadScrewSpeed = 0
-        self.pulleySpeed = 0        
+        self.pulleySpeed = 0

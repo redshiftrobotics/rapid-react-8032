@@ -6,7 +6,7 @@ class DriveBackwardTimed(AutonomousStateMachine):
 
     MODE_NAME = "Drive backward timed"
     DEFAULT = True
-    
+
     driveTrain: DriveTrain
 
     @timed_state(duration=3, first=True)  # type:ignore

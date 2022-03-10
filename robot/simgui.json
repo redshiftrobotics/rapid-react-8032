@@ -1,18 +1,14 @@
 {
-  "NTProvider": {
-    "types": {
-      "/FMSInfo": "FMSInfo",
-      "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
-      "/LiveWindow/Ungrouped/DigitalInput[6]": "Digital Input",
-      "/LiveWindow/Ungrouped/DigitalInput[7]": "Digital Input",
-      "/LiveWindow/Ungrouped/DigitalInput[9]": "Digital Input",
-      "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
-      "/SmartDashboard/Autonomous Mode": "String Chooser"
-    }
-  },
-  "NetworkTables": {
-    "SmartDashboard": {
-      "open": true
-    }
-  }
+    "NTProvider": {
+        "types": {
+            "/FMSInfo": "FMSInfo",
+            "/LiveWindow/Ungrouped/DigitalInput[5]": "Digital Input",
+            "/LiveWindow/Ungrouped/DigitalInput[6]": "Digital Input",
+            "/LiveWindow/Ungrouped/DigitalInput[7]": "Digital Input",
+            "/LiveWindow/Ungrouped/DigitalInput[9]": "Digital Input",
+            "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
+            "/SmartDashboard/Autonomous Mode": "String Chooser",
+        }
+    },
+    "NetworkTables": {"SmartDashboard": {"open": true}},
 }

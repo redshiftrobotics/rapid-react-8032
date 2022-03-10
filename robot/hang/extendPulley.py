@@ -13,7 +13,8 @@ class ExtendPulley(StateMachine):
     @state(first=True)  # type:ignore
     def startExtendPulley(self):
 
-        wpilib.SmartDashboard.putBoolean('pulleyMotorSensor', self.hangComponents.getTopPulleySensor())
+        wpilib.SmartDashboard.putBoolean(
+            "pulleyMotorSensor", self.hangComponents.getTopPulleySensor()
+        )
         if self.hangComponents.getTopPulleySensor():
             self.hangComponents.setPulleyMotorSpeed(joystickUtils.kPulleySpeed)
-            
