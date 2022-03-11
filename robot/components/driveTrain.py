@@ -4,7 +4,7 @@ import rev
 import wpimath.controller
 from navx import AHRS
 import math
-from utils.util import adjustSpeed
+from utils.util import clampSpeed
 import utils.joystickUtils as joystickUtils
 
 
@@ -24,7 +24,7 @@ class DriveTrain:
         ### General Setup ###
         self.enabled = False
 
-        self.maxSpeed = 0.0
+        self.maxSpeed = 1
 
         self.rightMotorSpeed = 0
         self.leftMotorSpeed = 0
@@ -223,12 +223,14 @@ class DriveTrain:
     def execute(self):
         # TODO: Its kind of messy that drivetrain accesses a deadband which is a joystick value.
         # We could call adjustSpeed in robot.py instead, or create a joystick wrapper class
-        self.leftMotorSpeed = adjustSpeed(
-            self.leftMotorSpeed, self.maxSpeed, -self.maxSpeed, joystickUtils.kDeadband
-        )
-        self.rightMotorSpeed = adjustSpeed(
-            self.rightMotorSpeed, self.maxSpeed, -self.maxSpeed, joystickUtils.kDeadband
-        )
+        self.leftMotorSpeed = clampSpeed(self.leftMotorSpeed, 1, -1)
+        self.rightMotorSpeed = clampSpeed(self.rightMotorSpeed, 1, -1)
+
+        self.leftMotorSpeed = self.leftMotorSpeed * self.getMaxSpeed()
+        self.rightMotorSpeed = self.rightMotorSpeed * self.getMaxSpeed()
+
+        wpilib.SmartDashboard.putNumber("leftMotorSpeed", self.leftMotorSpeed)
+        wpilib.SmartDashboard.putNumber("rightMotorSpeed", self.rightMotorSpeed)
 
         if self.enabled:
             self.backLeftMotor.set(self.leftMotorSpeed)

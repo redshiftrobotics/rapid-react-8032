@@ -1,5 +1,6 @@
 from magicbot.state_machine import StateMachine, state
 from components.hangComponents import HangComponents
+import utils.joystickUtils as joystickUtils
 
 
 class RetractLeadScrew(StateMachine):
@@ -11,4 +12,4 @@ class RetractLeadScrew(StateMachine):
     @state(first=True)  # type:ignore
     def startRetractLeadScrew(self):
         if self.hangComponents.getBottomLeadScrewSensor():
-            self.hangComponents.setLeadScrewMotorSpeed(-0.1)
+            self.hangComponents.setLeadScrewMotorSpeed(-joystickUtils.kLeadScrewSpeed)
