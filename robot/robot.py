@@ -59,6 +59,11 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.frontRightMotor.setInverted(motorUtils.isFrontRightMotorReversed)
         self.backRightMotor.setInverted(motorUtils.isBackRightMotorReversed)
 
+        # self.frontLeftMotor.setIdleMode(rev.CANSparkMax.IdleMode.kCoast)
+        # self.backLeftMotor.setIdleMode(rev.CANSparkMax.IdleMode.kCoast)
+        # self.frontRightMotor.setIdleMode(rev.CANSparkMax.IdleMode.kCoast)
+        # self.backRightMotor.setIdleMode(rev.CANSparkMax.IdleMode.kCoast)
+        
         # initialize encoders
         self.leftEncoder = self.backLeftMotor.getAlternateEncoder(
             motorUtils.kTicksPerRev
@@ -66,6 +71,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.rightEncoder = self.backRightMotor.getAlternateEncoder(
             motorUtils.kTicksPerRev
         )
+
+        self.testEncoder = self.frontLeftMotor.getEncoder(rev.SparkMaxRelativeEncoder.Type.kHallSensor,42)
 
         # Create gyroscope. spi - communications protocol
         self.ahrs = AHRS.create_spi()  # type:ignore
@@ -132,6 +139,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         wpilib.SmartDashboard.putBoolean(
             "bottomLeadScrewSensor", self.hangComponents.getBottomLeadScrewSensor()
         )
+
+        wpilib.SmartDashboard.putNumber("Test Encoder",self.testEncoder.getPosition())
 
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewExtendButton):
