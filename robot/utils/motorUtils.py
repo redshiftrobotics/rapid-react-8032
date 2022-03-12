@@ -28,4 +28,3 @@ isIntakeMotorReversed = False
 isDropperMotorReversed = False
 
 isLeadScrewMotorReversed = False
-isPulleyMotorReversed = False
