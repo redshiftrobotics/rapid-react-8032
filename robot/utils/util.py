@@ -6,15 +6,19 @@ def remap(
     return (value - inputLow) * ratio + outputLow
 
 
-def adjustSpeed(speed: float, maxSpeed: float, minSpeed: float):
+def clampSpeed(speed: float, maxSpeed: float, minSpeed: float):
+
     if speed > maxSpeed:
         return maxSpeed
 
     if speed < minSpeed:
         return minSpeed
 
-    if abs(speed) <= 0.01:
+    return speed
+
+
+def deadBand(speed: float, deadband: float):
+    if abs(speed) < deadband:
         speed = 0
-        return speed
 
     return speed
