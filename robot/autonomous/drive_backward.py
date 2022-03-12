@@ -1,10 +1,10 @@
- from components.driveTrain import DriveTrain
+from components.driveTrain import DriveTrain
 from magicbot.state_machine import AutonomousStateMachine, timed_state
 
 
-class DriveBackwardTimed(AutonomousStateMachine):
+class DriveBackward(AutonomousStateMachine):
 
-    MODE_NAME = "Drive backward timed"
+    MODE_NAME = "Drive forward, deposit, drive backward"
     DEFAULT = True
 
     driveTrain: DriveTrain

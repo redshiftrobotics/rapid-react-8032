@@ -49,10 +49,10 @@ class DriveTrain:
         self.kForwardD = 0
         self.kForwardTolerance = 10
 
-        self.forwardController = wpimath.controller.PIDController(
+        self.distanceController = wpimath.controller.PIDController(
             self.kForwardP, self.kForwardI, self.kForwardD
         )
-        self.forwardController.setTolerance(self.kForwardTolerance)
+        self.distanceController.setTolerance(self.kForwardTolerance)
 
     def arcadeDrive(self, xAxis: float, yAxis: float):
         """
@@ -171,10 +171,10 @@ class DriveTrain:
         Returns: None
         """
         # FIXME: Don't call calculate twice, because it messes up the PID controller
-        newLeftSpeed = self.forwardController.calculate(
+        newLeftSpeed = self.distanceController.calculate(
             self.getLeftDistance(), targetDistance
         )
-        newRightSpeed = self.forwardController.calculate(
+        newRightSpeed = self.distanceController.calculate(
             self.getRightDistance(), targetDistance
         )
 
@@ -204,6 +204,14 @@ class DriveTrain:
         Returns: boolean
         """
         return self.angleController.atSetpoint()
+    
+    def atDistancePIDSetPoint(self):
+        """
+        Returns if the angle PID is at it's setpoint
+        Input: None
+        Returns: boolean
+        """
+        return self.distanceController.atSetpoint()
 
     def resetOdometry(self):
         """
