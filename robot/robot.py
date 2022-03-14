@@ -25,9 +25,9 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
 
-    #hangComponents: HangComponents
-    #extendLeadScrew: ExtendLeadScrew
-    #retractLeadScrew: RetractLeadScrew
+    hangComponents: HangComponents
+    extendLeadScrew: ExtendLeadScrew
+    retractLeadScrew: RetractLeadScrew
 
     ### These mechanisms don't exist yet ###
     # dropperComponents: DropperComponents
@@ -72,7 +72,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
             motorUtils.kTicksPerRev
         )
 
-        self.testEncoder = self.frontLeftMotor.getEncoder(rev.SparkMaxRelativeEncoder.Type.kHallSensor,42)
+        
 
         # Create gyroscope. spi - communications protocol
         self.ahrs = AHRS.create_spi()  # type:ignore
@@ -95,21 +95,24 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # )
 
         ### Hang Setup ###
-        #with self.consumeExceptions():
-        #    self.leadScrewMotor = rev.CANSparkMax(
-        #        motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushless
-        #    )
+        with self.consumeExceptions():
+            self.leadScrewMotor = rev.CANSparkMax(
+                motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushless
+            )
 
-        #    self.topLeadScrewSensor = wpilib.DigitalInput(
-        #        sensorUtils.kTopLeadScrewSensorID
-        #    )
-        #    self.bottomLeadScrewSensor = wpilib.DigitalInput(
-        #        sensorUtils.kBottomLeadScrewSensorID
-        #    )
+     
+            self.topLeadScrewSensor = wpilib.DigitalInput(
+                sensorUtils.kTopLeadScrewSensorID
+            )
+            self.bottomLeadScrewSensor = wpilib.DigitalInput(
+                sensorUtils.kBottomLeadScrewSensorID
+            )
 
         ### Auto Setup ###
         with self.consumeExceptions():
             self.auto = AutonomousModeSelector("autonomous")
+
+        
 
     def autonomousInit(self):
         self.auto.start()
@@ -133,61 +136,59 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
     def teleopPeriodic(self):
         ### Hang Control Code ###
 
-        #wpilib.SmartDashboard.putBoolean(
-        #    "topLeadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
-        #)
-        #wpilib.SmartDashboard.putBoolean(
-        #    "bottomLeadScrewSensor", self.hangComponents.getBottomLeadScrewSensor()
-        #)
+        wpilib.SmartDashboard.putBoolean(
+           "topLeadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
+        )
+        wpilib.SmartDashboard.putBoolean(
+           "bottomLeadScrewSensor", self.hangComponents.getBottomLeadScrewSensor()
+        )
 
-        wpilib.SmartDashboard.putNumber("Test Encoder",self.testEncoder.getPosition())
+        
 
-        #with self.consumeExceptions():
-            #if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewExtendButton):
+        with self.consumeExceptions():
+            if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewExtendButton):
 
-                #wpilib.SmartDashboard.putBoolean(
-                #    "topleadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
-                #)
-                # self.extendLeadScrew.extendLeadScrew()
-                #self.hangComponents.setLeadScrewMotorSpeed(
+                
+                self.extendLeadScrew.extendLeadScrew()
+                # self.hangComponents.setLeadScrewMotorSpeed(
                 #    joystickUtils.kLeadScrewSpeed
-                #)
+                # )
 
-        #with self.consumeExceptions():
-            #if self.operatorJoystick.getRawButton(
-                #joystickUtils.kLeadScrewRetractButton
-            #):
-                # self.retractLeadScrew.retractLeadScrew()
-                #self.hangComponents.setLeadScrewMotorSpeed(
+        with self.consumeExceptions():
+            if self.operatorJoystick.getRawButton(
+                joystickUtils.kLeadScrewRetractButton
+            ):
+                self.retractLeadScrew.retractLeadScrew()
+                # self.hangComponents.setLeadScrewMotorSpeed(
                 #    -joystickUtils.kLeadScrewSpeed
-                #)
+                # )
 
         ### Drivetrain Control Code ###
 
         # with self.consumeExceptions():
-        self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
+        # self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
 
-        with self.consumeExceptions():
-            # if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
-            #     self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
-            if self.driverJoystick.getTrigger():
-                self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
-            if self.slowButtonToggle.get():
-                self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
-            wpilib.SmartDashboard.putBoolean(
-                "nitro button pressed", self.driverJoystick.getTrigger()
-            )
-            wpilib.SmartDashboard.putNumber(
-                "code max speed", self.driveTrain.getMaxSpeed()
-            )
+        # with self.consumeExceptions():
+        #     # if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
+        #     #     self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
+        #     if self.driverJoystick.getTrigger():
+        #         self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
+        #     if self.slowButtonToggle.get():
+        #         self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
+        #     wpilib.SmartDashboard.putBoolean(
+        #         "nitro button pressed", self.driverJoystick.getTrigger()
+        #     )
+        #     wpilib.SmartDashboard.putNumber(
+        #         "code max speed", self.driveTrain.getMaxSpeed()
+        #     )
 
-        # `getX` left to right is turns the robot. Replace with `getZ` for twist
-        self.driveTrain.arcadeDrive(
-            # util.deadBand(joystickUtils.isXAxisReversed * self.driverJoystick.getX(),joystickUtils.kDeadband),
-            # util.deadBand(joystickUtils.isYAxisReversed * self.driverJoystick.getY(), joystickUtils.kDeadband)
-            joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
-            joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
-        )
+        # # `getX` left to right is turns the robot. Replace with `getZ` for twist
+        # self.driveTrain.arcadeDrive(
+        #     # util.deadBand(joystickUtils.isXAxisReversed * self.driverJoystick.getX(),joystickUtils.kDeadband),
+        #     # util.deadBand(joystickUtils.isYAxisReversed * self.driverJoystick.getY(), joystickUtils.kDeadband)
+        #     joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
+        #     joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
+        # )
 
     def disabledPeriodic(self):
         pass
