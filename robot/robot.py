@@ -111,6 +111,10 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         ### Auto Setup ###
         with self.consumeExceptions():
             self.auto = AutonomousModeSelector("autonomous")
+    
+    def robotInit(self):
+        wpilib.CameraServer.launch()
+        super().robotInit()
 
         
 
