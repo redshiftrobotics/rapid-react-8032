@@ -132,10 +132,9 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driveTrain.resetEncoders()
         self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
-
-        ### These mechanisms don't exist yet ###
-        #with self.consumeExceptions():
-        #    self.hangComponents.enable()
+        
+        with self.consumeExceptions():
+           self.hangComponents.enable()
 
     def teleopPeriodic(self):
         ### Hang Control Code ###
