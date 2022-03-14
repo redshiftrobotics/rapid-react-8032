@@ -95,17 +95,17 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # )
 
         ### Hang Setup ###
-        with self.consumeExceptions():
-            self.leadScrewMotor = rev.CANSparkMax(
-                motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushless
-            )
+        #with self.consumeExceptions():
+        #    self.leadScrewMotor = rev.CANSparkMax(
+        #        motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushless
+        #    )
 
-            self.topLeadScrewSensor = wpilib.DigitalInput(
-                sensorUtils.kTopLeadScrewSensorID
-            )
-            self.bottomLeadScrewSensor = wpilib.DigitalInput(
-                sensorUtils.kBottomLeadScrewSensorID
-            )
+        #    self.topLeadScrewSensor = wpilib.DigitalInput(
+        #        sensorUtils.kTopLeadScrewSensorID
+        #    )
+        #    self.bottomLeadScrewSensor = wpilib.DigitalInput(
+        #        sensorUtils.kBottomLeadScrewSensorID
+        #    )
 
         ### Auto Setup ###
         with self.consumeExceptions():
@@ -127,40 +127,40 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driveTrain.enable()
 
         ### These mechanisms don't exist yet ###
-        with self.consumeExceptions():
-            self.hangComponents.enable()
+        #with self.consumeExceptions():
+        #    self.hangComponents.enable()
 
     def teleopPeriodic(self):
         ### Hang Control Code ###
 
-        wpilib.SmartDashboard.putBoolean(
-            "topLeadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
-        )
-        wpilib.SmartDashboard.putBoolean(
-            "bottomLeadScrewSensor", self.hangComponents.getBottomLeadScrewSensor()
-        )
+        #wpilib.SmartDashboard.putBoolean(
+        #    "topLeadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
+        #)
+        #wpilib.SmartDashboard.putBoolean(
+        #    "bottomLeadScrewSensor", self.hangComponents.getBottomLeadScrewSensor()
+        #)
 
         wpilib.SmartDashboard.putNumber("Test Encoder",self.testEncoder.getPosition())
 
-        with self.consumeExceptions():
-            if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewExtendButton):
+        #with self.consumeExceptions():
+            #if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewExtendButton):
 
-                wpilib.SmartDashboard.putBoolean(
-                    "topleadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
-                )
+                #wpilib.SmartDashboard.putBoolean(
+                #    "topleadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
+                #)
                 # self.extendLeadScrew.extendLeadScrew()
-                self.hangComponents.setLeadScrewMotorSpeed(
-                    joystickUtils.kLeadScrewSpeed
-                )
+                #self.hangComponents.setLeadScrewMotorSpeed(
+                #    joystickUtils.kLeadScrewSpeed
+                #)
 
-        with self.consumeExceptions():
-            if self.operatorJoystick.getRawButton(
-                joystickUtils.kLeadScrewRetractButton
-            ):
+        #with self.consumeExceptions():
+            #if self.operatorJoystick.getRawButton(
+                #joystickUtils.kLeadScrewRetractButton
+            #):
                 # self.retractLeadScrew.retractLeadScrew()
-                self.hangComponents.setLeadScrewMotorSpeed(
-                    -joystickUtils.kLeadScrewSpeed
-                )
+                #self.hangComponents.setLeadScrewMotorSpeed(
+                #    -joystickUtils.kLeadScrewSpeed
+                #)
 
         ### Drivetrain Control Code ###
 
