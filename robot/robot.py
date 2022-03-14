@@ -25,9 +25,9 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
     driveTrain: DriveTrain
 
-    hangComponents: HangComponents
-    extendLeadScrew: ExtendLeadScrew
-    retractLeadScrew: RetractLeadScrew
+    #hangComponents: HangComponents
+    #extendLeadScrew: ExtendLeadScrew
+    #retractLeadScrew: RetractLeadScrew
 
     ### These mechanisms don't exist yet ###
     # dropperComponents: DropperComponents
