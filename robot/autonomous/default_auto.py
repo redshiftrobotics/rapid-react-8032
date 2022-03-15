@@ -5,7 +5,7 @@ from components.driveTrain import DriveTrain
 class DefaultAuto(AutonomousStateMachine):
 
     MODE_NAME = "Default Auto"
-    # DEFAULT = True
+    DEFAULT = True
 
     driveTrain: DriveTrain
 

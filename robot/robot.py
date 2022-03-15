@@ -141,22 +141,20 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewExtendButton):
 
-                wpilib.SmartDashboard.putBoolean(
-                    "topleadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
-                )
-                # self.extendLeadScrew.extendLeadScrew()
-                self.hangComponents.setLeadScrewMotorSpeed(
-                    joystickUtils.kLeadScrewSpeed
-                )
+                
+                self.extendLeadScrew.extendLeadScrew()
+                # self.hangComponents.setLeadScrewMotorSpeed(
+                #     joystickUtils.kLeadScrewSpeed
+                # )
 
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(
                 joystickUtils.kLeadScrewRetractButton
             ):
-                # self.retractLeadScrew.retractLeadScrew()
-                self.hangComponents.setLeadScrewMotorSpeed(
-                    -joystickUtils.kLeadScrewSpeed
-                )
+                self.retractLeadScrew.retractLeadScrew()
+                # self.hangComponents.setLeadScrewMotorSpeed(
+                #     -joystickUtils.kLeadScrewSpeed
+                # )
 
         ### Drivetrain Control Code ###
 
@@ -184,6 +182,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
             joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
             joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
         )
+
+        wpilib.SmartDashboard.putNumber("Leadscrew motor speed",self.leadScrewMotor.get())
 
     def disabledPeriodic(self):
         pass

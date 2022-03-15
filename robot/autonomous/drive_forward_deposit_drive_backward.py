@@ -7,11 +7,10 @@ from magicbot.state_machine import AutonomousStateMachine, timed_state, state
 class DriveForwardDepositDriveBackward(AutonomousStateMachine):
 
     MODE_NAME = "Deposit and drive backward"
-    DEFAULT = True
 
     driveTrain: DriveTrain
-    dropperComponents: DropperComponents
-    transportComponents: TransportComponents
+    # dropperComponents: DropperComponents
+    # transportComponents: TransportComponents
 
     @state(first=True) # type:ignore
     def driveToHub(self):

@@ -5,7 +5,6 @@ from magicbot.state_machine import AutonomousStateMachine, timed_state
 class DriveBackward(AutonomousStateMachine):
 
     MODE_NAME = "Drive forward, deposit, drive backward"
-    DEFAULT = True
 
     driveTrain: DriveTrain
 
