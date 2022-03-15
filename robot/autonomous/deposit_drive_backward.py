@@ -7,10 +7,11 @@ from magicbot.state_machine import AutonomousStateMachine, timed_state, state
 class DepositDriveBackward(AutonomousStateMachine):
 
     MODE_NAME = "Deposit, drive backward"
+    DEFAULT = True
 
     driveTrain: DriveTrain
-    # dropperComponents: DropperComponents
-    # transportComponents: TransportComponents
+    dropperComponents: DropperComponents
+    transportComponents: TransportComponents
 
     @timed_state(duration=2, first=True, next_state="backOutOfTarmac")  # type:ignore
     def depositBall(self):
