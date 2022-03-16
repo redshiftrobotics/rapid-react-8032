@@ -27,8 +27,9 @@ def deadBand(speed: float, deadband: float):
     return speed
 
 class AccelerationLimiter:
-    def __init__(self, max_acceleration: float):
+    def __init__(self, max_acceleration: float, critical_damping_coefficient: float = 0.85):
         self.max_acceleration = max_acceleration
+        self.critical_damping_coefficient = critical_damping_coefficient
         
         self.prev_time = time.time()
         self.prev_pos = 0
@@ -51,6 +52,7 @@ class AccelerationLimiter:
             
             new_accel = clamp(curr_accel, self.max_acceleration, -self.max_acceleration)
             new_vel = self.prev_vel + (new_accel * time_diff)
+            new_vel *= self.critical_damping_coefficient
             new_pos = self.prev_pos + (new_vel * time_diff)
 
             wpilib.SmartDashboard.putBoolean("accel_too_large", curr_accel != new_accel)
@@ -59,7 +61,7 @@ class AccelerationLimiter:
             wpilib.SmartDashboard.putNumber("new_vel", new_vel)
             wpilib.SmartDashboard.putNumber("new_pos", new_pos)
 
-            print("target_pos", target_pos, "curr_vel", curr_vel, "curr_accel", curr_accel, "new_accel", new_accel, "new_vel", new_vel, "new_pos", new_pos)
+            print("target_pos", round(target_pos, 2), "curr_vel", round(curr_vel, 2), "curr_accel", round(curr_accel, 2), "new_accel", round(new_accel, 2), "new_vel", round(new_vel, 2), "new_pos", round(new_pos, 2))
 
             # Store the calculated values for the next loop iteration
             self.prev_pos = new_pos
