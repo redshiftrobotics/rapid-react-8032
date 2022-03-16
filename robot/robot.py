@@ -37,6 +37,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         ### Joystick Setup ###
         self.driverJoystick = wpilib.Joystick(joystickUtils.kDriverJoystickID)
         self.slowButtonToggle = Toggle(self.driverJoystick, joystickUtils.kSlowButton)
+        self.driverJoysticAccelerationLimiter = util.AccelerationLimiter(1000)
 
         self.operatorJoystick = wpilib.Joystick(joystickUtils.kOperatorJoystickID)
 
@@ -184,6 +185,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
             joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
             joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
         )
+
+        self.driverJoysticAccelerationLimiter.calculate(self.driverJoystick.getY())
 
     def disabledPeriodic(self):
         pass

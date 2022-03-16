@@ -13,5 +13,6 @@
       "reportPrivateImportUsage": "information",
       "reportUnusedImport": "information",
       "reportUntypedFunctionDecorator": "information",
+      "reportUnusedVariable": "information"
   }
 }
