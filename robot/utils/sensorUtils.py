@@ -1,7 +1,7 @@
 # DIO Sensors
 # Magnet Sensor is True when away from magnet and False when close to magnet
-kTopLeadScrewSensorID = 5
-kBottomLeadScrewSensorID = 6
+kTopLeadScrewSensorID = 8
+kBottomLeadScrewSensorID = 9
 
 # Analog Sensors
 kDropperSensorID = 0
