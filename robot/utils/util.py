@@ -22,11 +22,11 @@ def clamp(speed: float, maxSpeed: float, minSpeed: float):
 
 def deadBand(speed: float, deadband: float):
     if abs(speed) < deadband:
-        speed = 0
+        return 0
 
     return speed
 
-class AccelerationLimiter():
+class AccelerationLimiter:
     def __init__(self, max_acceleration: float):
         self.max_acceleration = max_acceleration
         
@@ -50,14 +50,16 @@ class AccelerationLimiter():
             wpilib.SmartDashboard.putNumber("curr_accel", curr_accel)
             
             new_accel = clamp(curr_accel, self.max_acceleration, -self.max_acceleration)
-            new_vel = new_accel * time_diff
-            new_pos = new_vel * time_diff
+            new_vel = self.prev_vel + (new_accel * time_diff)
+            new_pos = self.prev_pos + (new_vel * time_diff)
 
             wpilib.SmartDashboard.putBoolean("accel_too_large", curr_accel != new_accel)
             
             wpilib.SmartDashboard.putNumber("new_accel", new_accel)
             wpilib.SmartDashboard.putNumber("new_vel", new_vel)
             wpilib.SmartDashboard.putNumber("new_pos", new_pos)
+
+            print("target_pos", target_pos, "curr_vel", curr_vel, "curr_accel", curr_accel, "new_accel", new_accel, "new_vel", new_vel, "new_pos", new_pos)
 
             # Store the calculated values for the next loop iteration
             self.prev_pos = new_pos
