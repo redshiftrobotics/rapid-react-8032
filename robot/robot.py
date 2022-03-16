@@ -183,7 +183,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
             # util.deadBand(joystickUtils.isXAxisReversed * self.driverJoystick.getX(),joystickUtils.kDeadband),
             # util.deadBand(joystickUtils.isYAxisReversed * self.driverJoystick.getY(), joystickUtils.kDeadband)
             joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
-            joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
+            joystickUtils.isYAxisReversed * self.driverJoysticAccelerationLimiter.calculate(self.driverJoystick.getY())
+            #joystickUtils.isYAxisReversed * self.driverJoystick.getY()
         )
 
         self.driverJoysticAccelerationLimiter.calculate(self.driverJoystick.getY())
