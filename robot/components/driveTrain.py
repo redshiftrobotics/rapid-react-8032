@@ -49,10 +49,15 @@ class DriveTrain:
         self.kForwardD = 0
         self.kForwardTolerance = 10
 
-        self.distanceController = wpimath.controller.PIDController(
+        self.leftDistanceController = wpimath.controller.PIDController(
             self.kForwardP, self.kForwardI, self.kForwardD
         )
-        self.distanceController.setTolerance(self.kForwardTolerance)
+        self.leftDistanceController.setTolerance(self.kForwardTolerance)
+
+        self.rightDistanceController = wpimath.controller.PIDController(
+            self.kForwardP, self.kForwardI, self.kForwardD
+        )
+        self.rightDistanceController.setTolerance(self.kForwardTolerance)
 
     def arcadeDrive(self, xAxis: float, yAxis: float):
         """
@@ -170,11 +175,12 @@ class DriveTrain:
         Input: float
         Returns: None
         """
-        # FIXME: Don't call calculate twice, because it messes up the PID controller
-        newLeftSpeed = self.distanceController.calculate(
+        
+
+        newLeftSpeed = self.leftDistanceController.calculate(
             self.getLeftDistance(), targetDistance
         )
-        newRightSpeed = self.distanceController.calculate(
+        newRightSpeed = self.rightDistanceController.calculate(
             self.getRightDistance(), targetDistance
         )
 
@@ -204,14 +210,33 @@ class DriveTrain:
         Returns: boolean
         """
         return self.angleController.atSetpoint()
-    
-    def atDistancePIDSetPoint(self):
+
+    def atRightDistancePIDSetPoint(self):
         """
-        Returns if the angle PID is at it's setpoint
+        Returns if the right distance PID is at it's setpoint
         Input: None
         Returns: boolean
         """
-        return self.distanceController.atSetpoint()
+        return self.rightDistanceController.atSetpoint()
+
+    def atLeftDistancePIDSetPoint(self):
+        """
+        Returns if the left distance PID is at it's setpoint
+        Input: None
+        Returns: boolean
+        """
+        return self.leftDistanceController.atSetpoint()
+
+    def atDistancePIDSetPoint(self):
+        """
+        Returns if the distance PID is at it's setpoint
+        Input: None
+        Returns: boolean
+        """
+        return (
+            self.leftDistanceController.atSetpoint()
+            and self.rightDistanceController.atSetpoint()
+        )
 
     def resetOdometry(self):
         """

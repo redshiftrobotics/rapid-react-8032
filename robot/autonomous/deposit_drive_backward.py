@@ -4,6 +4,7 @@ from components.transportComponents import TransportComponents
 
 from magicbot.state_machine import AutonomousStateMachine, timed_state, state
 
+
 class DepositDriveBackward(AutonomousStateMachine):
 
     MODE_NAME = "Deposit, drive backward"
@@ -17,8 +18,8 @@ class DepositDriveBackward(AutonomousStateMachine):
     def depositBall(self):
         self.dropperComponents.drop()
         self.transportComponents.setIntakeSpeed(0.2)
-    
-    @state() # type:ignore
+
+    @state()  # type:ignore
     def backOutOfTarmac(self):
         target = -100
         self.driveTrain.driveToDistance(target)
