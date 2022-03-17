@@ -187,8 +187,6 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
             #joystickUtils.isYAxisReversed * self.driverJoystick.getY()
         )
 
-        self.driverJoysticAccelerationLimiter.calculate(self.driverJoystick.getY())
-
     def disabledPeriodic(self):
         pass
 
