@@ -5,14 +5,12 @@ import wpilib
 import rev
 from components.driveTrain import DriveTrain
 from components.hangComponents import HangComponents
-from components.dropperComponents import DropperComponents
 from components.transportComponents import TransportComponents
 
 from hang.extendLeadScrew import ExtendLeadScrew
 from hang.retractLeadScrew import RetractLeadScrew
 from navx import AHRS
 from robotpy_ext.autonomous import AutonomousModeSelector  # type:ignore
-from components.dropperComponents import DropperComponents
 from components.transportComponents import TransportComponents
 
 import utils.joystickUtils as joystickUtils
@@ -30,7 +28,6 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
     retractLeadScrew: RetractLeadScrew
 
     ### These mechanisms don't exist yet ###
-    # dropperComponents: DropperComponents
     # transportComponents: TransportComponents
 
     def createObjects(self):
@@ -63,7 +60,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # self.backLeftMotor.setIdleMode(rev.CANSparkMax.IdleMode.kCoast)
         # self.frontRightMotor.setIdleMode(rev.CANSparkMax.IdleMode.kCoast)
         # self.backRightMotor.setIdleMode(rev.CANSparkMax.IdleMode.kCoast)
-        
+
         # initialize encoders
         self.leftEncoder = self.backLeftMotor.getAlternateEncoder(
             motorUtils.kTicksPerRev
@@ -71,8 +68,6 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.rightEncoder = self.backRightMotor.getAlternateEncoder(
             motorUtils.kTicksPerRev
         )
-
-        
 
         # Create gyroscope. spi - communications protocol
         self.ahrs = AHRS.create_spi()  # type:ignore
@@ -84,23 +79,12 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         #     self.intakeMotor = rev.CANSparkMax(motorUtils.kIntakeMotorID, motorUtils.kCANSparkMaxBrushed)
         #     self.intakeMotor.setInverted(motorUtils.isIntakeMotorReversed)
 
-        ### Dropper Setup ###
-        # with self.consumeExceptions():
-        #     self.dropperMotor = rev.CANSparkMax(motorUtils.kDropperMotorID, motorUtils.kCANSparkMaxBrushed)
-        #     self.dropperMotor.setInverted(motorUtils.isDropperMotorReversed)
-        #     self.dropperSensor = wpilib.AnalogPotentiometer(
-        #         sensorUtils.kDropperSensorID,
-        #         sensorUtils.kDropperSensorStart,
-        #         sensorUtils.kDropperSensorEnd,
-        # )
-
         ### Hang Setup ###
         with self.consumeExceptions():
             self.leadScrewMotor = rev.CANSparkMax(
                 motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushless
             )
 
-     
             self.topLeadScrewSensor = wpilib.DigitalInput(
                 sensorUtils.kTopLeadScrewSensorID
             )
@@ -111,12 +95,10 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         ### Auto Setup ###
         with self.consumeExceptions():
             self.auto = AutonomousModeSelector("autonomous")
-    
+
     def robotInit(self):
         wpilib.CameraServer.launch()
         super().robotInit()
-
-        
 
     def autonomousInit(self):
         self.auto.start()
@@ -132,26 +114,23 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driveTrain.resetEncoders()
         self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
-        
+
         with self.consumeExceptions():
-           self.hangComponents.enable()
+            self.hangComponents.enable()
 
     def teleopPeriodic(self):
         ### Hang Control Code ###
 
         wpilib.SmartDashboard.putBoolean(
-           "topLeadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
+            "topLeadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
         )
         wpilib.SmartDashboard.putBoolean(
-           "bottomLeadScrewSensor", self.hangComponents.getBottomLeadScrewSensor()
+            "bottomLeadScrewSensor", self.hangComponents.getBottomLeadScrewSensor()
         )
-
-        
 
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewExtendButton):
 
-                
                 self.extendLeadScrew.extendLeadScrew()
                 # self.hangComponents.setLeadScrewMotorSpeed(
                 #     joystickUtils.kLeadScrewSpeed
@@ -193,7 +172,9 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         #     joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
         # )
 
-        wpilib.SmartDashboard.putNumber("Leadscrew motor speed",self.leadScrewMotor.get())
+        wpilib.SmartDashboard.putNumber(
+            "Leadscrew motor speed", self.leadScrewMotor.get()
+        )
 
     def disabledPeriodic(self):
         pass

@@ -13,8 +13,6 @@ kBackRightMotorID = 5
 
 kIntakeMotorID = 5
 
-kDropperMotorID = 6
-
 kLeadScrewMotorID = 8
 
 # Motor Directions
@@ -24,7 +22,5 @@ isBackLeftMotorReversed = False
 isBackRightMotorReversed = True
 
 isIntakeMotorReversed = False
-
-isDropperMotorReversed = False
 
 isLeadScrewMotorReversed = False
