@@ -1,2 +1,8 @@
 .venv
 __pycache__
+
+robot/simgui-ds.json
+
+robot/simgui-window.json
+
+robot/simgui.json

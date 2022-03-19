@@ -1,5 +1,5 @@
 ### Global Settings ###
-kDeadband = 0.025
+kDeadband = 0.2
 
 ### Driver Joystick ###
 kDriverJoystickID = 0
