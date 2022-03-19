@@ -34,8 +34,12 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         ### Joystick Setup ###
         self.driverJoystick = wpilib.Joystick(joystickUtils.kDriverJoystickID)
         self.slowButtonToggle = Toggle(self.driverJoystick, joystickUtils.kSlowButton)
-        self.driverYJoystickAccelerationLimiter = util.AccelerationLimiter(100000, 1) # 14 0.9
-        self.driverXJoystikcAccelerationLimiter = util.AccelerationLimiter(100000, 1) # 30 0.9
+        self.driverYJoystickAccelerationLimiter = util.AccelerationLimiter(
+            100000, 1
+        )  # 14 0.9
+        self.driverXJoystikcAccelerationLimiter = util.AccelerationLimiter(
+            100000, 1
+        )  # 30 0.9
 
         self.operatorJoystick = wpilib.Joystick(joystickUtils.kOperatorJoystickID)
 
@@ -157,7 +161,9 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
 
         with self.consumeExceptions():
-            if self.driverJoystick.getTrigger(): # Can also be: self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
+            if (
+                self.driverJoystick.getTrigger()
+            ):  # Can also be: self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
                 self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
             if self.slowButtonToggle.get():
                 self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
@@ -180,22 +186,43 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                 self.transportComponents.setTransportSpeed(
                     -joystickUtils.kTransportSpeed
                 )
-        
+
         # Transport debug messages
 
-        wpilib.SmartDashboard.putBoolean("Forward Transport Button", self.operatorJoystick.getRawButton(joystickUtils.kTransportButton))
-        wpilib.SmartDashboard.putBoolean("Reverse Transport Button", self.operatorJoystick.getRawButton(joystickUtils.kReverseTransportButton))
-        wpilib.SmartDashboard.putNumber("Constant Transport Speed!", joystickUtils.kTransportSpeed)
-        wpilib.SmartDashboard.putNumber("Transport Component Speed", self.transportComponents.getTransportSpeed())
-        
+        wpilib.SmartDashboard.putBoolean(
+            "Forward Transport Button",
+            self.operatorJoystick.getRawButton(joystickUtils.kTransportButton),
+        )
+        wpilib.SmartDashboard.putBoolean(
+            "Reverse Transport Button",
+            self.operatorJoystick.getRawButton(joystickUtils.kReverseTransportButton),
+        )
+        wpilib.SmartDashboard.putNumber(
+            "Constant Transport Speed!", joystickUtils.kTransportSpeed
+        )
+        wpilib.SmartDashboard.putNumber(
+            "Transport Component Speed", self.transportComponents.getTransportSpeed()
+        )
 
         wpilib.SmartDashboard.putNumber(
             "Leadscrew motor speed", self.leadScrewMotor.get()
         )
         # `getX` left to right is turns the robot. Replace with `getZ` for twist
         self.driveTrain.arcadeDrive(
-            util.deadBand(joystickUtils.isXAxisReversed * self.driverXJoystikcAccelerationLimiter.calculate(self.driverJoystick.getX()), joystickUtils.kDeadband),
-            util.deadBand(joystickUtils.isYAxisReversed * self.driverYJoystickAccelerationLimiter.calculate(self.driverJoystick.getY()), joystickUtils.kDeadband)
+            util.deadBand(
+                joystickUtils.isXAxisReversed
+                * self.driverXJoystikcAccelerationLimiter.calculate(
+                    self.driverJoystick.getX()
+                ),
+                joystickUtils.kDeadband,
+            ),
+            util.deadBand(
+                joystickUtils.isYAxisReversed
+                * self.driverYJoystickAccelerationLimiter.calculate(
+                    self.driverJoystick.getY()
+                ),
+                joystickUtils.kDeadband,
+            ),
         )
 
         wpilib.SmartDashboard.putNumber("joyX", self.driverJoystick.getX())
