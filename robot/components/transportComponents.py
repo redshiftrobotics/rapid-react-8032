@@ -1,4 +1,5 @@
 import rev
+import utils.util as util
 
 
 class TransportComponents:
@@ -8,6 +9,7 @@ class TransportComponents:
     def __init__(self):
         self.enabled = False
         self.transportMotorSpeed = 0
+        self.accelerationLimiter = util.AccelerationLimiter(100000, 1, False)
 
     def setTransportSpeed(self, transportSpeed: float):
         self.transportMotorSpeed = transportSpeed
@@ -23,6 +25,11 @@ class TransportComponents:
 
     def execute(self):
         if self.enabled:
-            self.transportMotor.set(self.transportMotorSpeed)
+            self.transportMotor.set(
+                self.accelerationLimiter.calculate(self.transportMotorSpeed)
+            )
+
+            # Old code, use if accelerationLimiter does not work / do not need it anymore
+            # self.transportMotor.set(self.transportMotorSpeed)
 
         self.transportMotorSpeed = 0

@@ -1,4 +1,5 @@
 import time
+from xmlrpc.client import Boolean
 import wpilib
 
 
@@ -30,17 +31,21 @@ def deadBand(speed: float, deadband: float):
 
 class AccelerationLimiter:
     def __init__(
-        self, max_acceleration: float, critical_damping_coefficient: float = 0.85
+        self,
+        max_acceleration: float,
+        critical_damping_coefficient: float = 0.85,
+        useNoAccelWhenSpeedingDown: Boolean = True,
     ):
         self.max_acceleration = max_acceleration
         self.critical_damping_coefficient = critical_damping_coefficient
+        self.useNoAccelWhenSpeedingDown = useNoAccelWhenSpeedingDown
 
         self.prev_time = time.time()
         self.prev_pos = 0
         self.prev_vel = 0
 
     def calculate(self, target_pos: float):
-        if abs(target_pos) < abs(self.prev_pos):
+        if abs(target_pos) < abs(self.prev_pos) and self.useNoAccelWhenSpeedingDown:
             return target_pos
 
         # Calculate the current velocity and acceleration
