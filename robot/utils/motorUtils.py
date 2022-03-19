@@ -11,7 +11,7 @@ kFrontRightMotorID = 6
 kBackLeftMotorID = 20
 kBackRightMotorID = 5
 
-kTransportMotorID = 5
+kTransportMotorID = 9
 
 kLeadScrewMotorID = 8
 

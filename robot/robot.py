@@ -40,6 +40,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driverXJoystikcAccelerationLimiter = util.AccelerationLimiter(
             100000, 1
         )  # 30 0.9
+        self.transportMotorAccelerationLimiter = util.AccelerationLimiter(100000,1)
 
         self.operatorJoystick = wpilib.Joystick(joystickUtils.kOperatorJoystickID)
 
@@ -174,6 +175,24 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                 "code max speed", self.driveTrain.getMaxSpeed()
             )
 
+        # `getX` left to right is turns the robot. Replace with `getZ` for twist
+        self.driveTrain.arcadeDrive(
+            util.deadBand(
+                joystickUtils.isXAxisReversed
+                * self.driverXJoystikcAccelerationLimiter.calculate(
+                    self.driverJoystick.getX()
+                ),
+                joystickUtils.kDeadband,
+            ),
+            util.deadBand(
+                joystickUtils.isYAxisReversed
+                * self.driverYJoystickAccelerationLimiter.calculate(
+                    self.driverJoystick.getY()
+                ),
+                joystickUtils.kDeadband,
+            ),
+        )
+
         # -------Transport Code--------
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(joystickUtils.kTransportButton):
@@ -186,6 +205,16 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                 self.transportComponents.setTransportSpeed(
                     -joystickUtils.kTransportSpeed
                 )
+        
+
+        #this code uses acceleration limiters is the same as code above save for acceleration limiter
+        # with self.consumeExceptions():
+        #     if self.operatorJoystick.getRawButton(joystickUtils.kTransportButton):
+        #         self.transportComponents.setTransportSpeed(self.transportMotorAccelerationLimiter.calculate(joystickUtils.kTransportSpeed))
+        #     elif self.operatorJoystick.getRawButton(joystickUtils.kReverseTransportButton):
+        #         self.transportComponents.setTransportSpeed(self.transportMotorAccelerationLimiter.calculate(-joystickUtils.kTransportSpeed))
+        #     else:
+        #         self.transportComponents.setTransportSpeed(self.transportMotorAccelerationLimiter.calculate(0))
 
         # Transport debug messages
 
@@ -207,23 +236,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         wpilib.SmartDashboard.putNumber(
             "Leadscrew motor speed", self.leadScrewMotor.get()
         )
-        # `getX` left to right is turns the robot. Replace with `getZ` for twist
-        self.driveTrain.arcadeDrive(
-            util.deadBand(
-                joystickUtils.isXAxisReversed
-                * self.driverXJoystikcAccelerationLimiter.calculate(
-                    self.driverJoystick.getX()
-                ),
-                joystickUtils.kDeadband,
-            ),
-            util.deadBand(
-                joystickUtils.isYAxisReversed
-                * self.driverYJoystickAccelerationLimiter.calculate(
-                    self.driverJoystick.getY()
-                ),
-                joystickUtils.kDeadband,
-            ),
-        )
+        
 
         wpilib.SmartDashboard.putNumber("joyX", self.driverJoystick.getX())
 
