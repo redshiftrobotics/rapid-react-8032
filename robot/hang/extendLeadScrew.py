@@ -12,4 +12,4 @@ class ExtendLeadScrew(StateMachine):
     @state(first=True)  # type:ignore
     def startExtendLeadScrew(self):
         if self.hangComponents.getTopLeadScrewSensor():
-            self.hangComponents.setLeadScrewMotorSpeed(joystickUtils.kLeadScrewSpeed)
+            self.hangComponents.setLeadScrewMotorSpeed(-joystickUtils.kLeadScrewSpeed)

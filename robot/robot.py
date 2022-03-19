@@ -61,6 +61,11 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.frontRightMotor.setInverted(motorUtils.isFrontRightMotorReversed)
         self.backRightMotor.setInverted(motorUtils.isBackRightMotorReversed)
 
+        # self.frontLeftMotor.setIdleMode(rev.CANSparkMax.IdleMode.kCoast)
+        # self.backLeftMotor.setIdleMode(rev.CANSparkMax.IdleMode.kCoast)
+        # self.frontRightMotor.setIdleMode(rev.CANSparkMax.IdleMode.kCoast)
+        # self.backRightMotor.setIdleMode(rev.CANSparkMax.IdleMode.kCoast)
+        
         # initialize encoders
         self.leftEncoder = self.backLeftMotor.getAlternateEncoder(
             motorUtils.kTicksPerRev
@@ -68,6 +73,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.rightEncoder = self.backRightMotor.getAlternateEncoder(
             motorUtils.kTicksPerRev
         )
+
+        
 
         # Create gyroscope. spi - communications protocol
         self.ahrs = AHRS.create_spi()  # type:ignore
@@ -95,6 +102,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                 motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushless
             )
 
+     
             self.topLeadScrewSensor = wpilib.DigitalInput(
                 sensorUtils.kTopLeadScrewSensorID
             )
@@ -110,6 +118,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         wpilib.CameraServer.launch()
         super().robotInit()
 
+        
+
     def autonomousInit(self):
         self.auto.start()
         self.driveTrain.resetEncoders()
@@ -124,46 +134,44 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driveTrain.resetEncoders()
         self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
-
-        ### These mechanisms don't exist yet ###
+        
         with self.consumeExceptions():
-            self.hangComponents.enable()
+           self.hangComponents.enable()
 
     def teleopPeriodic(self):
-        ### These mechanisms don't exist yet ###
         ### Hang Control Code ###
 
         wpilib.SmartDashboard.putBoolean(
-            "topLeadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
+           "topLeadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
         )
         wpilib.SmartDashboard.putBoolean(
-            "bottomLeadScrewSensor", self.hangComponents.getBottomLeadScrewSensor()
+           "bottomLeadScrewSensor", self.hangComponents.getBottomLeadScrewSensor()
         )
+
+        
 
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewExtendButton):
 
-                wpilib.SmartDashboard.putBoolean(
-                    "topleadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
-                )
-                # self.extendLeadScrew.extendLeadScrew()
-                self.hangComponents.setLeadScrewMotorSpeed(
-                    joystickUtils.kLeadScrewSpeed
-                )
+                
+                self.extendLeadScrew.extendLeadScrew()
+                # self.hangComponents.setLeadScrewMotorSpeed(
+                #     joystickUtils.kLeadScrewSpeed
+                # )
 
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(
                 joystickUtils.kLeadScrewRetractButton
             ):
-                # self.retractLeadScrew.retractLeadScrew()
-                self.hangComponents.setLeadScrewMotorSpeed(
-                    -joystickUtils.kLeadScrewSpeed
-                )
+                self.retractLeadScrew.retractLeadScrew()
+                # self.hangComponents.setLeadScrewMotorSpeed(
+                #     -joystickUtils.kLeadScrewSpeed
+                # )
 
         ### Drivetrain Control Code ###
 
         # with self.consumeExceptions():
-        self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
+        # self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
 
         with self.consumeExceptions():
             if self.driverJoystick.getTrigger(): # Can also be: self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
@@ -182,6 +190,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
             util.deadBand(joystickUtils.isXAxisReversed * self.driverXJoystikcAccelerationLimiter.calculate(self.driverJoystick.getX()), joystickUtils.kDeadband),
             util.deadBand(joystickUtils.isYAxisReversed * self.driverYJoystickAccelerationLimiter.calculate(self.driverJoystick.getY()), joystickUtils.kDeadband)
         )
+        
+        wpilib.SmartDashboard.putNumber("Leadscrew motor speed",self.leadScrewMotor.get())
 
         wpilib.SmartDashboard.putNumber("joyX", self.driverJoystick.getX())
 
