@@ -26,6 +26,7 @@ class HangComponents:
         return self.topLeadScrewSensor.get()
 
     def setLeadScrewMotorSpeed(self, speed: float):
+        #IMPORTANT TODO make inverted variable !!!!!!!!!!!! leadscrew negative goes up and positive goes down
         self.leadScrewSpeed = speed
 
     def execute(self):

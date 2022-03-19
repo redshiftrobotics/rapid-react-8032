@@ -4,7 +4,7 @@ import rev
 import wpimath.controller
 from navx import AHRS
 import math
-from utils.util import clampSpeed
+from utils.util import clamp
 import utils.joystickUtils as joystickUtils
 
 
@@ -256,8 +256,8 @@ class DriveTrain:
     def execute(self):
         # TODO: Its kind of messy that drivetrain accesses a deadband which is a joystick value.
         # We could call adjustSpeed in robot.py instead, or create a joystick wrapper class
-        self.leftMotorSpeed = clampSpeed(self.leftMotorSpeed, 1, -1)
-        self.rightMotorSpeed = clampSpeed(self.rightMotorSpeed, 1, -1)
+        self.leftMotorSpeed = clamp(self.leftMotorSpeed, 1, -1)
+        self.rightMotorSpeed = clamp(self.rightMotorSpeed, 1, -1)
 
         self.leftMotorSpeed = self.leftMotorSpeed * self.getMaxSpeed()
         self.rightMotorSpeed = self.rightMotorSpeed * self.getMaxSpeed()
