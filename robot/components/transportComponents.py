@@ -2,14 +2,15 @@ import rev
 
 
 class TransportComponents:
-    # Motors
-    intakeMotor: rev.CANSparkMax
+    # Motor
+    transportMotor: rev.CANSparkMax
 
     def __init__(self):
         self.enabled = False
+        self.transportMotorSpeed=0
 
-    def setIntakeSpeed(self, intakeSpeed: float):
-        self.intakeMotorSpeed = intakeSpeed
+    def setTransportSpeed(self, transportSpeed: float):
+        self.transportMotorSpeed = transportSpeed
 
     def enable(self):
         self.enabled = True
@@ -19,6 +20,6 @@ class TransportComponents:
 
     def execute(self):
         if self.enabled:
-            self.intakeMotor.set(self.intakeMotorSpeed)
+            self.transportMotor.set(self.transportMotorSpeed)
 
-        self.intakeMotorSpeed = 0
+        self.transportMotorSpeed = 0

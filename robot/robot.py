@@ -73,11 +73,11 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.ahrs = AHRS.create_spi()  # type:ignore
 
         ### These mechanisms don't exist yet ###
-
-        ### Intake Setup ###
-        # with self.consumeExceptions():
-        #     self.intakeMotor = rev.CANSparkMax(motorUtils.kIntakeMotorID, motorUtils.kCANSparkMaxBrushed)
-        #     self.intakeMotor.setInverted(motorUtils.isIntakeMotorReversed)
+    
+        ### Transport Setup ###
+        with self.consumeExceptions():
+            self.transportMotor = rev.CANSparkMax(motorUtils.kTransportMotorID, motorUtils.kCANSparkMaxBrushless)
+            self.transportMotor.setInverted(motorUtils.isTransportMotorReversed)
 
         ### Hang Setup ###
         with self.consumeExceptions():

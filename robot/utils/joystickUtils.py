@@ -17,9 +17,9 @@ isXAxisReversed = -1
 
 ### Operator Joystick ###
 kOperatorJoystickID = 1
-kIntakeButton = 2
-kStopIntakeButton = 5
-kReverseIntakeButton = 3
+kTransportButton = 2
+kStopTransportButton = 5
+kReverseTransportButton = 3
 
 kLeadScrewExtendButton = 3
 kLeadScrewRetractButton = 2
