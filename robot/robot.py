@@ -37,7 +37,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         ### Joystick Setup ###
         self.driverJoystick = wpilib.Joystick(joystickUtils.kDriverJoystickID)
         self.slowButtonToggle = Toggle(self.driverJoystick, joystickUtils.kSlowButton)
-        self.driverJoysticAccelerationLimiter = util.AccelerationLimiter(20, 0.82)
+        self.driverYJoystickAccelerationLimiter = util.AccelerationLimiter(100000, 1) # 14 0.9
+        self.driverXJoystikcAccelerationLimiter = util.AccelerationLimiter(100000, 1) # 30 0.9
 
         self.operatorJoystick = wpilib.Joystick(joystickUtils.kOperatorJoystickID)
 
@@ -165,9 +166,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
 
         with self.consumeExceptions():
-            # if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
-            #     self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
-            if self.driverJoystick.getTrigger():
+            if self.driverJoystick.getTrigger(): # Can also be: self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
                 self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
             if self.slowButtonToggle.get():
                 self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
@@ -180,12 +179,11 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         # `getX` left to right is turns the robot. Replace with `getZ` for twist
         self.driveTrain.arcadeDrive(
-            # util.deadBand(joystickUtils.isXAxisReversed * self.driverJoystick.getX(),joystickUtils.kDeadband),
-            # util.deadBand(joystickUtils.isYAxisReversed * self.driverJoystick.getY(), joystickUtils.kDeadband)
-            joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
-            joystickUtils.isYAxisReversed * self.driverJoysticAccelerationLimiter.calculate(self.driverJoystick.getY())
-            #joystickUtils.isYAxisReversed * self.driverJoystick.getY()
+            util.deadBand(joystickUtils.isXAxisReversed * self.driverXJoystikcAccelerationLimiter.calculate(self.driverJoystick.getX()), joystickUtils.kDeadband),
+            util.deadBand(joystickUtils.isYAxisReversed * self.driverYJoystickAccelerationLimiter.calculate(self.driverJoystick.getY()), joystickUtils.kDeadband)
         )
+
+        wpilib.SmartDashboard.putNumber("joyX", self.driverJoystick.getX())
 
     def disabledPeriodic(self):
         pass

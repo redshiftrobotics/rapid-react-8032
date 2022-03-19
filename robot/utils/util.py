@@ -36,6 +36,9 @@ class AccelerationLimiter:
         self.prev_vel = 0
     
     def calculate(self, target_pos: float):
+        if abs(target_pos) < abs(self.prev_pos):
+            return target_pos
+
         # Calculate the current velocity and acceleration
         new_time = time.time()
         time_diff = new_time - self.prev_time
