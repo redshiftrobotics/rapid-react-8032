@@ -28,7 +28,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
     retractLeadScrew: RetractLeadScrew
 
     ### These mechanisms don't exist yet ###
-    # transportComponents: TransportComponents
+    transportComponents: TransportComponents
 
     def createObjects(self):
         ### Joystick Setup ###
@@ -73,10 +73,12 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.ahrs = AHRS.create_spi()  # type:ignore
 
         ### These mechanisms don't exist yet ###
-    
+
         ### Transport Setup ###
         with self.consumeExceptions():
-            self.transportMotor = rev.CANSparkMax(motorUtils.kTransportMotorID, motorUtils.kCANSparkMaxBrushless)
+            self.transportMotor = rev.CANSparkMax(
+                motorUtils.kTransportMotorID, motorUtils.kCANSparkMaxBrushless
+            )
             self.transportMotor.setInverted(motorUtils.isTransportMotorReversed)
 
         ### Hang Setup ###
@@ -106,6 +108,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
         self.driveTrain.setMaxSpeed(1)
+        self.transportComponents.enable()
 
     def autonomousPeriodic(self):
         self.auto.periodic()
@@ -114,6 +117,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driveTrain.resetEncoders()
         self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
+        self.transportComponents.enable()
 
         with self.consumeExceptions():
             self.hangComponents.enable()
@@ -171,6 +175,19 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         #     joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
         #     joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
         # )
+
+        # -------Transport Code--------
+        with self.consumeExceptions():
+            if self.operatorJoystick.getRawButton(joystickUtils.kTransportButton):
+                self.transportComponents.setTransportSpeed(
+                    joystickUtils.kTransportSpeed
+                )
+            elif self.operatorJoystick.getRawButton(
+                joystickUtils.kReverseTransportButton
+            ):
+                self.transportComponents.setTransportSpeed(
+                    -joystickUtils.kTransportSpeed
+                )
 
         wpilib.SmartDashboard.putNumber(
             "Leadscrew motor speed", self.leadScrewMotor.get()

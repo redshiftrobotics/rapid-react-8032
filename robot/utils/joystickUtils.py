@@ -25,3 +25,6 @@ kLeadScrewExtendButton = 3
 kLeadScrewRetractButton = 2
 
 kLeadScrewSpeed = 0.2
+
+# Transport speed settings
+kTransportSpeed = 0.1  # Low to start with can be increased

@@ -7,7 +7,7 @@ class TransportComponents:
 
     def __init__(self):
         self.enabled = False
-        self.transportMotorSpeed=0
+        self.transportMotorSpeed = 0
 
     def setTransportSpeed(self, transportSpeed: float):
         self.transportMotorSpeed = transportSpeed
