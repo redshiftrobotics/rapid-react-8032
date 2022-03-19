@@ -12,6 +12,9 @@ class TransportComponents:
     def setTransportSpeed(self, transportSpeed: float):
         self.transportMotorSpeed = transportSpeed
 
+    def getTransportSpeed(self):
+        return self.transportMotorSpeed
+
     def enable(self):
         self.enabled = True
 

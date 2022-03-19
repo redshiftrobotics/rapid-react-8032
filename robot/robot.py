@@ -188,6 +188,14 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                 self.transportComponents.setTransportSpeed(
                     -joystickUtils.kTransportSpeed
                 )
+        
+        # Transport debug messages
+
+        wpilib.SmartDashboard.putBoolean("Forward Transport Button", self.operatorJoystick.getRawButton(joystickUtils.kTransportButton))
+        wpilib.SmartDashboard.putBoolean("Reverse Transport Button", self.operatorJoystick.getRawButton(joystickUtils.kReverseTransportButton))
+        wpilib.SmartDashboard.putNumber("Constant Transport Speed!", joystickUtils.kTransportSpeed)
+        wpilib.SmartDashboard.putNumber("Transport Component Speed", self.transportComponents.getTransportSpeed())
+        
 
         wpilib.SmartDashboard.putNumber(
             "Leadscrew motor speed", self.leadScrewMotor.get()
