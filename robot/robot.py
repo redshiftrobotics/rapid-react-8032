@@ -34,6 +34,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         ### Joystick Setup ###
         self.driverJoystick = wpilib.Joystick(joystickUtils.kDriverJoystickID)
         self.slowButtonToggle = Toggle(self.driverJoystick, joystickUtils.kSlowButton)
+        self.driverYJoystickAccelerationLimiter = util.AccelerationLimiter(100000, 1) # 14 0.9
+        self.driverXJoystikcAccelerationLimiter = util.AccelerationLimiter(100000, 1) # 30 0.9
 
         self.operatorJoystick = wpilib.Joystick(joystickUtils.kOperatorJoystickID)
 
@@ -154,27 +156,17 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # with self.consumeExceptions():
         # self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
 
-        # with self.consumeExceptions():
-        #     # if self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
-        #     #     self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
-        #     if self.driverJoystick.getTrigger():
-        #         self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
-        #     if self.slowButtonToggle.get():
-        #         self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
-        #     wpilib.SmartDashboard.putBoolean(
-        #         "nitro button pressed", self.driverJoystick.getTrigger()
-        #     )
-        #     wpilib.SmartDashboard.putNumber(
-        #         "code max speed", self.driveTrain.getMaxSpeed()
-        #     )
-
-        # # `getX` left to right is turns the robot. Replace with `getZ` for twist
-        # self.driveTrain.arcadeDrive(
-        #     # util.deadBand(joystickUtils.isXAxisReversed * self.driverJoystick.getX(),joystickUtils.kDeadband),
-        #     # util.deadBand(joystickUtils.isYAxisReversed * self.driverJoystick.getY(), joystickUtils.kDeadband)
-        #     joystickUtils.isXAxisReversed * self.driverJoystick.getX(),
-        #     joystickUtils.isYAxisReversed * self.driverJoystick.getY(),
-        # )
+        with self.consumeExceptions():
+            if self.driverJoystick.getTrigger(): # Can also be: self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
+                self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
+            if self.slowButtonToggle.get():
+                self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
+            wpilib.SmartDashboard.putBoolean(
+                "nitro button pressed", self.driverJoystick.getTrigger()
+            )
+            wpilib.SmartDashboard.putNumber(
+                "code max speed", self.driveTrain.getMaxSpeed()
+            )
 
         # -------Transport Code--------
         with self.consumeExceptions():
@@ -200,6 +192,13 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         wpilib.SmartDashboard.putNumber(
             "Leadscrew motor speed", self.leadScrewMotor.get()
         )
+        # `getX` left to right is turns the robot. Replace with `getZ` for twist
+        self.driveTrain.arcadeDrive(
+            util.deadBand(joystickUtils.isXAxisReversed * self.driverXJoystikcAccelerationLimiter.calculate(self.driverJoystick.getX()), joystickUtils.kDeadband),
+            util.deadBand(joystickUtils.isYAxisReversed * self.driverYJoystickAccelerationLimiter.calculate(self.driverJoystick.getY()), joystickUtils.kDeadband)
+        )
+
+        wpilib.SmartDashboard.putNumber("joyX", self.driverJoystick.getX())
 
     def disabledPeriodic(self):
         pass
