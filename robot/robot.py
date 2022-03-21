@@ -77,8 +77,6 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # Create gyroscope. spi - communications protocol
         self.ahrs = AHRS.create_spi()  # type:ignore
 
-        ### These mechanisms don't exist yet ###
-
         ### Transport Setup ###
         with self.consumeExceptions():
             self.transportMotor = rev.CANSparkMax(

@@ -1,11 +1,9 @@
-from magicbot import tunable
 import wpilib
 import rev
 import wpimath.controller
 from navx import AHRS
 import math
 from utils.util import clamp
-import utils.joystickUtils as joystickUtils
 
 
 class DriveTrain:
@@ -220,7 +218,6 @@ class DriveTrain:
         self.maxSpeed = speed
 
     def execute(self):
-        # We could call adjustSpeed in robot.py instead, or create a joystick wrapper class
         self.leftMotorSpeed = clamp(self.leftMotorSpeed, 1, -1)
         self.rightMotorSpeed = clamp(self.rightMotorSpeed, 1, -1)
 
