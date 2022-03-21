@@ -11,9 +11,7 @@ kFrontRightMotorID = 6
 kBackLeftMotorID = 20
 kBackRightMotorID = 5
 
-kIntakeMotorID = 5
-
-kDropperMotorID = 6
+kTransportMotorID = 9
 
 kLeadScrewMotorID = 8
 
@@ -23,8 +21,6 @@ isFrontRightMotorReversed = True
 isBackLeftMotorReversed = False
 isBackRightMotorReversed = True
 
-isIntakeMotorReversed = False
-
-isDropperMotorReversed = False
+isTransportMotorReversed = False
 
 isLeadScrewMotorReversed = False
