@@ -29,7 +29,4 @@ class TransportComponents:
                 self.accelerationLimiter.calculate(self.transportMotorSpeed)
             )
 
-            # Old code, use if accelerationLimiter does not work / do not need it anymore
-            # self.transportMotor.set(self.transportMotorSpeed)
-
         self.transportMotorSpeed = 0

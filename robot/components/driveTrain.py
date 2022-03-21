@@ -170,7 +170,6 @@ class DriveTrain:
         Input: float
         Returns: None
         """
-        # FIXME: Don't call calculate twice, because it messes up the PID controller
         newLeftSpeed = self.forwardController.calculate(
             self.getLeftDistance(), targetDistance
         )
