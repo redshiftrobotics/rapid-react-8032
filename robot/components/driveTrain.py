@@ -170,7 +170,7 @@ class DriveTrain:
         Input: float
         Returns: None
         """
-        # FIXME: Don't call calculate twice, because it messes up the PID controller
+
         newLeftSpeed = self.forwardController.calculate(
             self.getLeftDistance(), targetDistance
         )
@@ -221,7 +221,6 @@ class DriveTrain:
         self.maxSpeed = speed
 
     def execute(self):
-        # TODO: Its kind of messy that drivetrain accesses a deadband which is a joystick value.
         # We could call adjustSpeed in robot.py instead, or create a joystick wrapper class
         self.leftMotorSpeed = clamp(self.leftMotorSpeed, 1, -1)
         self.rightMotorSpeed = clamp(self.rightMotorSpeed, 1, -1)
