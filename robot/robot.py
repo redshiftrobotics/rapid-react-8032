@@ -122,7 +122,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.driveTrain.resetEncoders()
         self.driveTrain.resetGyroYaw()
         self.driveTrain.enable()
-        self.transportComponents.enable()
+        with self.consumeExceptions():
+            self.transportComponents.enable()
 
         with self.consumeExceptions():
             self.hangComponents.enable()
@@ -156,8 +157,9 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         ### Drivetrain Control Code ###
 
-        # with self.consumeExceptions():
-        # self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
+        # TODO test this
+        with self.consumeExceptions():
+            self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
 
         with self.consumeExceptions():
             if (
