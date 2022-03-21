@@ -26,8 +26,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
     hangComponents: HangComponents
     extendLeadScrew: ExtendLeadScrew
     retractLeadScrew: RetractLeadScrew
-
-    ### These mechanisms don't exist yet ###
+    
     transportComponents: TransportComponents
 
     def createObjects(self):
