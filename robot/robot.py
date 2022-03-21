@@ -199,7 +199,13 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                 self.transportComponents.setTransportSpeed(
                     joystickUtils.kTransportSpeed
                 )
-            elif self.operatorJoystick.getRawButton(
+
+            if self.operatorJoystick.getRawButton(joystickUtils.kTransportSlowButton):
+                self.transportComponents.setTransportSpeed(
+                    joystickUtils.kSlowTransportSpeed
+                )
+
+            if self.operatorJoystick.getRawButton(
                 joystickUtils.kReverseTransportButton
             ):
                 self.transportComponents.setTransportSpeed(
@@ -208,26 +214,11 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         # Transport debug messages
 
-        wpilib.SmartDashboard.putBoolean(
-            "Forward Transport Button",
-            self.operatorJoystick.getRawButton(joystickUtils.kTransportButton),
-        )
-        wpilib.SmartDashboard.putBoolean(
-            "Reverse Transport Button",
-            self.operatorJoystick.getRawButton(joystickUtils.kReverseTransportButton),
-        )
         wpilib.SmartDashboard.putNumber(
-            "Constant Transport Speed!", joystickUtils.kTransportSpeed
-        )
-        wpilib.SmartDashboard.putNumber(
-            "Transport Component Speed", self.transportComponents.getTransportSpeed()
+            "Transport Speed", self.transportComponents.getTransportSpeed()
         )
 
-        wpilib.SmartDashboard.putNumber(
-            "Leadscrew motor speed", self.leadScrewMotor.get()
-        )
-
-        wpilib.SmartDashboard.putNumber("joyX", self.driverJoystick.getX())
+        wpilib.SmartDashboard.putNumber("Leadscrew speed", self.leadScrewMotor.get())
 
     def disabledPeriodic(self):
         pass
