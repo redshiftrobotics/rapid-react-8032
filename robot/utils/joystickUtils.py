@@ -17,13 +17,15 @@ isXAxisReversed = -1
 
 ### Operator Joystick ###
 kOperatorJoystickID = 1
-kDropButton = 4
-kUnDropButton = 6
-kIntakeButton = 2
-kStopIntakeButton = 5
-kReverseIntakeButton = 3
+kTransportButton = 3
+kReverseTransportButton = 4
+kTransportSlowButton = 12  # TODO ask Ana if want to change
 
-kLeadScrewExtendButton = 3
-kLeadScrewRetractButton = 2
+kLeadScrewExtendButton = 2
+kLeadScrewRetractButton = 1
 
 kLeadScrewSpeed = 0.2
+
+# Transport speed settings
+kSlowTransportSpeed = 0.2
+kTransportSpeed = 0.4
