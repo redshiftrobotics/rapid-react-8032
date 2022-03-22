@@ -172,7 +172,7 @@ class DriveTrain:
         Drives the robot a certain distance using PID, needs odometry reset before using
         Input: float
         Returns: None
-        """    
+        """
 
         newLeftSpeed = self.leftDistanceController.calculate(
             self.getLeftDistance(), targetDistance
