@@ -8,7 +8,7 @@ import utils.joystickUtils as joystickUtils
 class DepositDriveBackward(AutonomousStateMachine):
 
     MODE_NAME = "Deposit, drive backward"
-    DEFAULT = True
+    DEFAULT = False
 
     driveTrain: DriveTrain
     transportComponents: TransportComponents
