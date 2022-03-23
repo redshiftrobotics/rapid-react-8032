@@ -16,6 +16,7 @@ class DepositDriveBackward(AutonomousStateMachine):
     @timed_state(duration=2, first=True, next_state="backOutOfTarmac")  # type:ignore
     def depositBall(self):
         self.transportComponents.setTransportSpeed(joystickUtils.kTransportSpeed)
+        self.transportComponents.setIntakeShooterSpeed(joystickUtils.kTransportSpeed)
 
     @state()  # type:ignore
     def backOutOfTarmac(self):
