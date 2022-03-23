@@ -84,6 +84,11 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
             )
             self.transportMotor.setInverted(motorUtils.isTransportMotorReversed)
 
+            self.intakeShooterMotor = rev.CANSparkMax(
+                motorUtils.kIntakeShooterMotorID, motorUtils.kCANSparkMaxBrushless
+            )
+            self.intakeShooterMotor.setInverted(motorUtils.isIntakeShooterMotor)
+
         ### Hang Setup ###
         with self.consumeExceptions():
             self.leadScrewMotor = rev.CANSparkMax(
@@ -193,21 +198,33 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
 
         # -------Transport Code--------
         with self.consumeExceptions():
+            # Forward Full Speed
             if self.operatorJoystick.getRawButton(joystickUtils.kTransportButton):
                 self.transportComponents.setTransportSpeed(
                     joystickUtils.kTransportSpeed
                 )
+                self.transportComponents.setIntakeShooterSpeed(
+                    -joystickUtils.kTransportSpeed
+                )
 
+            # Forward Slow
             if self.operatorJoystick.getRawButton(joystickUtils.kTransportSlowButton):
                 self.transportComponents.setTransportSpeed(
                     joystickUtils.kSlowTransportSpeed
                 )
+                self.transportComponents.setIntakeShooterSpeed(
+                    -joystickUtils.kSlowTransportSpeed
+                )
 
+            # Backwards Full Speed
             if self.operatorJoystick.getRawButton(
                 joystickUtils.kReverseTransportButton
             ):
                 self.transportComponents.setTransportSpeed(
                     -joystickUtils.kTransportSpeed
+                )
+                self.transportComponents.setIntakeShooterSpeed(
+                    joystickUtils.kTransportSpeed
                 )
 
         # Transport debug messages
