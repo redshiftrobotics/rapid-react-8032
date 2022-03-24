@@ -22,7 +22,7 @@ isFrontRightMotorReversed = True
 isBackLeftMotorReversed = False
 isBackRightMotorReversed = True
 
-isTransportMotorReversed = False
+isTransportMotorReversed = True
 isIntakeShooterMotor = True
 
 isLeadScrewMotorReversed = False
