@@ -186,7 +186,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                     self.driverJoystick.getX()
                 ),
                 joystickUtils.kDeadband,
-            )*0.8,
+            )*joystickUtils.kTurnSpeed,
             util.deadBand(
                 joystickUtils.isYAxisReversed
                 * self.driverYJoystickAccelerationLimiter.calculate(
