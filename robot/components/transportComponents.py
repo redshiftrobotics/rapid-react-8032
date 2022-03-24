@@ -12,9 +12,7 @@ class TransportComponents:
         self.transportMotorSpeed = 0
         self.intakeShooterSpeed = 0
         self.transportAccelerationLimiter = util.AccelerationLimiter(100000, 1, False)
-        self.intakShooterAccelerationLimiter = util.AccelerationLimiter(
-            100000, 1, False
-        )
+        self.intakShooterAccelerationLimiter = util.AccelerationLimiter(100000, 1, False)
 
     def setTransportSpeed(self, transportSpeed: float):
         self.transportMotorSpeed = transportSpeed
@@ -36,12 +34,8 @@ class TransportComponents:
 
     def execute(self):
         if self.enabled:
-            self.transportMotor.set(
-                self.transportAccelerationLimiter.calculate(self.transportMotorSpeed)
-            )
-            self.intakeShooterMotor.set(
-                self.intakShooterAccelerationLimiter.calculate(self.intakeShooterSpeed)
-            )
+            self.transportMotor.set(self.transportAccelerationLimiter.calculate(self.transportMotorSpeed))
+            self.intakeShooterMotor.set(self.intakShooterAccelerationLimiter.calculate(self.intakeShooterSpeed))
 
         self.transportMotorSpeed = 0
         self.intakeShooterSpeed = 0

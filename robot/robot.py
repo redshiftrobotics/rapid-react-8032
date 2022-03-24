@@ -33,28 +33,16 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         ### Joystick Setup ###
         self.driverJoystick = wpilib.Joystick(joystickUtils.kDriverJoystickID)
         self.slowButtonToggle = Toggle(self.driverJoystick, joystickUtils.kSlowButton)
-        self.driverYJoystickAccelerationLimiter = util.AccelerationLimiter(
-            100000, 1
-        )  # 14 0.9
-        self.driverXJoystikcAccelerationLimiter = util.AccelerationLimiter(
-            100000, 1
-        )  # 30 0.9
+        self.driverYJoystickAccelerationLimiter = util.AccelerationLimiter(100000, 1)  # 14 0.9
+        self.driverXJoystikcAccelerationLimiter = util.AccelerationLimiter(100000, 1)  # 30 0.9
 
         self.operatorJoystick = wpilib.Joystick(joystickUtils.kOperatorJoystickID)
 
         #### Drivetrain Setup ###
-        self.frontLeftMotor = rev.CANSparkMax(
-            motorUtils.kFrontLeftMotorID, motorUtils.kCANSparkMaxBrushless
-        )
-        self.frontRightMotor = rev.CANSparkMax(
-            motorUtils.kFrontRightMotorID, motorUtils.kCANSparkMaxBrushless
-        )
-        self.backLeftMotor = rev.CANSparkMax(
-            motorUtils.kBackLeftMotorID, motorUtils.kCANSparkMaxBrushless
-        )
-        self.backRightMotor = rev.CANSparkMax(
-            motorUtils.kBackRightMotorID, motorUtils.kCANSparkMaxBrushless
-        )
+        self.frontLeftMotor = rev.CANSparkMax(motorUtils.kFrontLeftMotorID, motorUtils.kCANSparkMaxBrushless)
+        self.frontRightMotor = rev.CANSparkMax(motorUtils.kFrontRightMotorID, motorUtils.kCANSparkMaxBrushless)
+        self.backLeftMotor = rev.CANSparkMax(motorUtils.kBackLeftMotorID, motorUtils.kCANSparkMaxBrushless)
+        self.backRightMotor = rev.CANSparkMax(motorUtils.kBackRightMotorID, motorUtils.kCANSparkMaxBrushless)
 
         self.frontLeftMotor.setInverted(motorUtils.isFrontLeftMotorReversed)
         self.backLeftMotor.setInverted(motorUtils.isBackLeftMotorReversed)
@@ -67,40 +55,26 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         # self.backRightMotor.setIdleMode(rev.CANSparkMax.IdleMode.kCoast)
 
         # initialize encoders
-        self.leftEncoder = self.backLeftMotor.getAlternateEncoder(
-            motorUtils.kTicksPerRev
-        )
-        self.rightEncoder = self.backRightMotor.getAlternateEncoder(
-            motorUtils.kTicksPerRev
-        )
+        self.leftEncoder = self.backLeftMotor.getAlternateEncoder(motorUtils.kTicksPerRev)
+        self.rightEncoder = self.backRightMotor.getAlternateEncoder(motorUtils.kTicksPerRev)
 
         # Create gyroscope. spi - communications protocol
         self.ahrs = AHRS.create_spi()  # type:ignore
 
         ### Transport Setup ###
         with self.consumeExceptions():
-            self.transportMotor = rev.CANSparkMax(
-                motorUtils.kTransportMotorID, motorUtils.kCANSparkMaxBrushless
-            )
+            self.transportMotor = rev.CANSparkMax(motorUtils.kTransportMotorID, motorUtils.kCANSparkMaxBrushless)
             self.transportMotor.setInverted(motorUtils.isTransportMotorReversed)
 
-            self.intakeShooterMotor = rev.CANSparkMax(
-                motorUtils.kIntakeShooterMotorID, motorUtils.kCANSparkMaxBrushless
-            )
+            self.intakeShooterMotor = rev.CANSparkMax(motorUtils.kIntakeShooterMotorID, motorUtils.kCANSparkMaxBrushless)
             self.intakeShooterMotor.setInverted(motorUtils.isIntakeShooterMotor)
 
         ### Hang Setup ###
         with self.consumeExceptions():
-            self.leadScrewMotor = rev.CANSparkMax(
-                motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushless
-            )
+            self.leadScrewMotor = rev.CANSparkMax(motorUtils.kLeadScrewMotorID, motorUtils.kCANSparkMaxBrushless)
 
-            self.topLeadScrewSensor = wpilib.DigitalInput(
-                sensorUtils.kTopLeadScrewSensorID
-            )
-            self.bottomLeadScrewSensor = wpilib.DigitalInput(
-                sensorUtils.kBottomLeadScrewSensorID
-            )
+            self.topLeadScrewSensor = wpilib.DigitalInput(sensorUtils.kTopLeadScrewSensorID)
+            self.bottomLeadScrewSensor = wpilib.DigitalInput(sensorUtils.kBottomLeadScrewSensorID)
 
         ### Auto Setup ###
         with self.consumeExceptions():
@@ -134,12 +108,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
     def teleopPeriodic(self):
         ### Hang Control Code ###
 
-        wpilib.SmartDashboard.putBoolean(
-            "topLeadScrewSensor", self.hangComponents.getTopLeadScrewSensor()
-        )
-        wpilib.SmartDashboard.putBoolean(
-            "bottomLeadScrewSensor", self.hangComponents.getBottomLeadScrewSensor()
-        )
+        wpilib.SmartDashboard.putBoolean("topLeadScrewSensor", self.hangComponents.getTopLeadScrewSensor())
+        wpilib.SmartDashboard.putBoolean("bottomLeadScrewSensor", self.hangComponents.getBottomLeadScrewSensor())
 
         with self.consumeExceptions():
             if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewExtendButton):
@@ -150,9 +120,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                 # )
 
         with self.consumeExceptions():
-            if self.operatorJoystick.getRawButton(
-                joystickUtils.kLeadScrewRetractButton
-            ):
+            if self.operatorJoystick.getRawButton(joystickUtils.kLeadScrewRetractButton):
                 self.retractLeadScrew.retractLeadScrew()
                 # self.hangComponents.setLeadScrewMotorSpeed(
                 #     -joystickUtils.kLeadScrewSpeed
@@ -165,33 +133,22 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
             self.driveTrain.setMaxSpeed(joystickUtils.kNormalSpeed)
 
         with self.consumeExceptions():
-            if (
-                self.driverJoystick.getTrigger()
-            ):  # Can also be: self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
+            if self.driverJoystick.getTrigger():  # Can also be: self.driverJoystick.getRawButtonPressed(joystickUtils.kNitroButton):
                 self.driveTrain.setMaxSpeed(joystickUtils.kNitroSpeed)
             if self.slowButtonToggle.get():
                 self.driveTrain.setMaxSpeed(joystickUtils.kSlowSpeed)
-            wpilib.SmartDashboard.putBoolean(
-                "nitro button pressed", self.driverJoystick.getTrigger()
-            )
-            wpilib.SmartDashboard.putNumber(
-                "code max speed", self.driveTrain.getMaxSpeed()
-            )
+            wpilib.SmartDashboard.putBoolean("nitro button pressed", self.driverJoystick.getTrigger())
+            wpilib.SmartDashboard.putNumber("code max speed", self.driveTrain.getMaxSpeed())
 
         # `getX` left to right is turns the robot. Replace with `getZ` for twist
         self.driveTrain.arcadeDrive(
             util.deadBand(
-                joystickUtils.isXAxisReversed
-                * self.driverXJoystikcAccelerationLimiter.calculate(
-                    self.driverJoystick.getX()
-                ),
+                joystickUtils.isXAxisReversed * self.driverXJoystikcAccelerationLimiter.calculate(self.driverJoystick.getX()),
                 joystickUtils.kDeadband,
-            )*joystickUtils.kTurnSpeed,
+            )
+            * joystickUtils.kTurnSpeed,
             util.deadBand(
-                joystickUtils.isYAxisReversed
-                * self.driverYJoystickAccelerationLimiter.calculate(
-                    self.driverJoystick.getY()
-                ),
+                joystickUtils.isYAxisReversed * self.driverYJoystickAccelerationLimiter.calculate(self.driverJoystick.getY()),
                 joystickUtils.kDeadband,
             ),
         )
@@ -200,38 +157,22 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         with self.consumeExceptions():
             # Forward Full Speed
             if self.operatorJoystick.getRawButton(joystickUtils.kTransportButton):
-                self.transportComponents.setTransportSpeed(
-                    joystickUtils.kTransportSpeed
-                )
-                self.transportComponents.setIntakeShooterSpeed(
-                    joystickUtils.kIntakeShooterSpeed
-                )
+                self.transportComponents.setTransportSpeed(joystickUtils.kTransportSpeed)
+                self.transportComponents.setIntakeShooterSpeed(joystickUtils.kIntakeShooterSpeed)
 
             # Forward Slow
             if self.operatorJoystick.getRawButton(joystickUtils.kTransportSlowButton):
-                self.transportComponents.setTransportSpeed(
-                    joystickUtils.kSlowTransportSpeed
-                )
-                self.transportComponents.setIntakeShooterSpeed(
-                    joystickUtils.kSlowIntakeShooterSpeed
-                )
+                self.transportComponents.setTransportSpeed(joystickUtils.kSlowTransportSpeed)
+                self.transportComponents.setIntakeShooterSpeed(joystickUtils.kSlowIntakeShooterSpeed)
 
             # Backwards Full Speed
-            if self.operatorJoystick.getRawButton(
-                joystickUtils.kReverseTransportButton
-            ):
-                self.transportComponents.setTransportSpeed(
-                    -joystickUtils.kTransportSpeed
-                )
-                self.transportComponents.setIntakeShooterSpeed(
-                    -joystickUtils.kIntakeShooterSpeed
-                )
+            if self.operatorJoystick.getRawButton(joystickUtils.kReverseTransportButton):
+                self.transportComponents.setTransportSpeed(-joystickUtils.kTransportSpeed)
+                self.transportComponents.setIntakeShooterSpeed(-joystickUtils.kIntakeShooterSpeed)
 
         # Transport debug messages
 
-        wpilib.SmartDashboard.putNumber(
-            "Transport Speed", self.transportComponents.getTransportSpeed()
-        )
+        wpilib.SmartDashboard.putNumber("Transport Speed", self.transportComponents.getTransportSpeed())
 
         wpilib.SmartDashboard.putNumber("Leadscrew speed", self.leadScrewMotor.get())
 

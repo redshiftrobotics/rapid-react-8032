@@ -37,9 +37,7 @@ class DriveTrain:
         self.kAngleD = -1 / 500
         self.kAngleTolerance = 3
 
-        self.angleController = wpimath.controller.PIDController(
-            self.kAngleP, self.kAngleI, self.kAngleD
-        )
+        self.angleController = wpimath.controller.PIDController(self.kAngleP, self.kAngleI, self.kAngleD)
         self.angleController.setTolerance(self.kAngleTolerance)
 
         self.kForwardP = 1 / 100
@@ -47,9 +45,7 @@ class DriveTrain:
         self.kForwardD = 0
         self.kForwardTolerance = 10
 
-        self.forwardController = wpimath.controller.PIDController(
-            self.kForwardP, self.kForwardI, self.kForwardD
-        )
+        self.forwardController = wpimath.controller.PIDController(self.kForwardP, self.kForwardI, self.kForwardD)
         self.forwardController.setTolerance(self.kForwardTolerance)
 
     def arcadeDrive(self, xAxis: float, yAxis: float):
@@ -168,12 +164,8 @@ class DriveTrain:
         Input: float
         Returns: None
         """
-        newLeftSpeed = self.forwardController.calculate(
-            self.getLeftDistance(), targetDistance
-        )
-        newRightSpeed = self.forwardController.calculate(
-            self.getRightDistance(), targetDistance
-        )
+        newLeftSpeed = self.forwardController.calculate(self.getLeftDistance(), targetDistance)
+        newRightSpeed = self.forwardController.calculate(self.getRightDistance(), targetDistance)
 
         self.setLeftMotorSpeed(newLeftSpeed)
         self.setRightMotorSpeed(newRightSpeed)
