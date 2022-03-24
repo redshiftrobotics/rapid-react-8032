@@ -1,7 +1,7 @@
-from pydoc_data import topics
 import magicbot
 from robotpy_ext.control.toggle import Toggle  # type: ignore
 import wpilib
+import wpimath.filter
 import rev
 from components.driveTrain import DriveTrain
 from components.hangComponents import HangComponents
@@ -33,8 +33,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         ### Joystick Setup ###
         self.driverJoystick = wpilib.Joystick(joystickUtils.kDriverJoystickID)
         self.slowButtonToggle = Toggle(self.driverJoystick, joystickUtils.kSlowButton)
-        self.driverYJoystickAccelerationLimiter = util.AccelerationLimiter(100000, 1)  # 14 0.9
-        self.driverXJoystikcAccelerationLimiter = util.AccelerationLimiter(100000, 1)  # 30 0.9
+        self.driverYJoystickAccelerationLimiter = wpimath.filter.SlewRateLimiter(1)
+        self.driverXJoystikcAccelerationLimiter = wpimath.filter.SlewRateLimiter(1)  # util.AccelerationLimiter(30, 1)  # 30 0.9
 
         self.operatorJoystick = wpilib.Joystick(joystickUtils.kOperatorJoystickID)
 

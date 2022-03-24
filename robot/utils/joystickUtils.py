@@ -28,7 +28,7 @@ kLeadScrewSpeed = 0.6
 
 # Transport speed settings
 kSlowTransportSpeed = 0.4
-kTransportSpeed = 0.8
+kTransportSpeed = 1.0
 
 kSlowIntakeShooterSpeed = 0.2
 kIntakeShooterSpeed = 0.4
