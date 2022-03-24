@@ -204,7 +204,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                     joystickUtils.kTransportSpeed
                 )
                 self.transportComponents.setIntakeShooterSpeed(
-                    -joystickUtils.kTransportSpeed
+                    joystickUtils.kTransportSpeed
                 )
 
             # Forward Slow
@@ -213,7 +213,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                     joystickUtils.kSlowTransportSpeed
                 )
                 self.transportComponents.setIntakeShooterSpeed(
-                    -joystickUtils.kSlowTransportSpeed
+                    joystickUtils.kSlowTransportSpeed
                 )
 
             # Backwards Full Speed
@@ -224,7 +224,7 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
                     -joystickUtils.kTransportSpeed
                 )
                 self.transportComponents.setIntakeShooterSpeed(
-                    joystickUtils.kTransportSpeed
+                    -joystickUtils.kTransportSpeed
                 )
 
         # Transport debug messages

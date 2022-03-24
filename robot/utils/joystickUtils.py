@@ -21,8 +21,8 @@ kTransportButton = 4
 kReverseTransportButton = 7
 kTransportSlowButton = 3
 
-kLeadScrewExtendButton = 2
-kLeadScrewRetractButton = 1
+kLeadScrewExtendButton = 1
+kLeadScrewRetractButton = 2 
 
 kLeadScrewSpeed = 0.6
 
