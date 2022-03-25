@@ -33,8 +33,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         ### Joystick Setup ###
         self.driverJoystick = wpilib.Joystick(joystickUtils.kDriverJoystickID)
         self.slowButtonToggle = Toggle(self.driverJoystick, joystickUtils.kSlowButton)
-        self.driverYJoystickAccelerationLimiter = wpimath.filter.SlewRateLimiter(1) # util.AccelerationLimiter(1)
-        self.driverXJoystikcAccelerationLimiter = wpimath.filter.SlewRateLimiter(1) # util.AccelerationLimiter(1)
+        self.driverYJoystickAccelerationLimiter = wpimath.filter.SlewRateLimiter(1.3) # util.AccelerationLimiter(1)
+        self.driverXJoystikcAccelerationLimiter = wpimath.filter.SlewRateLimiter(100) # util.AccelerationLimiter(1)
 
         self.operatorJoystick = wpilib.Joystick(joystickUtils.kOperatorJoystickID)
 
