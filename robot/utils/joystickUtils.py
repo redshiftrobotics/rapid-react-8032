@@ -27,8 +27,8 @@ kLeadScrewRetractButton = 2
 kLeadScrewSpeed = 0.6
 
 # Transport speed settings
-kSlowTransportSpeed = 0.5
-kTransportSpeed = 1
+kSlowTransportSpeed = 0.25
+kTransportSpeed = 0.5
 
 kSlowIntakeShooterSpeed = 0.6
 kIntakeShooterSpeed = 1
