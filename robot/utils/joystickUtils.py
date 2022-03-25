@@ -30,7 +30,7 @@ kLeadScrewSpeed = 0.6
 kSlowTransportSpeed = 0.5
 kTransportSpeed = 1
 
-kSlowIntakeShooterSpeed = 0.2
+kSlowIntakeShooterSpeed = 0.6
 kIntakeShooterSpeed = 1
 
 
