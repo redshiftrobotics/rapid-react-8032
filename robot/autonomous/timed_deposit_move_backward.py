@@ -21,5 +21,5 @@ class TimedDepositDriveBackward(AutonomousStateMachine):
 
     @timed_state(duration=6, first=False)  # type:ignore
     def backOutOfTarmac(self):
-        self.driveTrain.setRightMotorSpeed(-0.1)
-        self.driveTrain.setLeftMotorSpeed(-0.1)
+        self.driveTrain.setRightMotorSpeed(-0.2)
+        self.driveTrain.setLeftMotorSpeed(-0.2)
