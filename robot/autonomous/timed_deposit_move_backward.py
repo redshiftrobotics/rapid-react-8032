@@ -19,7 +19,8 @@ class TimedDepositDriveBackward(AutonomousStateMachine):
         self.transportComponents.setIntakeShooterSpeed(joystickUtils.kTransportSpeed)
         
 
-    @timed_state(duration=6, first=False)  # type:ignore
+    @timed_state(duration=4, first=False)  # type:ignore
     def backOutOfTarmac(self):
         self.driveTrain.setRightMotorSpeed(-0.2)
         self.driveTrain.setLeftMotorSpeed(-0.2)
+        pass

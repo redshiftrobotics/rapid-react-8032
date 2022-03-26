@@ -31,7 +31,7 @@ kSlowTransportSpeed = 0.5
 kTransportSpeed = 1
 
 kSlowIntakeShooterSpeed = 0.6
-kIntakeShooterSpeed = 1
+kIntakeShooterSpeed = 0.9
 
 
 kTurnSpeed = 0.8

@@ -85,8 +85,8 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         self.backLeftMotor.setSmartCurrentLimit(30)
         self.backRightMotor.setSmartCurrentLimit(30)
 
-        self.transportMotor.setSmartCurrentLimit(30)
-        self.intakeShooterMotor.setSmartCurrentLimit(30)
+        # self.transportMotor.setSmartCurrentLimit(35)
+        # self.intakeShooterMotor.setSmartCurrentLimit(35)
 
     def robotInit(self):
         wpilib.CameraServer.launch()
