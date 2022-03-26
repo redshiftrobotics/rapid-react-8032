@@ -80,6 +80,14 @@ class MyRobot(magicbot.MagicRobot):  # type:ignore
         with self.consumeExceptions():
             self.auto = AutonomousModeSelector("autonomous")
 
+        self.frontRightMotor.setSmartCurrentLimit(30)
+        self.frontLeftMotor.setSmartCurrentLimit(30)
+        self.backLeftMotor.setSmartCurrentLimit(30)
+        self.backRightMotor.setSmartCurrentLimit(30)
+
+        self.transportMotor.setSmartCurrentLimit(30)
+        self.intakeShooterMotor.setSmartCurrentLimit(30)
+
     def robotInit(self):
         wpilib.CameraServer.launch()
         super().robotInit()
